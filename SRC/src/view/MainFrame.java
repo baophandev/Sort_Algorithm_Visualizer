@@ -14,7 +14,10 @@ import javax.swing.JFrame;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    private HeaderPanel headerPanel;
     private ControlPanel controlPanel;
+    private VisualPanel visualPanel;
+    
     
     public MainFrame() {
         initComponents();
@@ -27,14 +30,21 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("MÔ PHỎNG CÁC THUẬT TOÁN SẮP XẾP");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void setupUi(){
         setLayout(new BorderLayout());
+        headerPanel = new HeaderPanel();
         controlPanel = new ControlPanel();
-        add(controlPanel, BorderLayout.NORTH);
+        visualPanel = new VisualPanel();
+        
+        add(headerPanel, BorderLayout.NORTH);
+        add(controlPanel, BorderLayout.WEST);
+        add(visualPanel, BorderLayout.CENTER);
+        
     }
     
     public static void main(String args[]) {
