@@ -40,18 +40,32 @@ public class VisualPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    // Sử dụng FlowLayout để các thẻ nằm ngang và được canh giữa
+     // Sử dụng GridBagLayout để hiển thị các thẻ như biểu đồ cột nhưng cách đáy một khoảng
     public void setupUi() {
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Khoảng cách giữa các thẻ
-        gbc.anchor = GridBagConstraints.CENTER; // Căn giữa theo cả chiều ngang và chiều dọc
+        gbc.insets = new Insets(2, 2, 2, 2);  // Khoảng cách giữa các thẻ
+//        gbc.fill = GridBagConstraints.VERTICAL; // Đảm bảo các thẻ chiếm hết chiều dọc của ô
+        gbc.anchor = GridBagConstraints.SOUTH;  // Đặt thẻ dính vào đáy của ô chứa chúng
+
+        // Thêm khoảng trống phía dưới để cách đáy
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weighty = 0.5;  // Trọng số nhỏ hơn để không chiếm quá nhiều không gian
+        add(new javax.swing.JPanel(), gbc);  // Thêm một panel trống để tạo khoảng cách với đáy
 
         // Thêm các thẻ vào panel
-        for (int i = 0; i < 15; i++) {
-            gbc.gridx = i; // Đặt các thẻ theo thứ tự ngang
-            add(new CardNumberComponent(), gbc);
+        gbc.weighty = 1.0;  // Trọng số y để các thẻ bị đẩy lên
+        for (int i = 0; i < 20; i++) {
+            gbc.gridx = i;  // Đặt các thẻ theo thứ tự ngang
+            gbc.gridy = 1;  // Chỉ định hàng thứ nhất (ở trên hàng trống)
+
+            int height = (i + 2) * 8;  // Chiều cao mỗi thẻ
+            CardNumberComponent card = new CardNumberComponent(height, i);
+            card.setPreferredSize(new java.awt.Dimension(40, height));  // Đặt kích thước của thẻ
+
+            add(card, gbc);  // Thêm thẻ vào panel
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

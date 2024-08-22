@@ -7,6 +7,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -24,6 +25,9 @@ public class MainFrame extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         getContentPane().setBackground(Color.white);
         setupUi();
+        String iconPath = "D:\\Myproject\\NLCS\\SortAlgorithmVisualizer\\SRC\\src\\images\\logo.png";
+        ImageIcon icon = new ImageIcon(iconPath);
+        setIconImage(icon.getImage());
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
