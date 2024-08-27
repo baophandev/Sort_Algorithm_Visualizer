@@ -15,9 +15,14 @@ import javax.swing.ImageIcon;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    private static final MainFrame instance = new MainFrame();
     private HeaderPanel headerPanel;
     private ControlPanel controlPanel;
     private VisualPanel visualPanel;
+    
+    public static MainFrame getInstance(){
+        return instance;
+    }
     
     
     public MainFrame() {
@@ -51,11 +56,6 @@ public class MainFrame extends javax.swing.JFrame {
         
     }
     
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> {
-            new MainFrame().setVisible(true);
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
