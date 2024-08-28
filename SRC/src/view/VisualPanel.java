@@ -30,6 +30,8 @@ public class VisualPanel extends javax.swing.JPanel {
         setupUi();
     }
     
+    //Phan Gia Bảo test
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -80,8 +82,6 @@ public class VisualPanel extends javax.swing.JPanel {
             add(card, gbc);  // Thêm thẻ vào panel
         }
     }
-
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
