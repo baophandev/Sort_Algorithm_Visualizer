@@ -7,6 +7,9 @@ package view;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Random;
+import java.awt.Point;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -14,12 +17,18 @@ import java.awt.Insets;
  */
 public class VisualPanel extends javax.swing.JPanel {
 
+    public static int initNumber;
     
     public VisualPanel() {
         initComponents();
-        setupUi();
+       
     }
 
+    public void initVisualPanel(){
+        Random random = new Random();
+        initNumber = random.nextInt(20) + 1;
+        setupUi();
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -57,16 +66,34 @@ public class VisualPanel extends javax.swing.JPanel {
 
         // Thêm các thẻ vào panel
         gbc.weighty = 1.0;  // Trọng số y để các thẻ bị đẩy lên
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < initNumber; i++) {
             gbc.gridx = i;  // Đặt các thẻ theo thứ tự ngang
             gbc.gridy = 1;  // Chỉ định hàng thứ nhất (ở trên hàng trống)
 
-            int height = (i + 2) * 8;  // Chiều cao mỗi thẻ
-            CardNumberComponent card = new CardNumberComponent(height, i);
+            Random random = new Random();
+            int value = random.nextInt(50) + 1;
+            
+            int height = (value + 2) * 8;  // Chiều cao mỗi thẻ
+            CardNumberComponent card = new CardNumberComponent(height, value);
             card.setPreferredSize(new java.awt.Dimension(40, height));  // Đặt kích thước của thẻ
 
             add(card, gbc);  // Thêm thẻ vào panel
         }
+    }
+    
+    // Function để di chuyển CardNumberComponent đến vị trí mong muốn
+    public void moveToPosition(CardNumberComponent card, Point destination) {
+        SwingUtilities.invokeLater(() -> {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.insets = new Insets(2, 2, 2, 2);
+            gbc.anchor = GridBagConstraints.SOUTH;
+            gbc.gridx = destination.x;
+            gbc.gridy = destination.y;
+            remove(card);
+            add(card, gbc);
+            revalidate();
+            repaint();
+        });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

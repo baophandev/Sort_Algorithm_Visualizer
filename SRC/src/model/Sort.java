@@ -11,6 +11,7 @@ package model;
 public abstract class Sort {
     protected final view.VisualPanel visualPanel;
     protected int swapCounts = 0;
+    protected volatile boolean isStop = false;
     
     public Sort() {
         visualPanel = null;
@@ -27,6 +28,11 @@ public abstract class Sort {
         array[i] = array[j];
         array[j] = tmp;
         swapCounts++;
+    }
+    
+    
+    protected void setSelectedLine(int idx){
+        
     }
     
     public int setSwapCount(){

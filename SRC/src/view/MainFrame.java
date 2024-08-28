@@ -24,7 +24,6 @@ public class MainFrame extends javax.swing.JFrame {
         return instance;
     }
     
-    
     public MainFrame() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -56,7 +55,18 @@ public class MainFrame extends javax.swing.JFrame {
         
     }
     
-
+    public ControlPanel getControlPanel(){
+        return controlPanel;
+    }
+    
+    public VisualPanel getVisualPanel(){
+        return visualPanel;
+    }
+    
+    public HeaderPanel getHeaderPanel(){
+        return headerPanel;
+    }
+            
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
