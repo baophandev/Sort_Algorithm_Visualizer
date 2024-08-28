@@ -9,9 +9,7 @@ import model.Sort;
 import view.ControlPanel;
 import view.VisualPanel;
 import view.HeaderPanel;
-import view.CardNumberComponent;
-import java.awt.Point;
-        
+
 /**
  *
  * @author GIA BAO
