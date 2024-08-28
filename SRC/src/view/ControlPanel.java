@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package view;
-
+import java.awt.event.ActionListener;
 /**
  *
  * @author GIA BAO
@@ -16,7 +16,32 @@ public class ControlPanel extends javax.swing.JPanel {
     public ControlPanel() {
         initComponents();
     }
+    
+    public void addSortBtnListener(ActionListener listener){
+        sortAscendingBtn.addActionListener(listener);
+        sortDescendingBtn.addActionListener(listener);
+    }
+    
+    public void disableBtn(){
+        compareBtn.setEnabled(false);
+        inputKeyBoardBtn.setEnabled(false);
+        randomBtn.setEnabled(false);
+        readFileBtn.setEnabled(false);
+        sortAscendingBtn.setEnabled(false);
+        sortDescendingBtn.setEnabled(false);
+        stopSortBtn.setEnabled(false);
+    }
 
+    
+    public void enableBtn(){
+        compareBtn.setEnabled(true);
+        inputKeyBoardBtn.setEnabled(true);
+        randomBtn.setEnabled(true);
+        readFileBtn.setEnabled(true);
+        sortAscendingBtn.setEnabled(true);
+        sortDescendingBtn.setEnabled(true);
+        stopSortBtn.setEnabled(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,35 +52,35 @@ public class ControlPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        randomBtn = new javax.swing.JButton();
+        inputKeyBoardBtn = new javax.swing.JButton();
+        readFileBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        sortAscendingBtn = new javax.swing.JButton();
+        stopSortBtn = new javax.swing.JButton();
+        sortDescendingBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
+        compareBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Khởi tạo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("K2D", 1, 14), new java.awt.Color(31, 92, 169))); // NOI18N
 
-        jButton2.setBackground(new java.awt.Color(0, 175, 239));
-        jButton2.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Ngẫu nhiên");
+        randomBtn.setBackground(new java.awt.Color(0, 175, 239));
+        randomBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
+        randomBtn.setForeground(new java.awt.Color(255, 255, 255));
+        randomBtn.setText("Ngẫu nhiên");
 
-        jButton1.setBackground(new java.awt.Color(0, 175, 239));
-        jButton1.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Nhập từ bàn phím");
+        inputKeyBoardBtn.setBackground(new java.awt.Color(0, 175, 239));
+        inputKeyBoardBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
+        inputKeyBoardBtn.setForeground(new java.awt.Color(255, 255, 255));
+        inputKeyBoardBtn.setText("Nhập từ bàn phím");
 
-        jButton3.setBackground(new java.awt.Color(0, 175, 239));
-        jButton3.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Đọc file");
+        readFileBtn.setBackground(new java.awt.Color(0, 175, 239));
+        readFileBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
+        readFileBtn.setForeground(new java.awt.Color(255, 255, 255));
+        readFileBtn.setText("Đọc file");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -64,46 +89,46 @@ public class ControlPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(randomBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                    .addComponent(inputKeyBoardBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(readFileBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(randomBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputKeyBoardBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(readFileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 8, Short.MAX_VALUE))
         );
 
-        jButton1.getAccessibleContext().setAccessibleDescription("");
+        inputKeyBoardBtn.getAccessibleContext().setAccessibleDescription("");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Điều khiển", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("K2D", 1, 14), new java.awt.Color(31, 92, 169))); // NOI18N
 
-        jButton4.setBackground(new java.awt.Color(0, 175, 239));
-        jButton4.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Sắp xếp tăng dần");
+        sortAscendingBtn.setBackground(new java.awt.Color(0, 175, 239));
+        sortAscendingBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
+        sortAscendingBtn.setForeground(new java.awt.Color(255, 255, 255));
+        sortAscendingBtn.setText("Sắp xếp tăng dần");
 
-        jButton5.setBackground(new java.awt.Color(255, 102, 102));
-        jButton5.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Dừng sắp xếp");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        stopSortBtn.setBackground(new java.awt.Color(255, 102, 102));
+        stopSortBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
+        stopSortBtn.setForeground(new java.awt.Color(255, 255, 255));
+        stopSortBtn.setText("Dừng sắp xếp");
+        stopSortBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                stopSortBtnActionPerformed(evt);
             }
         });
 
-        jButton6.setBackground(new java.awt.Color(0, 175, 239));
-        jButton6.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Sắp xếp giảm dần");
+        sortDescendingBtn.setBackground(new java.awt.Color(0, 175, 239));
+        sortDescendingBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
+        sortDescendingBtn.setForeground(new java.awt.Color(255, 255, 255));
+        sortDescendingBtn.setText("Sắp xếp giảm dần");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -112,29 +137,29 @@ public class ControlPanel extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
+                    .addComponent(sortAscendingBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stopSortBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(sortDescendingBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sortAscendingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sortDescendingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(stopSortBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nâng cao", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("K2D", 1, 14), new java.awt.Color(31, 92, 169))); // NOI18N
 
-        jButton7.setBackground(new java.awt.Color(31, 92, 169));
-        jButton7.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("So sánh tối ưu");
+        compareBtn.setBackground(new java.awt.Color(31, 92, 169));
+        compareBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
+        compareBtn.setForeground(new java.awt.Color(255, 255, 255));
+        compareBtn.setText("So sánh tối ưu");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -142,14 +167,14 @@ public class ControlPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(compareBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addComponent(compareBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -173,21 +198,21 @@ public class ControlPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void stopSortBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopSortBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_stopSortBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton compareBtn;
+    private javax.swing.JButton inputKeyBoardBtn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JButton randomBtn;
+    private javax.swing.JButton readFileBtn;
+    private javax.swing.JButton sortAscendingBtn;
+    private javax.swing.JButton sortDescendingBtn;
+    private javax.swing.JButton stopSortBtn;
     // End of variables declaration//GEN-END:variables
 }

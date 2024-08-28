@@ -3,6 +3,7 @@ package view;
 import java.awt.Color;
 import config.Configuration;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
 /**
  *
  * @author GIA BAO
@@ -132,6 +133,12 @@ public class HeaderPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void addSortBtnListener(ActionListener listener){
+        selectionSortBtn.addActionListener(listener);
+        insectionSortBtn.addActionListener(listener);
+        bubbleSortBtn.addActionListener(listener);
+    }
+    
     private void selectionSortBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionSortBtnActionPerformed
         selectionSortBtn.setBackground(Color.white);
         selectionSortBtn.setForeground(Configuration.COLOR_HEADER);   

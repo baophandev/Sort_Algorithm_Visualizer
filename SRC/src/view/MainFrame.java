@@ -7,6 +7,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -14,16 +15,23 @@ import javax.swing.JFrame;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    private static final MainFrame instance = new MainFrame();
     private HeaderPanel headerPanel;
     private ControlPanel controlPanel;
     private VisualPanel visualPanel;
     
+    public static MainFrame getInstance(){
+        return instance;
+    }
     
     public MainFrame() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         getContentPane().setBackground(Color.white);
         setupUi();
+        String iconPath = "D:\\Myproject\\NLCS\\SortAlgorithmVisualizer\\SRC\\src\\images\\logo.png";
+        ImageIcon icon = new ImageIcon(iconPath);
+        setIconImage(icon.getImage());
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -47,12 +55,18 @@ public class MainFrame extends javax.swing.JFrame {
         
     }
     
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> {
-            new MainFrame().setVisible(true);
-        });
+    public ControlPanel getControlPanel(){
+        return controlPanel;
     }
-
+    
+    public VisualPanel getVisualPanel(){
+        return visualPanel;
+    }
+    
+    public HeaderPanel getHeaderPanel(){
+        return headerPanel;
+    }
+            
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

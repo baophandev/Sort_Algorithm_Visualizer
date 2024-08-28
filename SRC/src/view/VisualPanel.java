@@ -7,6 +7,9 @@ package view;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Random;
+import java.awt.Point;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -14,12 +17,23 @@ import java.awt.Insets;
  */
 public class VisualPanel extends javax.swing.JPanel {
 
+    public static int initNumber;
     
     public VisualPanel() {
         initComponents();
-        setupUi();
+       
     }
 
+    public void initVisualPanel(){
+        Random random = new Random();
+        initNumber = random.nextInt(20) + 1;
+        setupUi();
+    }
+<<<<<<< HEAD
+    
+    //Phan Gia Bảo test
+=======
+>>>>>>> feb0ffbcdd2574ce09459e029de5c1061008f731
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -40,19 +54,51 @@ public class VisualPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    // Sử dụng FlowLayout để các thẻ nằm ngang và được canh giữa
+     // Sử dụng GridBagLayout để hiển thị các thẻ như biểu đồ cột nhưng cách đáy một khoảng
     public void setupUi() {
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Khoảng cách giữa các thẻ
-        gbc.anchor = GridBagConstraints.CENTER; // Căn giữa theo cả chiều ngang và chiều dọc
+        gbc.insets = new Insets(2, 2, 2, 2);  // Khoảng cách giữa các thẻ
+//        gbc.fill = GridBagConstraints.VERTICAL; // Đảm bảo các thẻ chiếm hết chiều dọc của ô
+        gbc.anchor = GridBagConstraints.SOUTH;  // Đặt thẻ dính vào đáy của ô chứa chúng
+
+        // Thêm khoảng trống phía dưới để cách đáy
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weighty = 0.5;  // Trọng số nhỏ hơn để không chiếm quá nhiều không gian
+        add(new javax.swing.JPanel(), gbc);  // Thêm một panel trống để tạo khoảng cách với đáy
 
         // Thêm các thẻ vào panel
-        for (int i = 0; i < 15; i++) {
-            gbc.gridx = i; // Đặt các thẻ theo thứ tự ngang
-            add(new CardNumberComponent(), gbc);
+        gbc.weighty = 1.0;  // Trọng số y để các thẻ bị đẩy lên
+        for (int i = 0; i < initNumber; i++) {
+            gbc.gridx = i;  // Đặt các thẻ theo thứ tự ngang
+            gbc.gridy = 1;  // Chỉ định hàng thứ nhất (ở trên hàng trống)
+
+            Random random = new Random();
+            int value = random.nextInt(50) + 1;
+            
+            int height = (value + 2) * 8;  // Chiều cao mỗi thẻ
+            CardNumberComponent card = new CardNumberComponent(height, value);
+            card.setPreferredSize(new java.awt.Dimension(40, height));  // Đặt kích thước của thẻ
+
+            add(card, gbc);  // Thêm thẻ vào panel
         }
+    }
+    
+    // Function để di chuyển CardNumberComponent đến vị trí mong muốn
+    public void moveToPosition(CardNumberComponent card, Point destination) {
+        SwingUtilities.invokeLater(() -> {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.insets = new Insets(2, 2, 2, 2);
+            gbc.anchor = GridBagConstraints.SOUTH;
+            gbc.gridx = destination.x;
+            gbc.gridy = destination.y;
+            remove(card);
+            add(card, gbc);
+            revalidate();
+            repaint();
+        });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
