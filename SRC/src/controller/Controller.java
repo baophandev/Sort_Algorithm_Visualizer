@@ -6,6 +6,12 @@ package controller;
 
 import view.MainFrame;
 import model.Sort;
+import view.ControlPanel;
+import view.VisualPanel;
+import view.HeaderPanel;
+import view.CardNumberComponent;
+import java.awt.Point;
+        
 /**
  *
  * @author GIA BAO
@@ -30,7 +36,19 @@ public class Controller {
     }
     
     private void initListeners(){
-        
+        initSortButtonListener();
+    }
+    
+    private void initSortButtonListener(){
+        ControlPanel controlPanel = frm.getControlPanel();
+        controlPanel.disableBtn();
+        VisualPanel visualPanel = frm.getVisualPanel();
+        visualPanel.initVisualPanel();
+        HeaderPanel headerPanel = frm.getHeaderPanel();
+        headerPanel.addSortBtnListener((e) -> {
+            controlPanel.enableBtn();
+        });
+       
     }
     
     public void runFrame(){
