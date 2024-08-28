@@ -80,21 +80,8 @@ public class VisualPanel extends javax.swing.JPanel {
             add(card, gbc);  // Thêm thẻ vào panel
         }
     }
+
     
-    // Function để di chuyển CardNumberComponent đến vị trí mong muốn
-    public void moveToPosition(CardNumberComponent card, Point destination) {
-        SwingUtilities.invokeLater(() -> {
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.insets = new Insets(2, 2, 2, 2);
-            gbc.anchor = GridBagConstraints.SOUTH;
-            gbc.gridx = destination.x;
-            gbc.gridy = destination.y;
-            remove(card);
-            add(card, gbc);
-            revalidate();
-            repaint();
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
