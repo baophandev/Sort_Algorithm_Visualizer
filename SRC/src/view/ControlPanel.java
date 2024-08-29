@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package view;
+
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import view.DataInput;
+
 /**
  *
  * @author GIA BAO
@@ -16,13 +21,13 @@ public class ControlPanel extends javax.swing.JPanel {
     public ControlPanel() {
         initComponents();
     }
-    
-    public void addSortBtnListener(ActionListener listener){
+
+    public void addSortBtnListener(ActionListener listener) {
         sortAscendingBtn.addActionListener(listener);
         sortDescendingBtn.addActionListener(listener);
     }
-    
-    public void disableBtn(){
+
+    public void disableBtn() {
         compareBtn.setEnabled(false);
         inputKeyBoardBtn.setEnabled(false);
         randomBtn.setEnabled(false);
@@ -32,8 +37,7 @@ public class ControlPanel extends javax.swing.JPanel {
         stopSortBtn.setEnabled(false);
     }
 
-    
-    public void enableBtn(){
+    public void enableBtn() {
         compareBtn.setEnabled(true);
         inputKeyBoardBtn.setEnabled(true);
         randomBtn.setEnabled(true);
@@ -42,6 +46,15 @@ public class ControlPanel extends javax.swing.JPanel {
         sortDescendingBtn.setEnabled(true);
         stopSortBtn.setEnabled(true);
     }
+
+    public void addRandomBtnListener(ActionListener listener) {
+        acceptRdSizeBtn.addActionListener(listener);
+    }
+
+    public int getRandomSize() {
+        return (int) spiner.getValue();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,6 +64,17 @@ public class ControlPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        rdSizeDialog = new javax.swing.JDialog();
+        spiner = new javax.swing.JSpinner();
+        acceptRdSizeBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        initArrayDialog = new javax.swing.JDialog();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        sizeSpiner = new javax.swing.JSpinner();
+        acceptSizeBtn = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         randomBtn = new javax.swing.JButton();
         inputKeyBoardBtn = new javax.swing.JButton();
@@ -62,6 +86,136 @@ public class ControlPanel extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         compareBtn = new javax.swing.JButton();
 
+        rdSizeDialog.setBackground(new java.awt.Color(255, 255, 255));
+        rdSizeDialog.setSize(new java.awt.Dimension(50, 50));
+
+        spiner.setFont(new java.awt.Font("K2D", 1, 24)); // NOI18N
+
+        acceptRdSizeBtn.setBackground(new java.awt.Color(0, 175, 239));
+        acceptRdSizeBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
+        acceptRdSizeBtn.setForeground(new java.awt.Color(255, 255, 255));
+        acceptRdSizeBtn.setText("ĐỒNG Ý");
+        acceptRdSizeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptRdSizeBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("K2D", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(31, 92, 169));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Nhập số lượng phần tử");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout rdSizeDialogLayout = new javax.swing.GroupLayout(rdSizeDialog.getContentPane());
+        rdSizeDialog.getContentPane().setLayout(rdSizeDialogLayout);
+        rdSizeDialogLayout.setHorizontalGroup(
+            rdSizeDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rdSizeDialogLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(rdSizeDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(spiner)
+                    .addComponent(acceptRdSizeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)))
+        );
+        rdSizeDialogLayout.setVerticalGroup(
+            rdSizeDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rdSizeDialogLayout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spiner, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(acceptRdSizeBtn))
+        );
+
+        initArrayDialog.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel4.setBackground(new java.awt.Color(31, 92, 169));
+
+        jLabel2.setFont(new java.awt.Font("K2D", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("NHẬP SỐ LƯỢNG PHẦN TỬ");
+
+        sizeSpiner.setFont(new java.awt.Font("K2D", 1, 14)); // NOI18N
+
+        acceptSizeBtn.setBackground(new java.awt.Color(0, 175, 239));
+        acceptSizeBtn.setFont(new java.awt.Font("K2D", 1, 14)); // NOI18N
+        acceptSizeBtn.setForeground(new java.awt.Color(255, 255, 255));
+        acceptSizeBtn.setText("Nhập");
+        acceptSizeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptSizeBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(acceptSizeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                    .addComponent(sizeSpiner))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sizeSpiner, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(acceptSizeBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 550, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 267, Short.MAX_VALUE)
+        );
+
+        jButton2.setBackground(new java.awt.Color(0, 175, 239));
+        jButton2.setFont(new java.awt.Font("K2D", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Đồng ý");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout initArrayDialogLayout = new javax.swing.GroupLayout(initArrayDialog.getContentPane());
+        initArrayDialog.getContentPane().setLayout(initArrayDialogLayout);
+        initArrayDialogLayout.setHorizontalGroup(
+            initArrayDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, initArrayDialogLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        initArrayDialogLayout.setVerticalGroup(
+            initArrayDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(initArrayDialogLayout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton2))
+        );
+
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -71,11 +225,21 @@ public class ControlPanel extends javax.swing.JPanel {
         randomBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
         randomBtn.setForeground(new java.awt.Color(255, 255, 255));
         randomBtn.setText("Ngẫu nhiên");
+        randomBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                randomBtnActionPerformed(evt);
+            }
+        });
 
         inputKeyBoardBtn.setBackground(new java.awt.Color(0, 175, 239));
         inputKeyBoardBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
         inputKeyBoardBtn.setForeground(new java.awt.Color(255, 255, 255));
         inputKeyBoardBtn.setText("Nhập từ bàn phím");
+        inputKeyBoardBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputKeyBoardBtnActionPerformed(evt);
+            }
+        });
 
         readFileBtn.setBackground(new java.awt.Color(0, 175, 239));
         readFileBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
@@ -189,7 +353,7 @@ public class ControlPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(209, Short.MAX_VALUE)
+                .addContainerGap(113, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -202,17 +366,73 @@ public class ControlPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_stopSortBtnActionPerformed
 
+    private void randomBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomBtnActionPerformed
+        // TODO add your handling code here:
+        rdSizeDialog.setVisible(true);
+        rdSizeDialog.setSize(300, 150);
+        rdSizeDialog.setLocationRelativeTo(null);
+    }//GEN-LAST:event_randomBtnActionPerformed
+
+    private void acceptRdSizeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptRdSizeBtnActionPerformed
+
+        rdSizeDialog.dispose();
+    }//GEN-LAST:event_acceptRdSizeBtnActionPerformed
+
+    private void inputKeyBoardBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputKeyBoardBtnActionPerformed
+        // TODO add your handling code here:
+        // Thiết lập kích thước cho initArrayDialog
+        initArrayDialog.setSize(600, 440);
+        initArrayDialog.setLocationRelativeTo(null); // Đặt vị trí trung tâm trên màn hình
+        initArrayDialog.setVisible(true); // Hiển thị dialog
+    }//GEN-LAST:event_inputKeyBoardBtnActionPerformed
+
+    private void acceptSizeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptSizeBtnActionPerformed
+        // TODO add your handling code here:
+        int size = (int) sizeSpiner.getValue();
+        jPanel5.removeAll();
+        jPanel5.setLayout(new java.awt.GridLayout(5, 1, 5, 5));
+        for (int i = 1; i <= size; i++) {
+            DataInput cell = new DataInput();
+            cell.setDataIdx(i);
+            jPanel5.add(cell);
+        }
+
+        // Refresh jPanel5 to show the new components
+        jPanel5.revalidate();
+        jPanel5.repaint();
+    }//GEN-LAST:event_acceptSizeBtnActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        initArrayDialog.dispose();
+        jPanel5.removeAll();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void disposeAllDialog() {
+        rdSizeDialog.dispose();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton acceptRdSizeBtn;
+    private javax.swing.JButton acceptSizeBtn;
     private javax.swing.JButton compareBtn;
+    private javax.swing.JDialog initArrayDialog;
     private javax.swing.JButton inputKeyBoardBtn;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JButton randomBtn;
+    private javax.swing.JDialog rdSizeDialog;
     private javax.swing.JButton readFileBtn;
+    private javax.swing.JSpinner sizeSpiner;
     private javax.swing.JButton sortAscendingBtn;
     private javax.swing.JButton sortDescendingBtn;
+    private javax.swing.JSpinner spiner;
     private javax.swing.JButton stopSortBtn;
     // End of variables declaration//GEN-END:variables
 }

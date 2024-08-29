@@ -4,18 +4,17 @@
  */
 package controller;
 
+import java.lang.reflect.Array;
 import view.MainFrame;
 import model.Sort;
 import view.ControlPanel;
 import view.VisualPanel;
 import view.HeaderPanel;
-<<<<<<< HEAD
+import java.util.Random;
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
-=======
-import view.CardNumberComponent;
-import java.awt.Point;
-        
->>>>>>> feb0ffbcdd2574ce09459e029de5c1061008f731
 /**
  *
  * @author GIA BAO
@@ -41,19 +40,69 @@ public class Controller {
     
     private void initListeners(){
         initSortButtonListener();
+        initArrayListener();
+        initRandomListener();
+        initVisualPanel();
     }
     
     private void initSortButtonListener(){
         ControlPanel controlPanel = frm.getControlPanel();
         controlPanel.disableBtn();
-        VisualPanel visualPanel = frm.getVisualPanel();
-        visualPanel.initVisualPanel();
+        
         HeaderPanel headerPanel = frm.getHeaderPanel();
         headerPanel.addSortBtnListener((e) -> {
             controlPanel.enableBtn();
         });
        
     }
+    
+    
+    private void initArrayListener(){
+        ControlPanel controlPanel = frm.getControlPanel();
+        
+    }
+    
+    private void initVisualPanel(){
+        VisualPanel visualPanel = frm.getVisualPanel();
+        visualPanel.initVisualPanel();
+        Random rdSize = new Random();
+        Random rdValue = new Random();
+        int randomSize = rdSize.nextInt(10, 20);
+        List<Integer> initData = new ArrayList<>();
+        for(int i = 0; i < randomSize; i++){
+            int value = rdValue.nextInt(50);
+            initData.add(value);
+        }
+        
+        frm.getVisualPanel().removeAll();
+        frm.getVisualPanel().setNodes(initData);
+    }
+    
+    private void initRandomListener() {
+    frm.getControlPanel().addRandomBtnListener((e) -> {
+        Random random = new Random(System.currentTimeMillis());
+        int size = frm.getControlPanel().getRandomSize();
+        
+        // Kiểm tra giá trị của size
+            if (size <= 1 || size > MAX_NODES) {
+                JOptionPane.showMessageDialog(frm, 
+                    "Số lượng phần tử không hợp lệ. Vui lòng nhập số từ 2 đến " + MAX_NODES + ".",
+                    "Lỗi Nhập Liệu", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
+        List<Integer> initData = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            int value = random.nextInt(50); // Giới hạn giá trị từ 0 tới 50
+            initData.add(value);
+            System.out.println("Giá trị ngẫu nhiên " + (i + 1) + ": " + value);
+        }
+        frm.getVisualPanel().removeAll();
+        frm.getVisualPanel().setNodes(initData);
+    });
+}
+
     
     public void runFrame(){
         java.awt.EventQueue.invokeLater(() -> {
