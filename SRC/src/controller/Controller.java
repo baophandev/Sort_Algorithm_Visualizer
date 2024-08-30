@@ -4,6 +4,7 @@
  */
 package controller;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import view.MainFrame;
 import model.Sort;
@@ -20,91 +21,109 @@ import javax.swing.JOptionPane;
  * @author GIA BAO
  */
 public class Controller {
-    public static void main(String args[]){
-       new Controller().runFrame();
+
+    public static void main(String args[]) {
+        new Controller().runFrame();
     }
-    
+
     private final int MAX_NODES = 20;
-    
+
     private final MainFrame frm;
     private Sort algorithm;
     private int sortType, speed;
-    
-    
-    
-    public Controller(){
+
+    public Controller() {
         frm = MainFrame.getInstance();
         speed = 1;
         initListeners();
     }
-    
-    private void initListeners(){
+
+    private void initListeners() {
         initSortButtonListener();
         initArrayListener();
         initRandomListener();
         initVisualPanel();
     }
-    
-    private void initSortButtonListener(){
+
+    private void initSortButtonListener() {
         ControlPanel controlPanel = frm.getControlPanel();
         controlPanel.disableBtn();
-        
+
         HeaderPanel headerPanel = frm.getHeaderPanel();
         headerPanel.addSortBtnListener((e) -> {
             controlPanel.enableBtn();
         });
-       
+
     }
-    
-    
-    private void initArrayListener(){
+
+    private void initArrayListener() {
         ControlPanel controlPanel = frm.getControlPanel();
-        
+        controlPanel.addInitArrayListenter((e) -> {
+            System.out.print("Yes");
+            try {
+                List<Integer> initData = controlPanel.getInitArray();
+                if (initData != null) {
+                    frm.getVisualPanel().removeAll();
+                    frm.getVisualPanel().setNodes(initData);
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frm,
+                        "Số lượng phần tử không hợp lệ. Vui lòng nhập số từ 2 đến " + MAX_NODES + ".",
+                        "Lỗi Nhập Liệu",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
     }
-    
-    private void initVisualPanel(){
+
+    private void initVisualPanel() {
         VisualPanel visualPanel = frm.getVisualPanel();
         visualPanel.initVisualPanel();
         Random rdSize = new Random();
         Random rdValue = new Random();
         int randomSize = rdSize.nextInt(10, 20);
         List<Integer> initData = new ArrayList<>();
-        for(int i = 0; i < randomSize; i++){
+        for (int i = 0; i < randomSize; i++) {
             int value = rdValue.nextInt(50);
             initData.add(value);
         }
-        
+
         frm.getVisualPanel().removeAll();
         frm.getVisualPanel().setNodes(initData);
     }
-    
+
     private void initRandomListener() {
-    frm.getControlPanel().addRandomBtnListener((e) -> {
-        Random random = new Random(System.currentTimeMillis());
-        int size = frm.getControlPanel().getRandomSize();
-        
-        // Kiểm tra giá trị của size
+        frm.getControlPanel().addRandomBtnListener((e) -> {
+            Random random = new Random(System.currentTimeMillis());
+            int size = frm.getControlPanel().getRandomSize();
+
+            // Kiểm tra giá trị của size
             if (size <= 1 || size > MAX_NODES) {
-                JOptionPane.showMessageDialog(frm, 
-                    "Số lượng phần tử không hợp lệ. Vui lòng nhập số từ 2 đến " + MAX_NODES + ".",
-                    "Lỗi Nhập Liệu", 
-                    JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frm,
+                        "Số lượng phần tử không hợp lệ. Vui lòng nhập số từ 2 đến " + MAX_NODES + ".",
+                        "Lỗi Nhập Liệu",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
-        
-        List<Integer> initData = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            int value = random.nextInt(50); // Giới hạn giá trị từ 0 tới 50
-            initData.add(value);
-            System.out.println("Giá trị ngẫu nhiên " + (i + 1) + ": " + value);
-        }
-        frm.getVisualPanel().removeAll();
-        frm.getVisualPanel().setNodes(initData);
-    });
-}
 
+            List<Integer> initData = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                int value = random.nextInt(50); // Giới hạn giá trị từ 0 tới 50
+                initData.add(value);
+                System.out.println("Giá trị ngẫu nhiên " + (i + 1) + ": " + value);
+            }
+            frm.getVisualPanel().removeAll();
+            frm.getVisualPanel().setNodes(initData);
+        });
+    }
     
-    public void runFrame(){
+    private void initReadFileListener(){
+        ControlPanel controlPanel = frm.getControlPanel();
+        controlPanel.addFileBtnListener((e) -> {
+            File f = frm.getFileToRead();
+        });
+    }
+
+    public void runFrame() {
         java.awt.EventQueue.invokeLater(() -> {
             frm.setVisible(true);
         });

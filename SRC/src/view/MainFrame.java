@@ -6,8 +6,10 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.File;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -37,6 +39,10 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fileChooser = new javax.swing.JFileChooser();
+
+        fileChooser.setPreferredSize(new java.awt.Dimension(500, 500));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MÔ PHỎNG CÁC THUẬT TOÁN SẮP XẾP");
 
@@ -55,6 +61,11 @@ public class MainFrame extends javax.swing.JFrame {
         
     }
     
+    public File getFileToRead(){
+        int choice = fileChooser.showOpenDialog(this);
+        return choice == JFileChooser.APPROVE_OPTION ? fileChooser.getSelectedFile() : null;
+    }
+    
     public ControlPanel getControlPanel(){
         return controlPanel;
     }
@@ -68,5 +79,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
             
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFileChooser fileChooser;
     // End of variables declaration//GEN-END:variables
 }
