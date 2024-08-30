@@ -4,11 +4,13 @@
  */
 package view;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.Random;
 import java.awt.Point;
+import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import java.util.List;
 import javax.swing.JLabel;
@@ -78,6 +80,17 @@ public class VisualPanel extends javax.swing.JPanel {
         // Yêu cầu cập nhật lại giao diện
         revalidate();
         repaint();
+    }
+    
+    public List<Integer> getNodes(){
+        List<Integer> nodes = new ArrayList<>();
+        for(Component cmp : getComponents()){
+            if(cmp instanceof CardNumberComponent node){
+                nodes.add(Integer.valueOf(node.getNumber()));
+            }
+        }
+        
+        return nodes;
     }
 
     // Function để di chuyển CardNumberComponent đến vị trí mong muốn

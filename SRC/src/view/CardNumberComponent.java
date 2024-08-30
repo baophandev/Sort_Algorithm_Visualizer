@@ -18,6 +18,10 @@ public class CardNumberComponent extends javax.swing.JPanel {
         updatePanelHeight();  // Cập nhật chiều cao cho CardNumberComponent
     }
 
+    public int getNumber(){
+        return number;
+    }
+    
     // Phương thức cập nhật chiều cao của chính CardNumberComponent
     private void updatePanelHeight() {
         // Set kích thước cho chính JPanel (CardNumberComponent)

@@ -5,7 +5,7 @@
 package controller;
 
 import java.io.File;
-import java.lang.reflect.Array;
+import java.io.FileNotFoundException;
 import view.MainFrame;
 import model.Sort;
 import view.ControlPanel;
@@ -14,6 +14,10 @@ import view.HeaderPanel;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -39,13 +43,15 @@ public class Controller {
     }
 
     private void initListeners() {
-        initSortButtonListener();
+        initSortArigthmListener();
         initArrayListener();
         initRandomListener();
         initVisualPanel();
+        initReadFileListener();
+        initSortBtnASC();
     }
 
-    private void initSortButtonListener() {
+    private void initSortArigthmListener() {
         ControlPanel controlPanel = frm.getControlPanel();
         controlPanel.disableBtn();
 
@@ -55,6 +61,18 @@ public class Controller {
         });
 
     }
+    
+    private void initSortBtnASC(){
+        ControlPanel controlPanel = frm.getControlPanel();
+        controlPanel.addAscBtnListener((e) -> {
+            int[] arrayToSort = getSortData();
+            for(int i = 0; i < arrayToSort.length; i++){
+                System.out.print(arrayToSort[i] + ", ");
+            }
+        });
+    }
+    
+    
 
     private void initArrayListener() {
         ControlPanel controlPanel = frm.getControlPanel();
@@ -115,12 +133,34 @@ public class Controller {
             frm.getVisualPanel().setNodes(initData);
         });
     }
-    
-    private void initReadFileListener(){
+
+    private void initReadFileListener() {
         ControlPanel controlPanel = frm.getControlPanel();
         controlPanel.addFileBtnListener((e) -> {
             File f = frm.getFileToRead();
+            if (f == null) {
+                return;
+            }
+
+            List<Integer> initData = new ArrayList<>();
+            try {
+                Scanner sc = new Scanner(f);
+                int size = sc.nextInt();
+                for (int i = 0; i < size && i < MAX_NODES && sc.hasNextInt(); i++) {
+                    initData.add(sc.nextInt());
+                }
+            } catch (FileNotFoundException | NoSuchElementException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.WARNING, "IOFile", ex);
+            }
+
+            frm.getVisualPanel().removeAll();
+            frm.getVisualPanel().setNodes(initData);
         });
+    }
+    
+    private int[] getSortData(){
+        List<Integer> nodes = frm.getVisualPanel().getNodes();
+        return nodes.stream().mapToInt((val) -> val).toArray();
     }
 
     public void runFrame() {
