@@ -53,6 +53,10 @@ public class ControlPanel extends javax.swing.JPanel {
     public void addRandomBtnListener(ActionListener listener) {
         acceptRdSizeBtn.addActionListener(listener);
     }
+    
+    public void addAscBtnListener(ActionListener listener){
+        sortAscendingBtn.addActionListener(listener);
+    }
 
     public int getRandomSize() {
         return (int) spiner.getValue();
