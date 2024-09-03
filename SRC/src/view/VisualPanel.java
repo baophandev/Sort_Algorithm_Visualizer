@@ -10,10 +10,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.Random;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import java.util.List;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
 /**
  *
@@ -91,6 +95,48 @@ public class VisualPanel extends javax.swing.JPanel {
         }
         
         return nodes;
+    }
+    
+    public void swapNodes(JComponent node1, JComponent node2) {
+        // Lấy vị trí ban đầu của hai node
+        int x1 = node1.getX();
+        int y1 = node1.getY();
+        int x2 = node2.getX();
+        int y2 = node2.getY();
+
+        // Tính toán khoảng cách di chuyển
+        int deltaX = x2 - x1;
+        int deltaY = y2 - y1;
+
+        // Thời gian để hoàn thành việc trao đổi
+        int duration = 500; // 500 milliseconds
+        int steps = 20; // Số lượng bước trong animation
+        int delay = duration / steps;
+
+        Timer timer = new Timer(delay, new ActionListener() {
+            int step = 0;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                step++;
+                double progress = (double) step / steps;
+
+                // Di chuyển node1 dần dần tới vị trí node2
+                node1.setLocation(x1 + (int)(deltaX * progress), y1 + (int)(deltaY * progress));
+
+                // Di chuyển node2 dần dần tới vị trí node1
+                node2.setLocation(x2 - (int)(deltaX * progress), y2 - (int)(deltaY * progress));
+
+                if (step >= steps) {
+                    // Đảm bảo các node về đúng vị trí cuối cùng
+                    node1.setLocation(x2, y2);
+                    node2.setLocation(x1, y1);
+                    ((Timer) e.getSource()).stop();
+                }
+            }
+        });
+
+        timer.start();
     }
 
     // Function để di chuyển CardNumberComponent đến vị trí mong muốn

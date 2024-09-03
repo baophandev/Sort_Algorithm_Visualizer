@@ -18,7 +18,12 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
+import config.Configuration;
+import java.util.stream.Collectors;
+import model.BubbleSort;
+import model.SelectionSort;
 
 /**
  *
@@ -49,30 +54,48 @@ public class Controller {
         initVisualPanel();
         initReadFileListener();
         initSortBtnASC();
+
     }
 
     private void initSortArigthmListener() {
         ControlPanel controlPanel = frm.getControlPanel();
-        controlPanel.disableBtn();
+        view.VisualPanel visualPanel = frm.getVisualPanel();
+        controlPanel.enableBtn();
 
         HeaderPanel headerPanel = frm.getHeaderPanel();
         headerPanel.addSortBtnListener((e) -> {
-            controlPanel.enableBtn();
+            int alg = headerPanel.getAlgorithm();
+            algorithm = switch (alg) {
+                case Configuration.BUBBLE_SORT ->
+                    new BubbleSort(visualPanel);
+                default ->
+                    new SelectionSort();
+            };
         });
 
     }
-    
-    private void initSortBtnASC(){
+
+    private void initSortBtnASC() {
         ControlPanel controlPanel = frm.getControlPanel();
+        VisualPanel visualPanel = frm.getVisualPanel();
         controlPanel.addAscBtnListener((e) -> {
             int[] arrayToSort = getSortData();
-            for(int i = 0; i < arrayToSort.length; i++){
+            for (int i = 0; i < arrayToSort.length; i++) {
                 System.out.print(arrayToSort[i] + ", ");
             }
+
+            final int[] orginArray = Arrays.copyOf(arrayToSort, arrayToSort.length);
+            algorithm.sort(arrayToSort, Configuration.ASC);
+            visualPanel.removeAll();
+            // Chuyển đổi mảng int[] thành List<Integer>
+            List<Integer> listToSort = Arrays.stream(arrayToSort)
+                    .boxed()
+                    .collect(Collectors.toList());
+
+            visualPanel.setNodes(listToSort); // Truyền danh sách vào setNodes
+
         });
     }
-    
-    
 
     private void initArrayListener() {
         ControlPanel controlPanel = frm.getControlPanel();
@@ -157,8 +180,8 @@ public class Controller {
             frm.getVisualPanel().setNodes(initData);
         });
     }
-    
-    private int[] getSortData(){
+
+    private int[] getSortData() {
         List<Integer> nodes = frm.getVisualPanel().getNodes();
         return nodes.stream().mapToInt((val) -> val).toArray();
     }
