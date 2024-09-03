@@ -12,5 +12,8 @@ public class Configuration {
     public static Color COLOR_SUBHEADER = new Color(32, 96, 187); //Màu #00afef Xanh nhạt
     public static final int ASC = 0;
     public static final int DESC = 1;
-            
+    public static final int SELECTION_SORT = 0;
+    public static final int BUBBLE_SORT = 1;
+    public static final int INSERTION_SORT = 2;
+    
 }

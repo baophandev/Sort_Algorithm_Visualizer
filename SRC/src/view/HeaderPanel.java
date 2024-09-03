@@ -4,16 +4,23 @@ import java.awt.Color;
 import config.Configuration;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+
 /**
  *
  * @author GIA BAO
  */
 public class HeaderPanel extends javax.swing.JPanel {
 
+    private int  algorithm = 0;
+    
     private JButton selectedBtn;
     
     public HeaderPanel() {
         initComponents();
+    }
+    
+    public int getAlgorithm(){
+        return algorithm;
     }
 
     @SuppressWarnings("unchecked")
@@ -148,6 +155,8 @@ public class HeaderPanel extends javax.swing.JPanel {
         
         bubbleSortBtn.setForeground(Color.white);
         bubbleSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        algorithm = Configuration.SELECTION_SORT;
     }//GEN-LAST:event_selectionSortBtnActionPerformed
 
     private void insectionSortBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insectionSortBtnActionPerformed
@@ -159,6 +168,8 @@ public class HeaderPanel extends javax.swing.JPanel {
         
         bubbleSortBtn.setForeground(Color.white);
         bubbleSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        algorithm = Configuration.INSERTION_SORT;
     }//GEN-LAST:event_insectionSortBtnActionPerformed
 
     private void bubbleSortBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bubbleSortBtnActionPerformed
@@ -170,6 +181,8 @@ public class HeaderPanel extends javax.swing.JPanel {
         
         insectionSortBtn.setForeground(Color.white);
         insectionSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        algorithm = Configuration.BUBBLE_SORT;
     }//GEN-LAST:event_bubbleSortBtnActionPerformed
 
 
