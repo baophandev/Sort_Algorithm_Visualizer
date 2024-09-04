@@ -30,23 +30,23 @@ import model.SelectionSort;
  * @author GIA BAO
  */
 public class Controller {
-
+    
     public static void main(String args[]) {
         new Controller().runFrame();
     }
-
+    
     private final int MAX_NODES = 20;
-
+    
     private final MainFrame frm;
     private Sort algorithm;
     private int sortType, speed;
-
+    
     public Controller() {
         frm = MainFrame.getInstance();
         speed = 1;
         initListeners();
     }
-
+    
     private void initListeners() {
         initSortArigthmListener();
         initArrayListener();
@@ -54,14 +54,14 @@ public class Controller {
         initVisualPanel();
         initReadFileListener();
         initSortBtnASC();
-
+        
     }
-
+    
     private void initSortArigthmListener() {
         ControlPanel controlPanel = frm.getControlPanel();
         view.VisualPanel visualPanel = frm.getVisualPanel();
         controlPanel.enableBtn();
-
+        
         HeaderPanel headerPanel = frm.getHeaderPanel();
         headerPanel.addSortBtnListener((e) -> {
             int alg = headerPanel.getAlgorithm();
@@ -72,31 +72,35 @@ public class Controller {
                     new SelectionSort();
             };
         });
-
+        
     }
-
+    
     private void initSortBtnASC() {
         ControlPanel controlPanel = frm.getControlPanel();
-        VisualPanel visualPanel = frm.getVisualPanel();
+        
         controlPanel.addAscBtnListener((e) -> {
             int[] arrayToSort = getSortData();
             for (int i = 0; i < arrayToSort.length; i++) {
                 System.out.print(arrayToSort[i] + ", ");
             }
-
+            
             final int[] orginArray = Arrays.copyOf(arrayToSort, arrayToSort.length);
             algorithm.sort(arrayToSort, Configuration.ASC);
-            visualPanel.removeAll();
+            for (int i = 0; i < arrayToSort.length; i++) {
+                System.err.print(arrayToSort[i] + ", ");
+            }
+            System.out.println("\n");
+            frm.getVisualPanel().removeAll();
             // Chuyển đổi mảng int[] thành List<Integer>
             List<Integer> listToSort = Arrays.stream(arrayToSort)
                     .boxed()
                     .collect(Collectors.toList());
-
-            visualPanel.setNodes(listToSort); // Truyền danh sách vào setNodes
+            
+            frm.getVisualPanel().setNodes(listToSort); // Truyền danh sách vào setNodes
 
         });
     }
-
+    
     private void initArrayListener() {
         ControlPanel controlPanel = frm.getControlPanel();
         controlPanel.addInitArrayListenter((e) -> {
@@ -115,7 +119,7 @@ public class Controller {
             }
         });
     }
-
+    
     private void initVisualPanel() {
         VisualPanel visualPanel = frm.getVisualPanel();
         visualPanel.initVisualPanel();
@@ -127,11 +131,11 @@ public class Controller {
             int value = rdValue.nextInt(50);
             initData.add(value);
         }
-
+        
         frm.getVisualPanel().removeAll();
         frm.getVisualPanel().setNodes(initData);
     }
-
+    
     private void initRandomListener() {
         frm.getControlPanel().addRandomBtnListener((e) -> {
             Random random = new Random(System.currentTimeMillis());
@@ -145,18 +149,18 @@ public class Controller {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+            
             List<Integer> initData = new ArrayList<>();
             for (int i = 0; i < size; i++) {
                 int value = random.nextInt(50); // Giới hạn giá trị từ 0 tới 50
                 initData.add(value);
-                System.out.println("Giá trị ngẫu nhiên " + (i + 1) + ": " + value);
+                System.out.print(value + ", ");
             }
             frm.getVisualPanel().removeAll();
             frm.getVisualPanel().setNodes(initData);
         });
     }
-
+    
     private void initReadFileListener() {
         ControlPanel controlPanel = frm.getControlPanel();
         controlPanel.addFileBtnListener((e) -> {
@@ -164,7 +168,7 @@ public class Controller {
             if (f == null) {
                 return;
             }
-
+            
             List<Integer> initData = new ArrayList<>();
             try {
                 Scanner sc = new Scanner(f);
@@ -175,17 +179,17 @@ public class Controller {
             } catch (FileNotFoundException | NoSuchElementException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.WARNING, "IOFile", ex);
             }
-
+            
             frm.getVisualPanel().removeAll();
             frm.getVisualPanel().setNodes(initData);
         });
     }
-
+    
     private int[] getSortData() {
         List<Integer> nodes = frm.getVisualPanel().getNodes();
         return nodes.stream().mapToInt((val) -> val).toArray();
     }
-
+    
     public void runFrame() {
         java.awt.EventQueue.invokeLater(() -> {
             frm.setVisible(true);
