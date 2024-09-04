@@ -3,25 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+
 import config.Configuration;
 import java.util.Comparator;
-        
 
 /**
  *
  * @author GIA BAO
  */
-public class BubbleSort extends Sort{
-    
-    public BubbleSort(view.VisualPanel visualPanel){
+public class BubbleSort extends Sort {
+
+    public BubbleSort(view.VisualPanel visualPanel) {
         super(visualPanel);
     }
-    
-    public BubbleSort(){
+
+    public BubbleSort() {
         super();
     }
-    
-    public String getCode(int sortType){
+
+    public String getCode(int sortType) {
         StringBuilder sb = new StringBuilder();
         sb.append("void BubbleSort(int array[]) {\n");
         sb.append("        for(int i = 0; i < array.length - 1; i++){\n");
@@ -38,22 +38,26 @@ public class BubbleSort extends Sort{
         sb.append("}");
         return sb.toString();
     }
-    
+
     @Override
-    public void sort(int[] array, int sortType){
+    public void sort(int[] array, int sortType) {
         Comparator<Integer> cmptor;
-        if(sortType == config.Configuration.ASC){
+        if (sortType == config.Configuration.ASC) {
             cmptor = (current, previous) -> current - previous;
-        }else{
+        } else {
             cmptor = (current, previous) -> previous - current;
         }
-        
-        for(int i = 0; i < array.length - 1 && !isStop; i++){
-            for(int j = array.length - 1; j > i; j--){
-                int tmp = array[j-1];
-                array[j-1] = array[j];
-                array[j] = tmp;
+
+        for (int i = 0; i < array.length - 1 && !isStop; i++) {
+            for (int j = array.length - 1; j > i; j--) {
+                // Sửa lỗi: Thêm điều kiện kiểm tra trước khi hoán đổi
+                if (cmptor.compare(array[j], array[j - 1]) < 0) {
+                    int tmp = array[j - 1];
+                    array[j - 1] = array[j];
+                    array[j] = tmp;
+                }
             }
         }
     }
+
 }
