@@ -30,6 +30,14 @@ public class CardNumberComponent extends javax.swing.JPanel {
         this.revalidate();  // Cập nhật lại layout
         this.repaint();     // Vẽ lại giao diện
     }
+    
+    public String getText(){
+        return jLabel2.getText();
+    }
+    
+    public void setText(String text){
+        jLabel2.setText(text);
+    }
 
     
     @SuppressWarnings("unchecked")

@@ -24,10 +24,12 @@ public abstract class Sort {
     public abstract void sort(int[] array, int sortType);
     
     protected void swap(int[] array, int i, int j){
+        visualPanel.swapNodes(i, j);
         int tmp = array[i];
         array[i] = array[j];
         array[j] = tmp;
         swapCounts++;
+        
     }
     
     
