@@ -52,9 +52,7 @@ public class BubbleSort extends Sort {
             for (int j = array.length - 1; j > i; j--) {
                 // Sửa lỗi: Thêm điều kiện kiểm tra trước khi hoán đổi
                 if (cmptor.compare(array[j], array[j - 1]) < 0) {
-                    int tmp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = tmp;
+                    swap(array, j-1, j);
                 }
             }
         }

@@ -10,22 +10,38 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.Random;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import java.util.List;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.Timer;
+import config.Configuration;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author GIA BAO
  */
+
+abstract class CustomTimerTask extends TimerTask {
+
+    private boolean isAlive = true;
+    
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean isAlive) {
+        this.isAlive = isAlive;
+    }
+}
+
 public class VisualPanel extends javax.swing.JPanel {
 
     public static int initNumber;
+    private int FPS = 60;
 
     public VisualPanel() {
         initComponents();
@@ -85,60 +101,97 @@ public class VisualPanel extends javax.swing.JPanel {
         revalidate();
         repaint();
     }
-    
-    public List<Integer> getNodes(){
+
+    public List<Integer> getNodes() {
         List<Integer> nodes = new ArrayList<>();
-        for(Component cmp : getComponents()){
-            if(cmp instanceof CardNumberComponent node){
+        for (Component cmp : getComponents()) {
+            if (cmp instanceof CardNumberComponent node) {
                 nodes.add(Integer.valueOf(node.getNumber()));
             }
         }
-        
+
         return nodes;
     }
-    
-    public void swapNodes(JComponent node1, JComponent node2) {
-        // Lấy vị trí ban đầu của hai node
-        int x1 = node1.getX();
-        int y1 = node1.getY();
-        int x2 = node2.getX();
-        int y2 = node2.getY();
 
-        // Tính toán khoảng cách di chuyển
-        int deltaX = x2 - x1;
-        int deltaY = y2 - y1;
-
-        // Thời gian để hoàn thành việc trao đổi
-        int duration = 500; // 500 milliseconds
-        int steps = 20; // Số lượng bước trong animation
-        int delay = duration / steps;
-
-        Timer timer = new Timer(delay, new ActionListener() {
-            int step = 0;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                step++;
-                double progress = (double) step / steps;
-
-                // Di chuyển node1 dần dần tới vị trí node2
-                node1.setLocation(x1 + (int)(deltaX * progress), y1 + (int)(deltaY * progress));
-
-                // Di chuyển node2 dần dần tới vị trí node1
-                node2.setLocation(x2 - (int)(deltaX * progress), y2 - (int)(deltaY * progress));
-
-                if (step >= steps) {
-                    // Đảm bảo các node về đúng vị trí cuối cùng
-                    node1.setLocation(x2, y2);
-                    node2.setLocation(x1, y1);
-                    ((Timer) e.getSource()).stop();
-                }
-            }
-        });
-
-        timer.start();
+    public void swapNodes(int beginIdx, int endIdx) {
+    if (beginIdx >= endIdx) {
+        return;
     }
 
+    if (getComponent(beginIdx) instanceof CardNumberComponent beginNode
+            && getComponent(endIdx) instanceof CardNumberComponent endNode) {
+        beginNode.setBackground(Configuration.HIGHLIGHT_NODE);
+        endNode.setBackground(Configuration.HIGHLIGHT_NODE);
+
+        final Point beginRes = beginNode.getLocation(),
+                    endRes = endNode.getLocation();
+
+        CustomTimerTask task = new CustomTimerTask() {
+            @Override
+            public void run() {
+                Point curBeginRes = beginNode.getLocation(),
+                      curEndRes = endNode.getLocation();
+
+                // Di chuyển Node sang phải
+                if (curBeginRes.x != endRes.x) {
+                    beginNode.setLocation(new Point(
+                            Math.min(curBeginRes.x + 5, endRes.x),
+                            curBeginRes.y));
+                }
+
+                // Di chuyển node kết thúc sang trái
+                if (curEndRes.x != beginRes.x) {
+                    endNode.setLocation(new Point(
+                            Math.max(curEndRes.x - 5, beginRes.x),
+                            curEndRes.y));
+                }
+
+                // Kiểm tra nếu đã đến vị trí mong muốn
+                if (Math.abs(curBeginRes.x - endRes.x) < 5 && Math.abs(curEndRes.x - beginRes.x) < 5) {
+                    this.setAlive(false);
+                    this.cancel();
+                }
+            }
+        };
+
+        redrawing(task);
+
+        // Sau khi di chuyển xong, hoán đổi giá trị
+        String tmp = beginNode.getText();
+        beginNode.setText(endNode.getText());
+        endNode.setText(tmp);
+
+        beginNode.setLocation(beginRes);
+        endNode.setLocation(endRes);
+        beginNode.setBackground(Configuration.COLOR_HEADER);
+        endNode.setBackground(Configuration.COLOR_HEADER);
+        
+        revalidate();
+        repaint();
+    }
+}
+
+
+    private void redrawing(CustomTimerTask task) {
+        final long periodTime = 1000 / FPS;
+        final Timer timer = new Timer("Animation Thread");
+        timer.scheduleAtFixedRate(task, 0, periodTime);
+        // waiting for animation has done
+        while (true) {
+            if (!task.isAlive()) {
+                timer.cancel();
+                break;
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(VisualPanel.class.getName())
+                        .log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     // Function để di chuyển CardNumberComponent đến vị trí mong muốn
     public void moveToPosition(CardNumberComponent card, Point destination) {
         SwingUtilities.invokeLater(() -> {
