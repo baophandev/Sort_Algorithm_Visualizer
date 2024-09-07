@@ -24,6 +24,7 @@ import config.Configuration;
 import java.util.stream.Collectors;
 import model.BubbleSort;
 import model.SelectionSort;
+import view.CodeVisual;
 
 /**
  *
@@ -61,22 +62,26 @@ public class Controller {
         ControlPanel controlPanel = frm.getControlPanel();
         view.VisualPanel visualPanel = frm.getVisualPanel();
         controlPanel.enableBtn();
+        CodeVisual codeVisual = frm.getCodeVisual();
+        
         
         HeaderPanel headerPanel = frm.getHeaderPanel();
         headerPanel.addSortBtnListener((e) -> {
             int alg = headerPanel.getAlgorithm();
             algorithm = switch (alg) {
                 case Configuration.BUBBLE_SORT ->
-                    new BubbleSort(visualPanel);
+                    new BubbleSort(visualPanel, codeVisual);
                 default ->
                     new SelectionSort();
             };
+            codeVisual.addCode(algorithm.getCode(sortType));
         });
         
     }
     
     private void initSortBtnASC() {
         ControlPanel controlPanel = frm.getControlPanel();
+        CodeVisual codeVisual = frm.getCodeVisual();
         
         controlPanel.addAscBtnListener((e) -> {
             int[] arrayToSort = getSortData();
@@ -85,7 +90,9 @@ public class Controller {
             }
             
             final int[] orginArray = Arrays.copyOf(arrayToSort, arrayToSort.length);
-            algorithm.sort(arrayToSort, Configuration.ASC);
+            sortType = Configuration.ASC;
+            algorithm.sort(arrayToSort, sortType);
+            codeVisual.setVisible(true);
             for (int i = 0; i < arrayToSort.length; i++) {
                 System.err.print(arrayToSort[i] + ", ");
             }

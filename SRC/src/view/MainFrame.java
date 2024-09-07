@@ -21,6 +21,7 @@ public class MainFrame extends javax.swing.JFrame {
     private HeaderPanel headerPanel;
     private ControlPanel controlPanel;
     private VisualPanel visualPanel;
+    private CodeVisual codeVisual;
     
     public static MainFrame getInstance(){
         return instance;
@@ -54,6 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
         headerPanel = new HeaderPanel();
         controlPanel = new ControlPanel();
         visualPanel = new VisualPanel();
+        codeVisual = new CodeVisual(); 
         
         add(headerPanel, BorderLayout.NORTH);
         add(controlPanel, BorderLayout.WEST);
@@ -76,6 +78,10 @@ public class MainFrame extends javax.swing.JFrame {
     
     public HeaderPanel getHeaderPanel(){
         return headerPanel;
+    }
+    
+    public  CodeVisual getCodeVisual(){
+        return codeVisual;
     }
             
     // Variables declaration - do not modify//GEN-BEGIN:variables
