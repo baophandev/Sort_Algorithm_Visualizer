@@ -6,6 +6,9 @@ package model;
 
 import config.Configuration;
 import java.util.Comparator;
+import javax.swing.SwingWorker;
+
+
 
 /**
  *
@@ -13,20 +16,21 @@ import java.util.Comparator;
  */
 public class BubbleSort extends Sort {
 
-    public BubbleSort(view.VisualPanel visualPanel) {
-        super(visualPanel);
+    public BubbleSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual) {
+        super(visualPanel, codeVisual);
     }
 
     public BubbleSort() {
         super();
     }
 
+    @Override
     public String getCode(int sortType) {
         StringBuilder sb = new StringBuilder();
         sb.append("void BubbleSort(int array[]) {\n");
         sb.append("        for(int i = 0; i < array.length - 1; i++){\n");
         sb.append("           for(int j = array.length - 1; j>=1; j--) {\n");
-        if (sortType == config.Configuration.ASC) {
+        if (sortType == Configuration.ASC) {
             sb.append("             if (array[j] < array[j-1]) {\n");
         } else {
             sb.append("             if (array[j] > array[j-1]) {\n");
@@ -48,14 +52,29 @@ public class BubbleSort extends Sort {
             cmptor = (current, previous) -> previous - current;
         }
 
-        for (int i = 0; i < array.length - 1 && !isStop; i++) {
-            for (int j = array.length - 1; j > i; j--) {
-                // Sửa lỗi: Thêm điều kiện kiểm tra trước khi hoán đổi
-                if (cmptor.compare(array[j], array[j - 1]) < 0) {
-                    swap(array, j-1, j);
+        // Tạo SwingWorker để xử lý thuật toán sắp xếp
+        SwingWorker<Void, int[]> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() {
+                for (int i = 0; i < array.length - 1 && !isStop; i++) {
+                    publish(array.clone());  // Cập nhật giao diện bằng cách publish
+                    setSelectedLine(1);
+                    for (int j = array.length - 1; j > i; j--) {
+                        setSelectedLine(2);
+                        setSelectedLine(3);
+                        if (cmptor.compare(array[j], array[j - 1]) < 0) {
+                            setSelectedLine(4);
+                            swap(array, j-1, j);
+                        }
+                        publish(array.clone());  // Cập nhật giao diện sau mỗi lần hoán đổi
+                    }
                 }
+                return null;
             }
-        }
+
+        };
+
+        worker.execute();  // Bắt đầu worker
     }
 
 }
