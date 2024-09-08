@@ -23,11 +23,9 @@ import java.util.logging.Logger;
  *
  * @author GIA BAO
  */
-
 abstract class CustomTimerTask extends TimerTask {
 
     private boolean isAlive = true;
-    
 
     public boolean isAlive() {
         return isAlive;
@@ -113,99 +111,74 @@ public class VisualPanel extends javax.swing.JPanel {
         return nodes;
     }
 
-    public void swapNodes(int beginIdx, int endIdx) {
-    if (beginIdx >= endIdx) {
-        return;
-    }
+    public void swapNodes(int index1, int index2) {
+        if (index1 == index2) {
+            return; // Không cần hoán đổi nếu chỉ số trùng nhau
+        }
 
-    if (getComponent(beginIdx) instanceof CardNumberComponent beginNode
-            && getComponent(endIdx) instanceof CardNumberComponent endNode) {
-        beginNode.setBackground(Configuration.HIGHLIGHT_NODE);
-        endNode.setBackground(Configuration.HIGHLIGHT_NODE);
+        // Lấy các thành phần tại vị trí index1 và index2
+        CardNumberComponent comp1 = (CardNumberComponent) getComponent(index1);
+        CardNumberComponent comp2 = (CardNumberComponent) getComponent(index2);
 
-        final Point beginRes = beginNode.getLocation(),
-                    endRes = endNode.getLocation();
+        // Đặt màu cho hai node đang được so sánh
+        comp1.setBackground(Configuration.HIGHLIGHT_NODE);
+        comp2.setBackground(Configuration.HIGHLIGHT_NODE);
 
-        CustomTimerTask task = new CustomTimerTask() {
+        final Point start1 = comp1.getLocation();
+        final Point start2 = comp2.getLocation();
+        final int distance = start2.x - start1.x;
+
+        // Tạo hiệu ứng di chuyển node comp1 sang phải và comp2 sang trái
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int step = 0;
+            int totalSteps = 50;  // Số bước di chuyển để có hiệu ứng mượt
+
             @Override
             public void run() {
-                Point curBeginRes = beginNode.getLocation(),
-                      curEndRes = endNode.getLocation();
+                step++;
 
-                // Di chuyển Node sang phải
-                if (curBeginRes.x != endRes.x) {
-                    beginNode.setLocation(new Point(
-                            Math.min(curBeginRes.x + 5, endRes.x),
-                            curBeginRes.y));
-                }
+                // Tính vị trí mới của từng node dựa trên số bước
+                int newX1 = start1.x + (distance * step) / totalSteps;
+                int newX2 = start2.x - (distance * step) / totalSteps;
 
-                // Di chuyển node kết thúc sang trái
-                if (curEndRes.x != beginRes.x) {
-                    endNode.setLocation(new Point(
-                            Math.max(curEndRes.x - 5, beginRes.x),
-                            curEndRes.y));
-                }
+                comp1.setLocation(newX1, start1.y);
+                comp2.setLocation(newX2, start2.y);
 
-                // Kiểm tra nếu đã đến vị trí mong muốn
-                if (Math.abs(curBeginRes.x - endRes.x) < 5 && Math.abs(curEndRes.x - beginRes.x) < 5) {
-                    this.setAlive(false);
-                    this.cancel();
+                revalidate();
+                repaint();
+
+                // Dừng khi đã hoàn thành bước cuối
+                if (step >= totalSteps) {
+                    // Đổi chỗ các node trên giao diện
+                    swapComponents(index1, index2);
+
+                    // Reset màu sau khi hoàn thành hoán đổi
+                    comp1.setBackground(Configuration.COLOR_HEADER);
+                    comp2.setBackground(Configuration.COLOR_HEADER);
+
+                    revalidate();
+                    repaint();
+
+                    this.cancel(); // Hủy timer sau khi hoàn thành
                 }
             }
         };
 
-        redrawing(task);
-
-        // Sau khi di chuyển xong, hoán đổi giá trị
-        String tmp = beginNode.getText();
-        beginNode.setText(endNode.getText());
-        endNode.setText(tmp);
-
-        beginNode.setLocation(beginRes);
-        endNode.setLocation(endRes);
-        beginNode.setBackground(Configuration.COLOR_HEADER);
-        endNode.setBackground(Configuration.COLOR_HEADER);
-        
-        revalidate();
-        repaint();
+        timer.schedule(task, 0, 10);  // Chạy task mỗi 10ms để tạo hiệu ứng hoạt hình
     }
-}
 
+    private void swapComponents(int index1, int index2) {
+        // Thay đổi vị trí của các node trong layout
+        Component temp = getComponent(index1);
+        remove(index1);
+        add(temp, index2);
 
-    private void redrawing(CustomTimerTask task) {
-        final long periodTime = 1000 / FPS;
-        final Timer timer = new Timer("Animation Thread");
-        timer.scheduleAtFixedRate(task, 0, periodTime);
-        // waiting for animation has done
-        while (true) {
-            if (!task.isAlive()) {
-                timer.cancel();
-                break;
-            }
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(VisualPanel.class.getName())
-                        .log(Level.SEVERE, null, ex);
-            }
-        }
+        temp = getComponent(index2 - 1);  // Sau khi remove, index sẽ thay đổi
+        remove(index2 - 1);
+        add(temp, index1);
     }
-    
-    // Function để di chuyển CardNumberComponent đến vị trí mong muốn
-    public void moveToPosition(CardNumberComponent card, Point destination) {
-        SwingUtilities.invokeLater(() -> {
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.insets = new Insets(2, 2, 2, 2);
-            gbc.anchor = GridBagConstraints.SOUTH;
-            gbc.gridx = destination.x;
-            gbc.gridy = destination.y;
-            remove(card);
-            add(card, gbc);
-            revalidate();
-            repaint();
-        });
-    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

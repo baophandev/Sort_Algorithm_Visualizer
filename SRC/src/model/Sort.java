@@ -36,6 +36,7 @@ public abstract class Sort {
 
     // Thực hiện việc đổi chỗ hai phần tử trong mảng
     protected void swap(int[] array, int i, int j) {
+        visualPanel.swapNodes(i, j);
         int tmp = array[i];
         array[i] = array[j];
         array[j] = tmp;
