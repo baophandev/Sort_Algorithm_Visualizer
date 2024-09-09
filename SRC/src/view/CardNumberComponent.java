@@ -4,6 +4,8 @@
  */
 package view;
 
+import java.awt.Dimension;
+
 public class CardNumberComponent extends javax.swing.JPanel {
 
    private int height;  // Biến lưu chiều cao của panel
@@ -16,6 +18,7 @@ public class CardNumberComponent extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText(String.valueOf(number));
         updatePanelHeight();  // Cập nhật chiều cao cho CardNumberComponent
+        volume.setBackground(config.Configuration.COLOR_HEADER);
     }
 
     public int getNumber(){
@@ -39,6 +42,17 @@ public class CardNumberComponent extends javax.swing.JPanel {
         jLabel2.setText(text);
     }
 
+    public void setHeight(int height){
+        volume.setPreferredSize(new Dimension(40, height));
+    }
+    
+    public void highColor(){
+        volume.setBackground(config.Configuration.HIGHLIGHT_NODE);
+    }
+    
+    public void defaultColor(){
+        volume.setBackground(config.Configuration.COLOR_HEADER);
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -46,8 +60,9 @@ public class CardNumberComponent extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        volume = new javax.swing.JPanel();
 
-        setBackground(new java.awt.Color(31, 92, 169));
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -59,7 +74,7 @@ public class CardNumberComponent extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -68,16 +83,37 @@ public class CardNumberComponent extends javax.swing.JPanel {
                 .addComponent(jLabel2))
         );
 
+        volume.setBackground(new java.awt.Color(51, 0, 153));
+
+        javax.swing.GroupLayout volumeLayout = new javax.swing.GroupLayout(volume);
+        volume.setLayout(volumeLayout);
+        volumeLayout.setHorizontalGroup(
+            volumeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        volumeLayout.setVerticalGroup(
+            volumeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addComponent(volume, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(3, 3, 3))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 148, Short.MAX_VALUE)
+                .addGap(0, 371, Short.MAX_VALUE)
+                .addComponent(volume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -88,5 +124,6 @@ public class CardNumberComponent extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel volume;
     // End of variables declaration//GEN-END:variables
 }
