@@ -22,6 +22,7 @@ public class MainFrame extends javax.swing.JFrame {
     private ControlPanel controlPanel;
     private VisualPanel visualPanel;
     private CodeVisual codeVisual;
+    private InfomationPanel infomationPanel;
     
     public static MainFrame getInstance(){
         return instance;
@@ -35,6 +36,7 @@ public class MainFrame extends javax.swing.JFrame {
         String iconPath = "D:\\Myproject\\NLCS\\SortAlgorithmVisualizer\\SRC\\src\\images\\logo.png";
         ImageIcon icon = new ImageIcon(iconPath);
         setIconImage(icon.getImage());
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -56,11 +58,12 @@ public class MainFrame extends javax.swing.JFrame {
         controlPanel = new ControlPanel();
         visualPanel = new VisualPanel();
         codeVisual = new CodeVisual(); 
+        infomationPanel = new InfomationPanel();
         
         add(headerPanel, BorderLayout.NORTH);
         add(controlPanel, BorderLayout.WEST);
         add(visualPanel, BorderLayout.CENTER);
-        
+        add(infomationPanel, BorderLayout.SOUTH);
     }
     
     public File getFileToRead(){
@@ -82,6 +85,10 @@ public class MainFrame extends javax.swing.JFrame {
     
     public  CodeVisual getCodeVisual(){
         return codeVisual;
+    }
+    
+    public InfomationPanel getInfomationPanel(){
+        return infomationPanel;
     }
             
     // Variables declaration - do not modify//GEN-BEGIN:variables
