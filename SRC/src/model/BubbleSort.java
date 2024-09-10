@@ -5,6 +5,7 @@
 package model;
 
 import config.Configuration;
+import java.awt.Color;
 import java.util.Comparator;
 import javax.swing.SwingWorker;
 
@@ -14,8 +15,8 @@ import javax.swing.SwingWorker;
  */
 public class BubbleSort extends Sort {
 
-    public BubbleSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual) {
-        super(visualPanel, codeVisual);
+    public BubbleSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
+        super(visualPanel, codeVisual, infomationPanel);
     }
 
     public BubbleSort() {
@@ -41,8 +42,11 @@ public class BubbleSort extends Sort {
         return sb.toString();
     }
 
+    
+    @Override
     public void sort(int[] array, int sortType) {
-        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+        SwingWorker<Void, Void> worker;
+        worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws Exception {
                 Comparator<Integer> cmptor;
@@ -51,15 +55,21 @@ public class BubbleSort extends Sort {
                 } else {
                     cmptor = (current, previous) -> previous - current;
                 }
-
+                
+                infomationPanel.setText("Bắt đầu thuật toán sắp xếp nổi bọt");
+                
                 for (int i = 0; i < array.length - 1 && !isStop; i++) {
                     setSelectedLine(1);
                     for (int j = 0; j < array.length - i - 1 && !isStop; j++) { // điều chỉnh lại hướng chạy của j
                         setSelectedLine(2);
                         setSelectedLine(3);
+                        
+                        infomationPanel.setText("i= " + array[j] + " ,j= " + array[j+1]);
                         if (cmptor.compare(array[j], array[j + 1]) > 0) {  // Sử dụng j+1 để so sánh
                             setSelectedLine(4);
+                            infomationPanel.setText("i= " + array[j] + " > j= " + array[j+1] + "\n "+ "Hoán đổi i và j");
                             swap(array, j, j + 1);  // Swap array[j] và array[j+1]
+                            
                         }
                     }
                 }
@@ -69,6 +79,7 @@ public class BubbleSort extends Sort {
             @Override
             protected void done() {
                 System.out.println("Sorting completed.");
+                infomationPanel.setText("Hoàn thành sắp xếp");
             }
         };
 

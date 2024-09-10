@@ -63,6 +63,7 @@ public class Controller {
         view.VisualPanel visualPanel = frm.getVisualPanel();
         controlPanel.enableBtn();
         CodeVisual codeVisual = frm.getCodeVisual();
+        view.InfomationPanel infomationPanel = frm.getInfomationPanel();
         
         
         HeaderPanel headerPanel = frm.getHeaderPanel();
@@ -70,7 +71,7 @@ public class Controller {
             int alg = headerPanel.getAlgorithm();
             algorithm = switch (alg) {
                 case Configuration.BUBBLE_SORT ->
-                    new BubbleSort(visualPanel, codeVisual);
+                    new BubbleSort(visualPanel, codeVisual, infomationPanel);
                 default ->
                     new SelectionSort();
             };

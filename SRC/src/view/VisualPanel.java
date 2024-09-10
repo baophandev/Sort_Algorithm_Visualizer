@@ -34,7 +34,6 @@ public class VisualPanel extends javax.swing.JPanel {
     public VisualPanel() {
         initComponents();
         initLayout(); // Khởi tạo layout tại đây
-
     }
 
     public void initVisualPanel() {
@@ -71,7 +70,7 @@ public class VisualPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     public void setNodes(List<Integer> data) {
-        setLayout(new GridBagLayout());
+        
         GridBagConstraints gbc = new GridBagConstraints();
 //        gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.SOUTH;
@@ -190,9 +189,6 @@ public class VisualPanel extends javax.swing.JPanel {
 
         timer.schedule(task, 0, 15);  // Chạy task mỗi 10ms để tạo hiệu ứng hoạt hình
     }
-
-    
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

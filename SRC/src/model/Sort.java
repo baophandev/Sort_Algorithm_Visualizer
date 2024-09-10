@@ -5,11 +5,13 @@ import view.VisualPanel;
 import view.CodeVisual;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import view.InfomationPanel;
 
 public abstract class Sort {
 
     protected final VisualPanel visualPanel;
     protected final CodeVisual codeVisual;
+    protected final InfomationPanel infomationPanel;
 
     protected int swapCounts = 0;
     protected volatile boolean isStop = false; // Đảm bảo thread-safe khi dừng
@@ -20,12 +22,14 @@ public abstract class Sort {
     public Sort() {
         this.visualPanel = null;
         this.codeVisual = null;
+        this.infomationPanel = null;
     }
 
     // Constructor có tham số
-    public Sort(VisualPanel visualPanel, CodeVisual codeVisual) {
+    public Sort(VisualPanel visualPanel, CodeVisual codeVisual, InfomationPanel infomationPanel) {
         this.visualPanel = visualPanel;
         this.codeVisual = codeVisual;
+        this.infomationPanel = infomationPanel;
     }
 
     // Lấy mã thuật toán (tuỳ loại sort)
