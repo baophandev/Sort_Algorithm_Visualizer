@@ -42,16 +42,31 @@ public class CardNumberComponent extends javax.swing.JPanel {
         jLabel2.setText(text);
     }
 
+    
     public void setHeight(int height){
         volume.setPreferredSize(new Dimension(40, height));
+        revalidate();
+        repaint();
     }
     
-    public void highColor(){
-        volume.setBackground(config.Configuration.HIGHLIGHT_NODE);
+    public int getVoulme(){
+        return volume.getHeight();
     }
     
-    public void defaultColor(){
-        volume.setBackground(config.Configuration.COLOR_HEADER);
+    // Phương thức đổi màu để làm nổi bật node
+    public void highColor() {
+        volume.setBackground(config.Configuration.HIGHLIGHT_NODE); // Đổi màu nổi bật
+        volume.setOpaque(true); // Đảm bảo màu nền hiển thị
+        revalidate();
+        repaint(); // Cập nhật giao diện
+    }
+
+    // Phương thức đổi về màu mặc định
+    public void defaultColor() {
+        volume.setBackground(config.Configuration.COLOR_HEADER); // Đổi về màu mặc định
+        volume.setOpaque(true); // Đảm bảo màu nền hiển thị
+        revalidate();
+        repaint(); // Cập nhật giao diện
     }
     
     @SuppressWarnings("unchecked")
