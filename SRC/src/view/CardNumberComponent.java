@@ -4,111 +4,106 @@
  */
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 public class CardNumberComponent extends javax.swing.JPanel {
 
-   private int height;  // Biến lưu chiều cao của panel
-   private int number;
+    private int volumeNumber = 0; // số của volume
+    private int height = 0; //chiều cao của volume
 
-    public CardNumberComponent(int height, int number) {
-        this.height = height;  // Thiết lập chiều cao dựa trên giá trị đầu vào
-        this.number = number;
+    public CardNumberComponent(int volumeNumber, int height) {
+        this.volumeNumber = volumeNumber;
+        this.height = height;
         initComponents();
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText(String.valueOf(number));
-        updatePanelHeight();  // Cập nhật chiều cao cho CardNumberComponent
+        setPreferredSize(new Dimension(60, 500));
+        textLabel.setText("");
+        volume.setPreferredSize(new Dimension(volume.getWidth(), height));
+        volumeLabel.setText(String.valueOf(volumeNumber));
         volume.setBackground(config.Configuration.COLOR_HEADER);
+        volumeLabel.setForeground(Color.WHITE);
     }
 
-    public int getNumber(){
-        return number;
-    }
-    
-    // Phương thức cập nhật chiều cao của chính CardNumberComponent
-    private void updatePanelHeight() {
-        // Set kích thước cho chính JPanel (CardNumberComponent)
-        this.setPreferredSize(new java.awt.Dimension(this.getPreferredSize().width, height));
-        this.setSize(this.getPreferredSize());
-        this.revalidate();  // Cập nhật lại layout
-        this.repaint();     // Vẽ lại giao diện
-    }
-    
-    public String getText(){
-        return jLabel2.getText();
-    }
-    
-    public void setText(String text){
-        jLabel2.setText(text);
+    public String getVolumeNumber() {
+        return volumeLabel.getText();
     }
 
-    
-    public void setHeight(int height){
-        volume.setPreferredSize(new Dimension(40, height));
+    public void setVolumeNumber(String volume) {
+        volumeLabel.setText(volume);
         revalidate();
         repaint();
     }
     
-    public int getVoulme(){
+    public int getheight(){
         return volume.getHeight();
     }
     
-    // Phương thức đổi màu để làm nổi bật node
-    public void highColor() {
-        volume.setBackground(config.Configuration.HIGHLIGHT_NODE); // Đổi màu nổi bật
-        volume.setOpaque(true); // Đảm bảo màu nền hiển thị
+    public void setHeight(int height){
+        volume.setPreferredSize(new Dimension(volume.getWidth(), height));
         revalidate();
-        repaint(); // Cập nhật giao diện
+        repaint();
     }
 
-    // Phương thức đổi về màu mặc định
-    public void defaultColor() {
-        volume.setBackground(config.Configuration.COLOR_HEADER); // Đổi về màu mặc định
-        volume.setOpaque(true); // Đảm bảo màu nền hiển thị
-        revalidate();
-        repaint(); // Cập nhật giao diện
+    public void setlabel(String str){
+        textLabel.setText(str);
+    }
+    
+    public void setVolumeColor(Color color){
+        volume.setBackground(color);
+    }
+    
+    public void setLabel(String str){
+        textLabel.setText(str);
     }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        textPanel = new javax.swing.JPanel();
+        textLabel = new javax.swing.JLabel();
         volume = new javax.swing.JPanel();
+        volumeLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        textPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setBackground(new java.awt.Color(31, 92, 169));
-        jLabel2.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
-        jLabel2.setText("1");
+        textLabel.setBackground(new java.awt.Color(31, 92, 169));
+        textLabel.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
+        textLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textLabel.setText("1");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+        javax.swing.GroupLayout textPanelLayout = new javax.swing.GroupLayout(textPanel);
+        textPanel.setLayout(textPanelLayout);
+        textPanelLayout.setHorizontalGroup(
+            textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(textLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        textPanelLayout.setVerticalGroup(
+            textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, textPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2))
+                .addComponent(textLabel))
         );
 
         volume.setBackground(new java.awt.Color(51, 0, 153));
+
+        volumeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        volumeLabel.setText("000");
 
         javax.swing.GroupLayout volumeLayout = new javax.swing.GroupLayout(volume);
         volume.setLayout(volumeLayout);
         volumeLayout.setHorizontalGroup(
             volumeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(volumeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         volumeLayout.setVerticalGroup(
             volumeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, volumeLayout.createSequentialGroup()
+                .addContainerGap(78, Short.MAX_VALUE)
+                .addComponent(volumeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -116,7 +111,7 @@ public class CardNumberComponent extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(3, 3, 3)
@@ -129,16 +124,15 @@ public class CardNumberComponent extends javax.swing.JPanel {
                 .addGap(0, 371, Short.MAX_VALUE)
                 .addComponent(volume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(textPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel textLabel;
+    private javax.swing.JPanel textPanel;
     private javax.swing.JPanel volume;
+    private javax.swing.JLabel volumeLabel;
     // End of variables declaration//GEN-END:variables
 }

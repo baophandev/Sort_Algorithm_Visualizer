@@ -42,7 +42,6 @@ public class BubbleSort extends Sort {
         return sb.toString();
     }
 
-    
     @Override
     public void sort(int[] array, int sortType) {
         SwingWorker<Void, Void> worker;
@@ -55,31 +54,57 @@ public class BubbleSort extends Sort {
                 } else {
                     cmptor = (current, previous) -> previous - current;
                 }
-                
+
                 infomationPanel.setText("Bắt đầu thuật toán sắp xếp nổi bọt");
-                
+
                 for (int i = 0; i < array.length - 1 && !isStop; i++) {
                     setSelectedLine(1);
-                    for (int j = 0; j < array.length - i - 1 && !isStop; j++) { // điều chỉnh lại hướng chạy của j
+                    visualPanel.setNodeLabel(i, "i = " + i);
+                    for (int j = array.length - 1; j > i && !isStop; j--) { // điều chỉnh lại hướng chạy của j
                         setSelectedLine(2);
+                        int x = j -1 ;
+                        infomationPanel.setText("array[" +x + "]=" + array[j-1] + " , array[" +j+ "]= " + array[j]);
+                        visualPanel.setNodeLabel( j, "j = " + j);
+                        int y = j - 1;
+                        visualPanel.setNodeLabel( j - 1, "j = " + y);
+                        visualPanel.setNodeColor(j, config.Configuration.YELLOW);
+                        visualPanel.setNodeColor(j-1, config.Configuration.YELLOW);
                         setSelectedLine(3);
-                        
-                        infomationPanel.setText("i= " + array[j] + " ,j= " + array[j+1]);
-                        if (cmptor.compare(array[j], array[j + 1]) > 0) {  // Sử dụng j+1 để so sánh
+
+                        if (cmptor.compare(array[j], array[j - 1]) < 0) {  // Sử dụng j+1 để so sánh
+                            visualPanel.setNodeColor(j, config.Configuration.YELLOW);
                             setSelectedLine(4);
-                            infomationPanel.setText("i= " + array[j] + " > j= " + array[j+1] + "\n "+ "Hoán đổi i và j");
-                            swap(array, j, j + 1);  // Swap array[j] và array[j+1]
-                            
+                            infomationPanel.setText("Hoán đổi i và j");
+                            swap(array, j - 1, j);  // Swap array[j] và array[j+1]
+                            visualPanel.setNodeLabel(j, " ");
+                            visualPanel.setNodeLabel(j - 1, " ");
+                        }else{
+                            visualPanel.setNodeColor(j, config.Configuration.COLOR_HEADER);
+                            visualPanel.setNodeColor(j-1, config.Configuration.COLOR_HEADER);
+                            visualPanel.setNodeLabel(j, " ");
+                            visualPanel.setNodeLabel(j - 1, " ");
                         }
+                        visualPanel.setNodeColor(i, config.Configuration.COLOR_HEADER);
                     }
+                    if(!isStop){
+                        visualPanel.setNodeColor(i, config.Configuration.HIGHLIGHT_NODE);
+                        visualPanel.setNodeLabel(i, " ");
+                    }
+                }
+                if(!isStop){
+                    visualPanel.setNodeColor(array.length - 1, config.Configuration.HIGHLIGHT_NODE);
                 }
                 return null;
             }
 
             @Override
             protected void done() {
-                System.out.println("Sorting completed.");
-                infomationPanel.setText("Hoàn thành sắp xếp");
+                if(!isStop){
+                    System.out.println("Sorting completed.");
+                    infomationPanel.setText("Hoàn thành sắp xếp");
+                }else{
+                    infomationPanel.setText("Đã dừng sắp xếp");
+                }
             }
         };
 
