@@ -55,19 +55,21 @@ public class Controller {
         initVisualPanel();
         initReadFileListener();
         initSortBtnASC();
-        
+        initSortBtnDESC();
+        initStopBtnListener();
     }
     
     private void initSortArigthmListener() {
         ControlPanel controlPanel = frm.getControlPanel();
         view.VisualPanel visualPanel = frm.getVisualPanel();
-        controlPanel.enableBtn();
+       
         CodeVisual codeVisual = frm.getCodeVisual();
         view.InfomationPanel infomationPanel = frm.getInfomationPanel();
         
         
         HeaderPanel headerPanel = frm.getHeaderPanel();
         headerPanel.addSortBtnListener((e) -> {
+             controlPanel.enableBtn();
             int alg = headerPanel.getAlgorithm();
             algorithm = switch (alg) {
                 case Configuration.BUBBLE_SORT ->
@@ -89,6 +91,8 @@ public class Controller {
             for (int i = 0; i < arrayToSort.length; i++) {
                 System.out.print(arrayToSort[i] + ", ");
             }
+            frm.getControlPanel().enableStopBtn();
+            algorithm.setStop(false);
             
             final int[] orginArray = Arrays.copyOf(arrayToSort, arrayToSort.length);
             sortType = Configuration.ASC;
@@ -106,6 +110,37 @@ public class Controller {
             
             frm.getVisualPanel().setNodes(listToSort); // Truyền danh sách vào setNodes
 
+        });
+    }
+    
+    private void initSortBtnDESC(){
+        ControlPanel contraPanel = frm.getControlPanel();
+        CodeVisual codeVisual = frm.getCodeVisual();
+        
+        contraPanel.addDESCBtnListener((e) -> {
+            int[] arrayToSort = getSortData();
+            for (int i = 0; i < arrayToSort.length; i++) {
+                System.out.print(arrayToSort[i] + ", ");
+            }
+            frm.getControlPanel().enableStopBtn();
+            algorithm.setStop(false);
+            
+            final int[] orginArray = Arrays.copyOf(arrayToSort, arrayToSort.length);
+            sortType = Configuration.DESC;
+            algorithm.sort(arrayToSort, sortType);
+            codeVisual.setVisible(true);
+            for (int i = 0; i < arrayToSort.length; i++) {
+                System.err.print(arrayToSort[i] + ", ");
+            }
+            System.out.println("\n");
+            frm.getVisualPanel().removeAll();
+            // Chuyển đổi mảng int[] thành List<Integer>
+            List<Integer> listToSort = Arrays.stream(arrayToSort)
+                    .boxed()
+                    .collect(Collectors.toList());
+            
+            frm.getVisualPanel().setNodes(listToSort); // Truyền danh sách vào setNodes
+            
         });
     }
     
@@ -190,6 +225,17 @@ public class Controller {
             
             frm.getVisualPanel().removeAll();
             frm.getVisualPanel().setNodes(initData);
+        });
+    }
+    
+    private void initStopBtnListener(){
+        
+        frm.getControlPanel().addStopBtnListener((e) -> {
+            if( algorithm != null && !algorithm.isStop()){
+                algorithm.setStop(true);
+                frm.getControlPanel().enableBtn();
+                frm.getCodeVisual().setVisible(false);
+            }
         });
     }
     

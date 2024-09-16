@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import java.util.List;
 import config.Configuration;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,7 +28,6 @@ import java.util.logging.Logger;
 public class VisualPanel extends javax.swing.JPanel {
 
     public static int initNumber;
-    private int FPS = 60;
     private GridBagLayout layout; // Lưu layout để cập nhật dễ dàng hơn
     private GridBagConstraints gbc; // Lưu cấu hình layout
 
@@ -78,9 +78,8 @@ public class VisualPanel extends javax.swing.JPanel {
         for (int i = 0; i < data.size(); i++) {
             int value = data.get(i);
             int height = (value + 2) * 8;
-            CardNumberComponent card = new CardNumberComponent(height, value);
-            card.setPreferredSize(new Dimension(60, 500));
-            card.setHeight(height);
+            CardNumberComponent card = new CardNumberComponent(value, height);
+            card.setlabel(" ");
 
             // Set initial position (left to right)
             gbc.gridx = i;
@@ -97,27 +96,40 @@ public class VisualPanel extends javax.swing.JPanel {
         List<Integer> nodes = new ArrayList<>();
         for (Component cmp : getComponents()) {
             if (cmp instanceof CardNumberComponent node) {
-                nodes.add(Integer.valueOf(node.getNumber()));
+                nodes.add(Integer.valueOf(node.getVolumeNumber()));
             }
         }
-
         return nodes;
     }
 
-    public void highlightNode(int index1, int index2) {
-        CardNumberComponent comp1 = (CardNumberComponent) getComponent(index1);
-        CardNumberComponent comp2 = (CardNumberComponent) getComponent(index2);
+    public void setNodeColor(int idx, Color color) {
+        // Lấy đối tượng CardNumberComponent tại vị trí idx
+        Component cmp = getComponent(idx);
+        if (cmp instanceof CardNumberComponent) {
+            CardNumberComponent node = (CardNumberComponent) cmp;
 
-        comp1.highColor();
-        comp2.highColor();
+            // Đặt màu mới cho volume của node
+            node.setVolumeColor(color);
+
+            // Cập nhật lại giao diện
+            revalidate();
+            repaint();
+        }
     }
+    
+    public void setNodeLabel(int idx, String text) {
+        // Lấy đối tượng CardNumberComponent tại vị trí idx
+        Component cmp = getComponent(idx);
+        if (cmp instanceof CardNumberComponent) {
+            CardNumberComponent node = (CardNumberComponent) cmp;
 
-    public void defaultNode(int index1, int index2) {
-        CardNumberComponent comp1 = (CardNumberComponent) getComponent(index1);
-        CardNumberComponent comp2 = (CardNumberComponent) getComponent(index2);
+            // Đặt màu mới cho volume của node
+            node.setlabel(text);
 
-        comp1.defaultColor();
-        comp2.defaultColor();
+            // Cập nhật lại giao diện
+            revalidate();
+            repaint();
+        }
     }
 
 // Phương thức đổi màu với thời gian delay
@@ -130,35 +142,22 @@ public class VisualPanel extends javax.swing.JPanel {
         CardNumberComponent comp1 = (CardNumberComponent) getComponent(index1);
         CardNumberComponent comp2 = (CardNumberComponent) getComponent(index2);
 
-        // Đặt màu cho hai node đang được so sánh
-        comp1.highColor();
-        comp2.highColor();
-
         // Lưu tạm giá trị text và volume của node 1
-        String tempText = comp1.getText();
-        int tempVolume = comp1.getVoulme();
+        String tempText = comp1.getVolumeNumber();
+        int tempVolume = comp1.getheight();
 
         // Hoán đổi text và volume giữa hai node
-        comp1.setText(comp2.getText());
-        comp1.setHeight(comp2.getVoulme());
+        comp1.setVolumeNumber(comp2.getVolumeNumber());
+        comp1.setHeight(comp2.getheight());
 
-        comp2.setText(tempText);
+        comp2.setVolumeNumber(tempText);
         comp2.setHeight(tempVolume);
 
-        // Sử dụng Timer để thêm delay trước khi reset lại màu mặc định
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                // Reset màu sau khi hoàn thành hoán đổi với một chút delay
-                comp1.defaultColor();
-                comp2.defaultColor();
+        comp1.setVolumeColor(config.Configuration.COLOR_HEADER);
+        comp2.setVolumeColor(config.Configuration.COLOR_HEADER);
+        revalidate();
+        repaint();
 
-                // Cập nhật lại giao diện
-                revalidate();
-                repaint();
-            }
-        }, 500); // 500ms delay trước khi chuyển về màu mặc định
     }
 
 

@@ -22,7 +22,7 @@ public class ControlPanel extends javax.swing.JPanel {
     public ControlPanel() {
         initComponents();
     }
-
+    
     public void addSortBtnListener(ActionListener listener) {
         sortAscendingBtn.addActionListener(listener);
         sortDescendingBtn.addActionListener(listener);
@@ -36,6 +36,15 @@ public class ControlPanel extends javax.swing.JPanel {
         sortAscendingBtn.setEnabled(false);
         sortDescendingBtn.setEnabled(false);
         stopSortBtn.setEnabled(false);
+    }
+    
+    public void enableStopBtn(){
+        compareBtn.setEnabled(false);
+        inputKeyBoardBtn.setEnabled(false);
+        randomBtn.setEnabled(false);
+        readFileBtn.setEnabled(false);
+        sortAscendingBtn.setEnabled(false);
+        sortDescendingBtn.setEnabled(false);
     }
 
     public void enableBtn() {
@@ -56,6 +65,14 @@ public class ControlPanel extends javax.swing.JPanel {
         sortAscendingBtn.addActionListener(listener);
     }
 
+    public void addDESCBtnListener(ActionListener listener){
+        sortDescendingBtn.addActionListener(listener);
+    }
+    
+    public void addStopBtnListener(ActionListener listener){
+        stopSortBtn.addActionListener(listener);
+    }
+    
     public int getRandomSize() {
         return (int) spiner.getValue();
     }
@@ -283,11 +300,13 @@ public class ControlPanel extends javax.swing.JPanel {
         sortAscendingBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
         sortAscendingBtn.setForeground(new java.awt.Color(255, 255, 255));
         sortAscendingBtn.setText("Sắp xếp tăng dần");
+        sortAscendingBtn.setEnabled(false);
 
         stopSortBtn.setBackground(new java.awt.Color(255, 102, 102));
         stopSortBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
         stopSortBtn.setForeground(new java.awt.Color(255, 255, 255));
         stopSortBtn.setText("Dừng sắp xếp");
+        stopSortBtn.setEnabled(false);
         stopSortBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stopSortBtnActionPerformed(evt);
@@ -298,6 +317,7 @@ public class ControlPanel extends javax.swing.JPanel {
         sortDescendingBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
         sortDescendingBtn.setForeground(new java.awt.Color(255, 255, 255));
         sortDescendingBtn.setText("Sắp xếp giảm dần");
+        sortDescendingBtn.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

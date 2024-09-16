@@ -32,14 +32,14 @@ public class InfomationPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(0, 100));
 
         variableLabel.setFont(new java.awt.Font("K2D", 0, 18)); // NOI18N
-        variableLabel.setForeground(new java.awt.Color(0, 175, 239));
+        variableLabel.setForeground(new java.awt.Color(102, 102, 102));
         variableLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(variableLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(variableLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
