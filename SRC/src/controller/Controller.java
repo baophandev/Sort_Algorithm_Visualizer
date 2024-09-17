@@ -75,7 +75,7 @@ public class Controller {
                 case Configuration.BUBBLE_SORT ->
                     new BubbleSort(visualPanel, codeVisual, infomationPanel);
                 default ->
-                    new SelectionSort();
+                    new SelectionSort(visualPanel, codeVisual, infomationPanel);
             };
             codeVisual.addCode(algorithm.getCode(sortType));
         });
@@ -97,6 +97,7 @@ public class Controller {
             final int[] orginArray = Arrays.copyOf(arrayToSort, arrayToSort.length);
             sortType = Configuration.ASC;
             algorithm.sort(arrayToSort, sortType);
+            codeVisual.addCode(algorithm.getCode(sortType));
             codeVisual.setVisible(true);
             for (int i = 0; i < arrayToSort.length; i++) {
                 System.err.print(arrayToSort[i] + ", ");
@@ -128,6 +129,7 @@ public class Controller {
             final int[] orginArray = Arrays.copyOf(arrayToSort, arrayToSort.length);
             sortType = Configuration.DESC;
             algorithm.sort(arrayToSort, sortType);
+            codeVisual.addCode(algorithm.getCode(sortType));
             codeVisual.setVisible(true);
             for (int i = 0; i < arrayToSort.length; i++) {
                 System.err.print(arrayToSort[i] + ", ");

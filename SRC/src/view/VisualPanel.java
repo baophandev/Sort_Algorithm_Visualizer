@@ -77,9 +77,10 @@ public class VisualPanel extends javax.swing.JPanel {
 
         for (int i = 0; i < data.size(); i++) {
             int value = data.get(i);
-            int height = (value + 2) * 8;
+            int height = (value + 3) * 8;
             CardNumberComponent card = new CardNumberComponent(value, height);
             card.setlabel(" ");
+            card.setlabel1(" ");
 
             // Set initial position (left to right)
             gbc.gridx = i;
@@ -125,6 +126,21 @@ public class VisualPanel extends javax.swing.JPanel {
 
             // Đặt màu mới cho volume của node
             node.setlabel(text);
+
+            // Cập nhật lại giao diện
+            revalidate();
+            repaint();
+        }
+    }
+    
+    public void setNodeLabel1(int idx, String text) {
+        // Lấy đối tượng CardNumberComponent tại vị trí idx
+        Component cmp = getComponent(idx);
+        if (cmp instanceof CardNumberComponent) {
+            CardNumberComponent node = (CardNumberComponent) cmp;
+
+            // Đặt màu mới cho volume của node
+            node.setlabel1(text);
 
             // Cập nhật lại giao diện
             revalidate();

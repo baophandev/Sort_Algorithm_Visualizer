@@ -5,7 +5,6 @@
 package model;
 
 import config.Configuration;
-import java.awt.Color;
 import java.util.Comparator;
 import javax.swing.SwingWorker;
 
