@@ -18,6 +18,7 @@ public class CardNumberComponent extends javax.swing.JPanel {
         initComponents();
         setPreferredSize(new Dimension(60, 500));
         textLabel.setText("");
+        textLabel1.setText("");
         volume.setPreferredSize(new Dimension(volume.getWidth(), height));
         volumeLabel.setText(String.valueOf(volumeNumber));
         volume.setBackground(config.Configuration.COLOR_HEADER);
@@ -48,13 +49,14 @@ public class CardNumberComponent extends javax.swing.JPanel {
         textLabel.setText(str);
     }
     
+    public void setlabel1(String str){
+        textLabel1.setText(str);
+    }
+    
     public void setVolumeColor(Color color){
         volume.setBackground(color);
     }
     
-    public void setLabel(String str){
-        textLabel.setText(str);
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -62,6 +64,7 @@ public class CardNumberComponent extends javax.swing.JPanel {
 
         textPanel = new javax.swing.JPanel();
         textLabel = new javax.swing.JLabel();
+        textLabel1 = new javax.swing.JLabel();
         volume = new javax.swing.JPanel();
         volumeLabel = new javax.swing.JLabel();
 
@@ -74,15 +77,23 @@ public class CardNumberComponent extends javax.swing.JPanel {
         textLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         textLabel.setText("1");
 
+        textLabel1.setBackground(new java.awt.Color(31, 92, 169));
+        textLabel1.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
+        textLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textLabel1.setText("1");
+
         javax.swing.GroupLayout textPanelLayout = new javax.swing.GroupLayout(textPanel);
         textPanel.setLayout(textPanelLayout);
         textPanelLayout.setHorizontalGroup(
             textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(textLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+            .addComponent(textLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+            .addComponent(textLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
         );
         textPanelLayout.setVerticalGroup(
             textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, textPanelLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(textLabel1)
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(textLabel))
         );
@@ -96,13 +107,13 @@ public class CardNumberComponent extends javax.swing.JPanel {
         volume.setLayout(volumeLayout);
         volumeLayout.setHorizontalGroup(
             volumeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(volumeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(volumeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         volumeLayout.setVerticalGroup(
             volumeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, volumeLayout.createSequentialGroup()
-                .addContainerGap(78, Short.MAX_VALUE)
-                .addComponent(volumeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(volumeLabel)
                 .addContainerGap())
         );
 
@@ -113,15 +124,15 @@ public class CardNumberComponent extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(textPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(3, 3, 3)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(5, 5, 5)
                 .addComponent(volume, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(3, 3, 3))
+                .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 371, Short.MAX_VALUE)
+                .addGap(0, 347, Short.MAX_VALUE)
                 .addComponent(volume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(textPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -131,6 +142,7 @@ public class CardNumberComponent extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel textLabel;
+    private javax.swing.JLabel textLabel1;
     private javax.swing.JPanel textPanel;
     private javax.swing.JPanel volume;
     private javax.swing.JLabel volumeLabel;
