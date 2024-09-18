@@ -118,6 +118,7 @@ public class SelectionSort extends Sort {
                             visualPanel.setNodeLabel(minIdx, " ");
                             infomationPanel.setText("Hoán đổi vị trí " + "[" + i + "]" + " và " + "[" + minIdx + "]");
                         }
+                        visualPanel.setNodeLabel(i, " ");
                         visualPanel.setNodeColor(i, Configuration.HIGHLIGHT_NODE);
                     }
 
@@ -127,7 +128,9 @@ public class SelectionSort extends Sort {
                 }
                 if (!isStop) {
                     visualPanel.setNodeColor(array.length - 1, config.Configuration.HIGHLIGHT_NODE);
+                    visualPanel.setNodeLabel1(array.length - 1, "i="+ (array.length - 1));
                 }
+                
                 return null;
             }
 
