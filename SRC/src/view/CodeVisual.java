@@ -23,6 +23,7 @@ public class CodeVisual extends javax.swing.JFrame {
         codeList.setModel(listModel);  // Gán DefaultListModel cho codeList đã được tạo trong initComponents
         //Không tắt cả chương trình
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        pack();
     }
 
     @SuppressWarnings("unchecked")
@@ -47,7 +48,7 @@ public class CodeVisual extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

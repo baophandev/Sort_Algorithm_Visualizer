@@ -24,6 +24,7 @@ import config.Configuration;
 import java.util.stream.Collectors;
 import model.BubbleSort;
 import model.SelectionSort;
+import model.InsertionSort;
 import view.CodeVisual;
 
 /**
@@ -74,6 +75,8 @@ public class Controller {
             algorithm = switch (alg) {
                 case Configuration.BUBBLE_SORT ->
                     new BubbleSort(visualPanel, codeVisual, infomationPanel);
+                case Configuration.INSERTION_SORT -> 
+                    new InsertionSort(visualPanel, codeVisual, infomationPanel);
                 default ->
                     new SelectionSort(visualPanel, codeVisual, infomationPanel);
             };
