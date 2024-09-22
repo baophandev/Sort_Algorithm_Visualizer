@@ -70,6 +70,7 @@ public class BubbleSort extends Sort {
                     setSelectedLine(4);
                     infomationPanel.setText("Hoán đổi i và j");
                     swap(array, j - 1, j);  // Swap array[j] và array[j+1]
+                    delay();
                     visualPanel.setNodeLabel(j, " ");
                     visualPanel.setNodeLabel(j - 1, " ");
                 } else {

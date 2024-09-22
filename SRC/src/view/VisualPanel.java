@@ -30,6 +30,7 @@ public class VisualPanel extends javax.swing.JPanel {
     public static int initNumber;
     private GridBagLayout layout; // Lưu layout để cập nhật dễ dàng hơn
     private GridBagConstraints gbc; // Lưu cấu hình layout
+    private int speed = 1;
 
     public VisualPanel() {
         initComponents();
@@ -117,7 +118,7 @@ public class VisualPanel extends javax.swing.JPanel {
             repaint();
         }
     }
-    
+
     public void setNodeLabel(int idx, String text) {
         // Lấy đối tượng CardNumberComponent tại vị trí idx
         Component cmp = getComponent(idx);
@@ -132,7 +133,7 @@ public class VisualPanel extends javax.swing.JPanel {
             repaint();
         }
     }
-    
+
     public void setNodeLabel1(int idx, String text) {
         // Lấy đối tượng CardNumberComponent tại vị trí idx
         Component cmp = getComponent(idx);
@@ -146,6 +147,13 @@ public class VisualPanel extends javax.swing.JPanel {
             revalidate();
             repaint();
         }
+    }
+
+    public void setSpeed(int speed) {
+        if (speed < 1) {
+            return;
+        }
+        this.speed = speed;
     }
 
 // Phương thức đổi màu với thời gian delay
