@@ -15,7 +15,7 @@ public abstract class Sort {
 
     protected int swapCounts = 0;
     protected volatile boolean isStop = false; // Đảm bảo thread-safe khi dừng
-    protected int speed = 1; // Tốc độ mặc định
+    protected int speed = 2; // Tốc độ mặc định
     protected final long sleepTime = 800; // Thời gian chờ mặc định
 
     // Constructor mặc định
@@ -47,6 +47,29 @@ public abstract class Sort {
         swapCounts++; // Tăng số lần swap
     }
 
+    // Phương thức để kiểm soát tốc độ
+    protected void delay() {
+        try {
+            int delayTime;
+            switch (speed) {
+                case 1: // nhanh
+                    delayTime = 50;
+                    break;
+                case 2: // trung bình
+                    delayTime = 300;
+                    break;
+                case 3: // chậm
+                    delayTime = 600;
+                    break;
+                default:
+                    delayTime = 300; // mặc định trung bình
+            }
+            Thread.sleep(delayTime);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    
     // Đặt dòng code được highlight
     protected void setSelectedLine(int idx) {
         codeVisual.setSelectedLine(idx);

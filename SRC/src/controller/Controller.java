@@ -62,6 +62,7 @@ public class Controller {
         initSortBtnASC();
         initSortBtnDESC();
         initStopBtnListener();
+        initSpeedChangeListener();
     }
 
     private void initSortArigthmListener() {
@@ -105,6 +106,7 @@ public class Controller {
             codeVisual.addCode(algorithm.getCode(sortType));
             codeVisual.setVisible(true);
             algorithm.resetSwapCount();
+            algorithm.setSpeed(speed);
 
             SwingWorker<Void, Void> worker = new SwingWorker<>() {
                 @Override
@@ -167,6 +169,7 @@ public class Controller {
             codeVisual.addCode(algorithm.getCode(sortType));
             codeVisual.setVisible(true);
             algorithm.resetSwapCount();
+            algorithm.setSpeed(speed);
 
             SwingWorker<Void, Void> worker = new SwingWorker<>() {
                 @Override
@@ -193,6 +196,7 @@ public class Controller {
                                 + "\nKết quả sắp xếp: " + Arrays.toString(arrayToSort);
                         if (frm.showConfirmMessage(res + "\nBạn có muốn xuất kết quả ra file không?")) {
                             saveSortingResultToFile(res);
+                            
                         }
                     }else{
                         frm.getInfomationPanel().setText("Đã dừng sắp xếp");
@@ -207,6 +211,15 @@ public class Controller {
             }
             System.out.println("\n");
 
+        });
+    }
+    
+    private void initSpeedChangeListener() {
+        ControlPanel controlPanel = frm.getControlPanel();
+        controlPanel.addSpeedSliderChangeState((e) -> {
+            speed = controlPanel.getSpeed();
+            algorithm.setSpeed(speed);
+            frm.getVisualPanel().setSpeed(speed);
         });
     }
 

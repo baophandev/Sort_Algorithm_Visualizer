@@ -8,6 +8,7 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.event.ChangeListener;
 import view.DataInput;
 
 /**
@@ -105,7 +106,7 @@ public class ControlPanel extends javax.swing.JPanel {
         sortAscendingBtn = new javax.swing.JButton();
         stopSortBtn = new javax.swing.JButton();
         sortDescendingBtn = new javax.swing.JButton();
-        jSlider1 = new javax.swing.JSlider();
+        speedSlider = new javax.swing.JSlider();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         compareBtn = new javax.swing.JButton();
@@ -321,10 +322,14 @@ public class ControlPanel extends javax.swing.JPanel {
         sortDescendingBtn.setText("Sắp xếp giảm dần");
         sortDescendingBtn.setEnabled(false);
 
-        jSlider1.setBackground(new java.awt.Color(255, 255, 255));
-        jSlider1.setForeground(new java.awt.Color(0, 102, 153));
-        jSlider1.setCursor(new java.awt.Cursor(java.awt.Cursor.SE_RESIZE_CURSOR));
-        jSlider1.setDoubleBuffered(true);
+        speedSlider.setBackground(new java.awt.Color(255, 255, 255));
+        speedSlider.setForeground(new java.awt.Color(0, 102, 153));
+        speedSlider.setMaximum(3);
+        speedSlider.setMinimum(1);
+        speedSlider.setMinorTickSpacing(1);
+        speedSlider.setValue(1);
+        speedSlider.setCursor(new java.awt.Cursor(java.awt.Cursor.SE_RESIZE_CURSOR));
+        speedSlider.setDoubleBuffered(true);
 
         jLabel3.setBackground(new java.awt.Color(102, 102, 102));
         jLabel3.setFont(new java.awt.Font("K2D", 0, 12)); // NOI18N
@@ -341,7 +346,7 @@ public class ControlPanel extends javax.swing.JPanel {
                         .addComponent(sortAscendingBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(sortDescendingBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                         .addComponent(stopSortBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSlider1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(speedSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addComponent(jLabel3))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
@@ -356,7 +361,7 @@ public class ControlPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -459,6 +464,14 @@ public class ControlPanel extends javax.swing.JPanel {
         return datas.isEmpty() ? null : datas;
     }
     
+    public void addSpeedSliderChangeState(ChangeListener listener) {
+        speedSlider.addChangeListener(listener);
+    }
+    
+    public int getSpeed() {
+        return speedSlider.getValue();
+    }
+    
     public void addFileBtnListener(ActionListener listener){
         readFileBtn.addActionListener(listener);
     }
@@ -488,13 +501,13 @@ public class ControlPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JSlider jSlider1;
     private javax.swing.JButton randomBtn;
     private javax.swing.JDialog rdSizeDialog;
     private javax.swing.JButton readFileBtn;
     private javax.swing.JSpinner sizeSpiner;
     private javax.swing.JButton sortAscendingBtn;
     private javax.swing.JButton sortDescendingBtn;
+    private javax.swing.JSlider speedSlider;
     private javax.swing.JSpinner spiner;
     private javax.swing.JButton stopSortBtn;
     // End of variables declaration//GEN-END:variables
