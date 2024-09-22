@@ -6,7 +6,6 @@ package model;
 
 import config.Configuration;
 import java.util.Comparator;
-import javax.swing.SwingWorker;
 
 /**
  *
@@ -18,7 +17,7 @@ public class InsertionSort extends Sort {
         super(visualPanel, codeVisual, infomationPanel);
     }
 
-    public InsertionSort(){
+    public InsertionSort() {
         super();
     }
 
@@ -45,59 +44,37 @@ public class InsertionSort extends Sort {
 
     @Override
     public void sort(int[] array, int sortType) {
-        SwingWorker<Void, Void> worker;
-        worker = new SwingWorker<>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-                Comparator<Integer> cmptor;
-                if (sortType == Configuration.ASC) {
-                    cmptor = (current, previous) -> current - previous;
-                } else {
-                    cmptor = (current, previous) -> previous - current;
-                }
-                
-                for(int i = 0; i < array.length && !isStop; i++){
-                    setSelectedLine(1);
-                    
-                    visualPanel.setNodeColor(i, Configuration.HIGHLIGHT_NODE);
-                    visualPanel.setNodeLabel1(i, "i="+i);
-                    
-                    setSelectedLine(2);
-                    
-                    int j = i;
-                    while (j > 0 && cmptor.compare(array[j], array[j-1]) < 0 && !isStop) {
-                        setSelectedLine(3);
-                        visualPanel.setNodeColor(j, Configuration.YELLOW);
-                        visualPanel.setNodeColor(j-1, Configuration.YELLOW);
-                        
-                        setSelectedLine(4);
-                        swap(array, j-1, j);
-                        
-                        visualPanel.setNodeColor(j-1, Configuration.COLOR_HEADER);
-                        visualPanel.setNodeColor(j, Configuration.COLOR_HEADER);
-                        setSelectedLine(5);
-                        j--;
-                    }
-                    visualPanel.setNodeLabel1(i, "i="+i);
-                }
-                
-                return null;
-            }
-            
-            
+        Comparator<Integer> cmptor;
+        if (sortType == Configuration.ASC) {
+            cmptor = (current, previous) -> current - previous;
+        } else {
+            cmptor = (current, previous) -> previous - current;
+        }
 
-            @Override
-            protected void done() {
-                if(!isStop){
-                    System.out.println("Sorting completed.");
-                    infomationPanel.setText("Hoàn thành sắp xếp");
-                }else{
-                    infomationPanel.setText("Đã dừng sắp xếp");
-                }
-            }
-        };
+        for (int i = 0; i < array.length && !isStop; i++) {
+            setSelectedLine(1);
 
-        worker.execute();
+            visualPanel.setNodeColor(i, Configuration.HIGHLIGHT_NODE);
+            visualPanel.setNodeLabel1(i, "i=" + i);
+
+            setSelectedLine(2);
+
+            int j = i;
+            while (j > 0 && cmptor.compare(array[j], array[j - 1]) < 0 && !isStop) {
+                setSelectedLine(3);
+                visualPanel.setNodeColor(j, Configuration.YELLOW);
+                visualPanel.setNodeColor(j - 1, Configuration.YELLOW);
+
+                setSelectedLine(4);
+                swap(array, j - 1, j);
+
+                visualPanel.setNodeColor(j - 1, Configuration.COLOR_HEADER);
+                visualPanel.setNodeColor(j, Configuration.COLOR_HEADER);
+                setSelectedLine(5);
+                j--;
+            }
+            visualPanel.setNodeLabel1(i, "i=" + i);
+        }
     }
 
 }
