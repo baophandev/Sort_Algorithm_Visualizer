@@ -7,9 +7,13 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,11 +27,11 @@ public class MainFrame extends javax.swing.JFrame {
     private VisualPanel visualPanel;
     private CodeVisual codeVisual;
     private InfomationPanel infomationPanel;
-    
-    public static MainFrame getInstance(){
+
+    public static MainFrame getInstance() {
         return instance;
     }
-    
+
     public MainFrame() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -36,8 +40,9 @@ public class MainFrame extends javax.swing.JFrame {
         String iconPath = "D:\\Myproject\\NLCS\\SortAlgorithmVisualizer\\SRC\\src\\images\\logo.png";
         ImageIcon icon = new ImageIcon(iconPath);
         setIconImage(icon.getImage());
-        
+
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -52,45 +57,76 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void setupUi(){
+    private void setupUi() {
         setLayout(new BorderLayout());
         headerPanel = new HeaderPanel();
         controlPanel = new ControlPanel();
         visualPanel = new VisualPanel();
-        codeVisual = new CodeVisual(); 
+        codeVisual = new CodeVisual();
         infomationPanel = new InfomationPanel();
-        
+
         add(headerPanel, BorderLayout.NORTH);
         add(controlPanel, BorderLayout.WEST);
         add(visualPanel, BorderLayout.CENTER);
         add(infomationPanel, BorderLayout.SOUTH);
     }
-    
-    public File getFileToRead(){
+
+    public File getSavingFile() {
+        int res = fileChooser.showSaveDialog(this);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            File saveFile = fileChooser.getSelectedFile();
+            String fileName = saveFile.getName();
+            if (!fileName.contains(".txt")) {
+                saveFile = new File(saveFile.getAbsolutePath() + ".txt");
+            }
+            if (saveFile.exists()) {
+                try {
+                    saveFile.createNewFile();
+                } catch (IOException ex) {
+                    Logger.getLogger(controller.Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            return saveFile;
+        } else {
+            return null;
+        }
+    }
+
+    public void showAlert(String msg, String title) {
+        JOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public boolean showConfirmMessage(String msg) {
+        int res = JOptionPane.showConfirmDialog(this, msg, "Thông báo",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        return res == JOptionPane.YES_OPTION;
+    }
+
+    public File getFileToRead() {
         int choice = fileChooser.showOpenDialog(this);
         return choice == JFileChooser.APPROVE_OPTION ? fileChooser.getSelectedFile() : null;
     }
-    
-    public ControlPanel getControlPanel(){
+
+    public ControlPanel getControlPanel() {
         return controlPanel;
     }
-    
-    public VisualPanel getVisualPanel(){
+
+    public VisualPanel getVisualPanel() {
         return visualPanel;
     }
-    
-    public HeaderPanel getHeaderPanel(){
+
+    public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }
-    
-    public  CodeVisual getCodeVisual(){
+
+    public CodeVisual getCodeVisual() {
         return codeVisual;
     }
-    
-    public InfomationPanel getInfomationPanel(){
+
+    public InfomationPanel getInfomationPanel() {
         return infomationPanel;
     }
-            
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser fileChooser;
     // End of variables declaration//GEN-END:variables
