@@ -17,5 +17,8 @@ public class Configuration {
     public static final int SELECTION_SORT = 0;
     public static final int BUBBLE_SORT = 1;
     public static final int INSERTION_SORT = 2;
+    public static final int MERGE_SORT = 3;
+    public static final int QUICK_SORT = 4;
+    public static final int HEAP_SORT = 5;
     
 }

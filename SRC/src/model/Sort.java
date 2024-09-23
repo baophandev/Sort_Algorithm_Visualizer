@@ -37,6 +37,7 @@ public abstract class Sort {
 
     // Thực hiện thuật toán sắp xếp
     public abstract void sort(int[] array, int sortType);
+    public abstract int sortWithoutAnimation(int[] array, int sortType);
 
     // Thực hiện việc đổi chỗ hai phần tử trong mảng
     protected void swap(int[] array, int i, int j) {

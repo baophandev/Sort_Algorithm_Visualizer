@@ -6,18 +6,21 @@ package model;
 
 import config.Configuration;
 import java.util.Comparator;
+import java.util.function.BiPredicate;
 
 /**
  *
  * @author GIA BAO
  */
-public class BubbleSort extends Sort {
+public class QuickSort extends Sort {
 
-    public BubbleSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
+    private BiPredicate<Integer, Integer> fstPred, scdPred;
+    
+    public QuickSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
         super(visualPanel, codeVisual, infomationPanel);
     }
 
-    public BubbleSort() {
+    public QuickSort() {
         super();
     }
 
@@ -91,26 +94,74 @@ public class BubbleSort extends Sort {
         }
     }
 
-    @Override
-    public int sortWithoutAnimation(int[] array, int sortType){
-        swapCounts = 0;
-        Comparator<Integer> cmptor;
-        if (sortType == Configuration.ASC) {
-            cmptor = (current, previous) -> current - previous;
-        } else {
-            cmptor = (current, previous) -> previous - current;
+    // Dung de so sanh toi uu, khong animation
+    private int findPivotNoAnimation(int[] array, int i, int j) {
+        int firstkey, k = i + 1;
+        firstkey = array[i];
+        while (k <= j && array[k] == firstkey && !isStop) {
+            k++;
         }
+        if (k > j && !isStop) {
+            return -1;
+        } else if (array[k] > firstkey && !isStop) {
+            return k;
+        } else {
+            return i;
+        }
+    }
 
-        for (int i = 0; i < array.length - 1 ; i++) { // 1         
-            for (int j = array.length - 1; j > i; j--) { // 2
-                if (cmptor.compare(array[j], array[j - 1]) < 0) { // 3
-                    int tmp = array[j-1];
-                    array[j-1] = array[j];
-                    array[j] = tmp;
-                    swapCounts++;
-                }
+    private int partitionNoAnimation(int[] array, int i, int j, int pivot) {
+        int Left = i, Right = j;
+
+        while (Left <= Right && !isStop) {
+            while (fstPred.test(array[Left], pivot) && !isStop) {
+                Left++;
+            }
+            while (scdPred.test(array[Right], pivot) && !isStop) {
+                Right--;
+            }
+            if (Left < Right && !isStop) {
+                int tmp = array[Left];
+                array[Left] = array[Right];
+                array[Right] = tmp;
+                swapCounts++;
             }
         }
+        return Left;
+    }
+
+    private void quickSortNoAnimation(int[] array, int i, int j) {
+        int k, pivotindex, pivot;
+        // Tìm chốt
+        pivotindex = findPivotNoAnimation(array, i, j);
+        if (pivotindex != -1 && !isStop) {
+            pivot = array[pivotindex];
+            // Phân hoạch tại k
+            k = partitionNoAnimation(array, i, j, pivot);
+            quickSortNoAnimation(array, i, k - 1);
+            quickSortNoAnimation(array, k, j);
+        }
+    }
+
+    @Override
+    public int sortWithoutAnimation(int[] array, int sortOrder) {
+        swapCounts = 0;
+        if (sortOrder == Configuration.ASC) {
+            /*
+                array[Left] < pivot
+                array[Right] >= pivot
+             */
+            fstPred = (left, pivot) -> left < pivot;
+            scdPred = (right, pivot) -> right >= pivot;
+        } else {
+            /*
+                array[Left] >= pivot
+                array[Right] < pivot
+             */
+            fstPred = (left, pivot) -> left >= pivot;
+            scdPred = (right, pivot) -> right < pivot;
+        }
+        quickSortNoAnimation(array, 0, array.length - 1);
         return swapCounts;
     }
     

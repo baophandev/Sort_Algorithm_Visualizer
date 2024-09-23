@@ -23,11 +23,19 @@ import javax.swing.JOptionPane;
 import config.Configuration;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import javax.swing.SwingWorker;
 import model.BubbleSort;
 import model.SelectionSort;
 import model.InsertionSort;
+import model.MergeSort;
+import model.HeapSort;
+import model.QuickSort;
 import view.CodeVisual;
 
 /**
@@ -46,6 +54,7 @@ public class Controller {
     private Sort algorithm;
     private int sortType, speed;
     private File saveFile;
+    private volatile boolean isComparing = false;
 
     public Controller() {
         frm = MainFrame.getInstance();
@@ -63,6 +72,7 @@ public class Controller {
         initSortBtnDESC();
         initStopBtnListener();
         initSpeedChangeListener();
+        initOptimalComparison();
     }
 
     private void initSortArigthmListener() {
@@ -81,6 +91,12 @@ public class Controller {
                     new BubbleSort(visualPanel, codeVisual, infomationPanel);
                 case Configuration.INSERTION_SORT ->
                     new InsertionSort(visualPanel, codeVisual, infomationPanel);
+                case Configuration.MERGE_SORT ->
+                    new MergeSort(visualPanel, codeVisual, infomationPanel);
+                case Configuration.HEAP_SORT ->
+                    new HeapSort(visualPanel, codeVisual, infomationPanel);
+                case Configuration.QUICK_SORT ->
+                    new QuickSort(visualPanel, codeVisual, infomationPanel);
                 default ->
                     new SelectionSort(visualPanel, codeVisual, infomationPanel);
             };
@@ -129,21 +145,21 @@ public class Controller {
                                 .collect(Collectors.toList());
 
                         frm.getVisualPanel().setNodes(listToSort); // Truyền danh sách vào setNodes
-                        String res = "Kết quả sắp xếp tăng dần:" 
-                                +"\nMảng gốc: " + Arrays.toString(originArray)
+                        String res = "Kết quả sắp xếp tăng dần:"
+                                + "\nMảng gốc: " + Arrays.toString(originArray)
                                 + "\nKết quả sắp xếp: " + Arrays.toString(arrayToSort)
-                                +"\nSố lần hoán đổi: " + algorithm.getSwapCount();
+                                + "\nSố lần hoán đổi: " + algorithm.getSwapCount();
                         if (frm.showConfirmMessage(res + "\nBạn có muốn xuất kết quả ra file không?")) {
                             saveSortingResultToFile(res);
                         }
-                    }else{
+                    } else {
                         frm.getInfomationPanel().setText("Đã dừng sắp xếp");
                     }
                 }
             };
 
             worker.execute();
-            
+
             for (int i = 0; i < arrayToSort.length; i++) {
                 System.err.print(arrayToSort[i] + ", ");
             }
@@ -196,16 +212,16 @@ public class Controller {
                                 + "\nKết quả sắp xếp: " + Arrays.toString(arrayToSort);
                         if (frm.showConfirmMessage(res + "\nBạn có muốn xuất kết quả ra file không?")) {
                             saveSortingResultToFile(res);
-                            
+
                         }
-                    }else{
+                    } else {
                         frm.getInfomationPanel().setText("Đã dừng sắp xếp");
                     }
                 }
             };
 
             worker.execute();
-            
+
             for (int i = 0; i < arrayToSort.length; i++) {
                 System.err.print(arrayToSort[i] + ", ");
             }
@@ -213,7 +229,94 @@ public class Controller {
 
         });
     }
-    
+
+    private void initOptimalComparison() {
+        ControlPanel controlPanel = frm.getControlPanel();
+        VisualPanel visualPanel = frm.getVisualPanel();
+
+        controlPanel.addCompareBtnListener((e) -> {
+            if (isComparing) {
+                frm.showAlert("Đang thực hiện so sánh...", "Thông báo");
+                return;
+            }
+
+            isComparing = true;
+
+            List<Sort> algorithms = new ArrayList<>(Arrays.asList(
+                    new SelectionSort(),
+                    new InsertionSort(),
+                    new BubbleSort(),
+                    new QuickSort(),
+                    new HeapSort(),
+                    new MergeSort()
+            ));
+
+            int[] arrayforSortAsc = getSortData();
+            if (arrayforSortAsc == null) {
+                isComparing = false;
+                return;
+            }
+
+            int[] arrayforSortDesc = Arrays.copyOf(arrayforSortAsc, arrayforSortAsc.length);
+            final int[] originArray = Arrays.copyOf(arrayforSortAsc, arrayforSortAsc.length);
+
+            // Khởi tạo các call back thực thi các thuật toán sắp xếp
+            List<Callable<Integer>> ascTasks = new ArrayList<>();
+            List<Callable<Integer>> descTasks = new ArrayList<>();
+
+            for (int i = 0; i < algorithms.size(); i++) {
+                final int index = i;
+                ascTasks.add(() -> {
+                    return algorithms.get(index).sortWithoutAnimation(Arrays.copyOf(originArray, originArray.length), Configuration.ASC);
+                });
+
+                descTasks.add(() -> {
+                    return algorithms.get(index).sortWithoutAnimation(Arrays.copyOf(originArray, originArray.length), Configuration.DESC);
+                });
+            }
+
+            // Sử dụng ExecutorService để chạy các công việc không đồng bộ
+            ExecutorService executor = Executors.newFixedThreadPool(algorithms.size());
+            try {
+                // Thực hiện các công việc ASC và thu thập kết quả
+                List<Future<Integer>> ascResults = executor.invokeAll(ascTasks);
+
+                // Chờ và lấy kết quả từ mỗi Future cho ASC
+                int selectionAscSwapCount = ascResults.get(0).get();
+                int insertionAscSwapCount = ascResults.get(1).get();
+                int bubbleAscSwapCount = ascResults.get(2).get();
+                int quickAscSwapCount = ascResults.get(3).get();
+                int heapAscSwapCount = ascResults.get(4).get();
+                int mergeAscSwapCount = ascResults.get(5).get();
+
+                // Gọi hàm setOptimalASCResultValue để đặt giá trị lên giao diện cho ASC
+                controlPanel.setOptimalASCResultPanel(selectionAscSwapCount, insertionAscSwapCount, bubbleAscSwapCount, quickAscSwapCount, heapAscSwapCount, mergeAscSwapCount);
+                controlPanel.setOptimalASCResultLabel(selectionAscSwapCount, insertionAscSwapCount, bubbleAscSwapCount, quickAscSwapCount, heapAscSwapCount, mergeAscSwapCount);
+
+                // Thực hiện các công việc DESC và thu thập kết quả
+                List<Future<Integer>> descResults = executor.invokeAll(descTasks);
+
+                // Chờ và lấy kết quả từ mỗi Future cho DESC
+                int selectionDescSwapCount = descResults.get(0).get();
+                int insertionDescSwapCount = descResults.get(1).get();
+                int bubbleDescSwapCount = descResults.get(2).get();
+                int quickDescSwapCount = descResults.get(3).get();
+                int heapDescSwapCount = descResults.get(4).get();
+                int mergeDescSwapCount = descResults.get(5).get();
+
+                // Gọi hàm setOptimalDESCResultValue để đặt giá trị lên giao diện cho DESC
+                controlPanel.setOptimalDESCResultPanel(selectionDescSwapCount, insertionDescSwapCount, bubbleDescSwapCount, quickDescSwapCount, heapDescSwapCount, mergeDescSwapCount);
+                controlPanel.setOptimalDESCResultLabel(selectionDescSwapCount, insertionDescSwapCount, bubbleDescSwapCount, quickDescSwapCount, heapDescSwapCount, mergeDescSwapCount);
+
+            } catch (InterruptedException | ExecutionException ex) {
+                ex.printStackTrace();
+            } finally {
+                executor.shutdown(); // Chỉ shutdown sau khi hoàn thành cả ASC và DESC
+                isComparing = false; // Đặt lại trạng thái sau khi hoàn thành
+            }
+        });
+    }
+
     private void initSpeedChangeListener() {
         ControlPanel controlPanel = frm.getControlPanel();
         controlPanel.addSpeedSliderChangeState((e) -> {

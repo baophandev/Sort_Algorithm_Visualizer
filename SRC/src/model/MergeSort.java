@@ -11,13 +11,15 @@ import java.util.Comparator;
  *
  * @author GIA BAO
  */
-public class BubbleSort extends Sort {
+public class MergeSort extends Sort {
+    
+    private Comparator<Integer> cmptor;
 
-    public BubbleSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
+    public MergeSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
         super(visualPanel, codeVisual, infomationPanel);
     }
 
-    public BubbleSort() {
+    public MergeSort() {
         super();
     }
 
@@ -91,26 +93,67 @@ public class BubbleSort extends Sort {
         }
     }
 
-    @Override
-    public int sortWithoutAnimation(int[] array, int sortType){
-        swapCounts = 0;
-        Comparator<Integer> cmptor;
-        if (sortType == Configuration.ASC) {
-            cmptor = (current, previous) -> current - previous;
-        } else {
-            cmptor = (current, previous) -> previous - current;
+    // Dung de so sanh toi uu, khong animation
+    private void mergeNoAnimation(int[] array, int left, int mid, int right) {
+        int n1 = mid - left + 1,
+            n2 = right - mid;
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+        for (int i = 0; i < n1; i ++) {
+            L[i] = array[left + i];
         }
-
-        for (int i = 0; i < array.length - 1 ; i++) { // 1         
-            for (int j = array.length - 1; j > i; j--) { // 2
-                if (cmptor.compare(array[j], array[j - 1]) < 0) { // 3
-                    int tmp = array[j-1];
-                    array[j-1] = array[j];
-                    array[j] = tmp;
-                    swapCounts++;
-                }
+        for (int j = 0; j < n2; j++) {
+            R[j] = array[mid + 1 + j];
+        }
+        int i = 0, j = 0, k = left;
+        while (i < n1 && j < n2) {
+            if (cmptor.compare(L[i], R[j]) <= 0) { // 11
+                array[k] = L[i];
+                swapCounts++;
+                i++;
+            } else { // 14
+                array[k] = R[j];
+                swapCounts++;
+                j++;
             }
+            k++;
         }
+        while (i < n1) { // 20
+            array[k] = L[i];
+            swapCounts++;
+            i++;
+            k++;
+        }
+        while (j < n2) { // 25
+            array[k] = R[j];
+            swapCounts++;
+            j++;
+            k++;
+        }
+    }
+
+    private void mergeSortNoAnimation(int[] array, int left, int right) {
+        if (left < right) {
+            // Find the middle point
+            int mid = left + (right - left) / 2;
+            // Sort first and second halves
+            mergeSortNoAnimation(array, left, mid);
+            mergeSortNoAnimation(array, mid + 1, right);
+            // Merge the sorted halves
+            mergeNoAnimation(array, left, mid, right);
+        }
+    }
+
+    @Override
+    public int sortWithoutAnimation(int[] array, int sortOrder) {
+        swapCounts = 0;
+        if (sortOrder == Configuration.ASC) {
+            cmptor = (L, R) -> L - R;
+        } else {
+            cmptor = (L, R) -> R - L;
+        }
+        mergeSortNoAnimation(array, 0, array.length - 1);
+
         return swapCounts;
     }
     
