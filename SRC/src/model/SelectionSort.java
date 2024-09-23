@@ -131,4 +131,31 @@ public class SelectionSort extends Sort {
         }
     }
 
+    @Override
+    public int sortWithoutAnimation(int[] array, int sortType){
+        swapCounts = 0;
+        Comparator<Integer> cmptor;
+        if (sortType == Configuration.ASC) { // array[j] < array[minIdx]
+            cmptor = (current, key) -> current - key;
+        } else { // array[j] > array[maxIdx]
+            cmptor = (current, key) -> key - current;
+        }
+
+        for (int i = 0; i < array.length - 1 && !isStop; i++) { // 1
+            int keyIdx = i; // 2            
+            for (int j = i + 1; j < array.length && !isStop; j++) { // 3               
+                if (cmptor.compare(array[j], array[keyIdx]) < 0) { // 4       
+                    keyIdx = j;
+                }
+            }
+            
+            if (i == keyIdx) continue;
+            int tmp = array[i];
+            array[i] = array[keyIdx];
+            array[keyIdx] = tmp;
+            swapCounts++;
+        }
+        return swapCounts;
+    }
+    
 }

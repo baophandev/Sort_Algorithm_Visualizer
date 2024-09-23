@@ -4,6 +4,12 @@
  */
 package view;
 
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+
 /**
  *
  * @author GIA BAO
@@ -16,6 +22,26 @@ public class DataInput extends javax.swing.JPanel {
     public DataInput() {
         initComponents();
         this.setSize(50, 20);
+
+        // Set the spinner model to only accept values from 0 to 50
+        SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 50, 1);
+        valueInput.setModel(model);
+
+        // Add InputVerifier to check for invalid values when focus is lost
+        valueInput.setInputVerifier(new InputVerifier() {
+            @Override
+            public boolean verify(JComponent input) {
+                JSpinner spinner = (JSpinner) input;
+                int value = (int) spinner.getValue();
+
+                // Kiểm tra giá trị và hiển thị thông báo lỗi nếu vượt giới hạn
+                if (value < 0 || value > 50) {
+                    JOptionPane.showMessageDialog(DataInput.this, "Giá trị phải nằm trong khoảng từ 0 đến 50.", "Lỗi giá trị", JOptionPane.ERROR_MESSAGE);
+                    return false;  // Trả về false để không chấp nhận giá trị
+                }
+                return true;
+            }
+        });
     }
 
     /**
@@ -58,15 +84,22 @@ public class DataInput extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    public int getData() throws NumberFormatException{
-        return Integer.parseInt(String.valueOf(valueInput.getModel().getValue()));
+    public int getData() throws NumberFormatException {
+        int value = Integer.parseInt(String.valueOf(valueInput.getModel().getValue()));
+
+        if (value < 0 || value > 50) {
+            // Hiển thị thông báo lỗi
+            JOptionPane.showMessageDialog(this, "Giá trị phải nằm trong khoảng từ 0 đến 50.", "Lỗi giá trị", JOptionPane.ERROR_MESSAGE);
+            return -1; // Giá trị trả về khi lỗi
+        }
+
+        return value;
     }
 
-    public void setDataIdx(int index){
+    public void setDataIdx(int index) {
         nameLbl.setText("Giá trị " + index);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel nameLbl;
     private javax.swing.JSpinner valueInput;

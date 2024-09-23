@@ -77,4 +77,27 @@ public class InsertionSort extends Sort {
         }
     }
 
+    
+    @Override
+    public int sortWithoutAnimation(int[] array, int sortType){
+        swapCounts = 0;
+        Comparator<Integer> cmptor;
+        if (sortType == Configuration.ASC) { // array[j] < array[j - 1]
+            cmptor = (current, previous) -> current - previous;
+        } else { // array[j] > array[j - 1]
+            cmptor = (current, previous) -> previous - current;
+        }
+
+        for (int i = 1; i < array.length && !isStop; i++) { // 1
+            int j = i; // 2
+            while (j > 0 && cmptor.compare(array[j], array[j - 1]) < 0 && !isStop) { // 3
+                int tmp = array[j - 1];
+                array[j - 1] = array[j];
+                array[j] = tmp;
+                swapCounts++;
+                j--; // 5
+            }
+        }
+        return swapCounts;
+    }
 }
