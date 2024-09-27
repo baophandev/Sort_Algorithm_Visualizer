@@ -21,7 +21,9 @@ import java.util.logging.Logger;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 import config.Configuration;
+import java.io.BufferedWriter;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -29,6 +31,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
+import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 import model.BubbleSort;
 import model.SelectionSort;
@@ -275,6 +278,9 @@ public class Controller {
                 });
             }
 
+            // Sử dụng một mảng String để lưu trữ kết quả
+            final String[] res = { "Mảng gốc: " + Arrays.toString(originArray) };
+
             // Sử dụng ExecutorService để chạy các công việc không đồng bộ
             ExecutorService executor = Executors.newFixedThreadPool(algorithms.size());
             try {
@@ -292,6 +298,9 @@ public class Controller {
                 // Gọi hàm setOptimalASCResultValue để đặt giá trị lên giao diện cho ASC
                 controlPanel.setOptimalASCResultPanel(selectionAscSwapCount, insertionAscSwapCount, bubbleAscSwapCount, quickAscSwapCount, heapAscSwapCount, mergeAscSwapCount);
                 controlPanel.setOptimalASCResultLabel(selectionAscSwapCount, insertionAscSwapCount, bubbleAscSwapCount, quickAscSwapCount, heapAscSwapCount, mergeAscSwapCount);
+                // Cập nhật chuỗi res
+                res[0] += "\nSố lần hoán đổi - Sắp xếp tăng dần"+"\n   +Selection sort: " + selectionAscSwapCount + "\n   +Insertion Sort" + insertionAscSwapCount 
+                +"\n   +BubbleSort" + bubbleAscSwapCount;
 
                 // Thực hiện các công việc DESC và thu thập kết quả
                 List<Future<Integer>> descResults = executor.invokeAll(descTasks);
@@ -307,6 +316,10 @@ public class Controller {
                 // Gọi hàm setOptimalDESCResultValue để đặt giá trị lên giao diện cho DESC
                 controlPanel.setOptimalDESCResultPanel(selectionDescSwapCount, insertionDescSwapCount, bubbleDescSwapCount, quickDescSwapCount, heapDescSwapCount, mergeDescSwapCount);
                 controlPanel.setOptimalDESCResultLabel(selectionDescSwapCount, insertionDescSwapCount, bubbleDescSwapCount, quickDescSwapCount, heapDescSwapCount, mergeDescSwapCount);
+
+                controlPanel.addExportCompareResultListner((event) -> {
+                    saveSortingResultToFile(res[0]);
+                });
 
             } catch (InterruptedException | ExecutionException ex) {
                 ex.printStackTrace();
