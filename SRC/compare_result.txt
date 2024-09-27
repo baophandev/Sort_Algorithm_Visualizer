@@ -1,0 +1,4 @@
+Mảng gốc: [34, 28, 15, 2, 9, 43, 1, 46, 23, 6]
+ Selection sort: 8
+ Insertion Sort26
+ BubbleSort26

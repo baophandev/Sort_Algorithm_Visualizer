@@ -84,6 +84,10 @@ public class ControlPanel extends javax.swing.JPanel {
         compareBtn.addActionListener(listener);
     }
     
+    public void addExportCompareResultListner(ActionListener listener){
+        exportCompareResultBtn.addActionListener(listener);
+    }
+    
     public int getRandomSize() {
         return (int) spiner.getValue();
     }
@@ -151,6 +155,7 @@ public class ControlPanel extends javax.swing.JPanel {
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        exportCompareResultBtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         randomBtn = new javax.swing.JButton();
         inputKeyBoardBtn = new javax.swing.JButton();
@@ -734,22 +739,35 @@ public class ControlPanel extends javax.swing.JPanel {
         jLabel18.setForeground(new java.awt.Color(31, 92, 169));
         jLabel18.setText("Mảng gốc: ");
 
+        exportCompareResultBtn.setBackground(new java.awt.Color(0, 175, 224));
+        exportCompareResultBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
+        exportCompareResultBtn.setForeground(new java.awt.Color(255, 255, 255));
+        exportCompareResultBtn.setText("Xuất kết quả");
+        exportCompareResultBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportCompareResultBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(exportCompareResultBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -762,6 +780,8 @@ public class ControlPanel extends javax.swing.JPanel {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportCompareResultBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1070,6 +1090,15 @@ public class ControlPanel extends javax.swing.JPanel {
         optimalComparison.setLocationRelativeTo(null);
     }//GEN-LAST:event_compareBtnActionPerformed
 
+    private void exportCompareResultBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportCompareResultBtnActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_exportCompareResultBtnActionPerformed
+
+    private void export(){
+        
+    }
+    
     public void disposeAllDialog() {
         rdSizeDialog.dispose();
     }
@@ -1079,6 +1108,7 @@ public class ControlPanel extends javax.swing.JPanel {
     private javax.swing.JButton acceptRdSizeBtn;
     private javax.swing.JButton acceptSizeBtn;
     private javax.swing.JButton compareBtn;
+    private javax.swing.JButton exportCompareResultBtn;
     private javax.swing.JDialog initArrayDialog;
     private javax.swing.JButton inputKeyBoardBtn;
     private javax.swing.JLabel jLabel1;
