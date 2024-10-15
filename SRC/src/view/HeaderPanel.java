@@ -4,6 +4,7 @@ import java.awt.Color;
 import config.Configuration;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import view.UserGuide;
 
 /**
  *
@@ -80,11 +81,21 @@ public class HeaderPanel extends javax.swing.JPanel {
         mergeSortBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
         mergeSortBtn.setForeground(new java.awt.Color(255, 255, 255));
         mergeSortBtn.setText("Merge Sort");
+        mergeSortBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mergeSortBtnActionPerformed(evt);
+            }
+        });
 
         quickSortBtn.setBackground(new java.awt.Color(31, 92, 169));
         quickSortBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
         quickSortBtn.setForeground(new java.awt.Color(255, 255, 255));
         quickSortBtn.setText("Quick Sort");
+        quickSortBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quickSortBtnActionPerformed(evt);
+            }
+        });
 
         jButton6.setBackground(new java.awt.Color(0, 204, 102));
         jButton6.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
@@ -95,6 +106,11 @@ public class HeaderPanel extends javax.swing.JPanel {
         jButton7.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("?");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         heapSortBtn.setBackground(new java.awt.Color(31, 92, 169));
         heapSortBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
@@ -144,7 +160,10 @@ public class HeaderPanel extends javax.swing.JPanel {
         selectionSortBtn.addActionListener(listener);
         insectionSortBtn.addActionListener(listener);
         bubbleSortBtn.addActionListener(listener);
+        quickSortBtn.addActionListener(listener);
+        mergeSortBtn.addActionListener(listener);
     }
+    
     
     private void selectionSortBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionSortBtnActionPerformed
         selectionSortBtn.setBackground(Color.white);
@@ -155,6 +174,12 @@ public class HeaderPanel extends javax.swing.JPanel {
         
         bubbleSortBtn.setForeground(Color.white);
         bubbleSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        quickSortBtn.setForeground(Color.white);
+        quickSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        mergeSortBtn.setForeground(Color.white);
+        mergeSortBtn.setBackground(Configuration.COLOR_HEADER);
         
         algorithm = Configuration.SELECTION_SORT;
     }//GEN-LAST:event_selectionSortBtnActionPerformed
@@ -169,6 +194,12 @@ public class HeaderPanel extends javax.swing.JPanel {
         bubbleSortBtn.setForeground(Color.white);
         bubbleSortBtn.setBackground(Configuration.COLOR_HEADER);
         
+        quickSortBtn.setForeground(Color.white);
+        quickSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        mergeSortBtn.setForeground(Color.white);
+        mergeSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
         algorithm = Configuration.INSERTION_SORT;
     }//GEN-LAST:event_insectionSortBtnActionPerformed
 
@@ -182,9 +213,79 @@ public class HeaderPanel extends javax.swing.JPanel {
         insectionSortBtn.setForeground(Color.white);
         insectionSortBtn.setBackground(Configuration.COLOR_HEADER);
         
+        quickSortBtn.setForeground(Color.white);
+        quickSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        mergeSortBtn.setForeground(Color.white);
+        mergeSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
         algorithm = Configuration.BUBBLE_SORT;
     }//GEN-LAST:event_bubbleSortBtnActionPerformed
 
+    private void quickSortBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quickSortBtnActionPerformed
+        // TODO add your handling code here:
+        quickSortBtn.setBackground(Color.white);
+        quickSortBtn.setForeground(Configuration.COLOR_HEADER);
+        
+        selectionSortBtn.setForeground(Color.white);
+        selectionSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        insectionSortBtn.setForeground(Color.white);
+        insectionSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        bubbleSortBtn.setForeground(Color.white);
+        bubbleSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        mergeSortBtn.setForeground(Color.white);
+        mergeSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        algorithm = Configuration.QUICK_SORT;
+    }//GEN-LAST:event_quickSortBtnActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        UserGuide userGuide = new UserGuide();
+        userGuide.setVisible(true);
+        userGuide.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void mergeSortBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mergeSortBtnActionPerformed
+        mergeSortBtn.setBackground(Color.white);
+        mergeSortBtn.setForeground(Configuration.COLOR_HEADER);
+        
+        selectionSortBtn.setForeground(Color.white);
+        selectionSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        insectionSortBtn.setForeground(Color.white);
+        insectionSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        bubbleSortBtn.setForeground(Color.white);
+        bubbleSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        quickSortBtn.setForeground(Color.white);
+        quickSortBtn.setBackground(Configuration.COLOR_HEADER);
+        
+        algorithm = Configuration.MERGE_SORT;
+    }//GEN-LAST:event_mergeSortBtnActionPerformed
+
+    public void disableBtn(){
+        bubbleSortBtn.setEnabled(false);
+        insectionSortBtn.setEnabled(false);
+        selectionSortBtn.setEnabled(false);
+        quickSortBtn.setEnabled(false);
+        mergeSortBtn.setEnabled(false);
+        heapSortBtn.setEnabled(false);
+    }
+    
+    public void enableBtn(){
+        bubbleSortBtn.setEnabled(true);
+        insectionSortBtn.setEnabled(true);
+        selectionSortBtn.setEnabled(true);
+        quickSortBtn.setEnabled(true);
+        mergeSortBtn.setEnabled(true);
+        heapSortBtn.setEnabled(true);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bubbleSortBtn;
