@@ -24,21 +24,52 @@ public class MergeSort extends Sort {
     }
 
     @Override
-    public String getCode(int sortType) {
+    public String getCode(int sortOrder) {
         StringBuilder sb = new StringBuilder();
-        sb.append("void BubbleSort(int array[]) {\n");
-        sb.append("        for(int i = 0; i < array.length - 1; i++){\n");
-        sb.append("           for(int j = array.length - 1; j>=1; j--) {\n");
-        if (sortType == Configuration.ASC) {
-            sb.append("             if (array[j] < array[j-1]) {\n");
+        sb.append("void Merge(int[] array, int left, int mid, int right) {\n");    //0
+        sb.append("    int n1 = mid - left + 1;\n");
+        sb.append("    int n2 = right - mid;\n");
+        sb.append("    int[] L = new int[n1];\n");
+        sb.append("    int[] R = new int[n2];\n");
+        sb.append("    for (int i = 0; i < n1; i ++)\n");
+        sb.append("        L[i] = array[left + i];\n");
+        sb.append("    for (int j = 0; j < n2; j ++)\n");
+        sb.append("        R[j] = array[mid + 1 + j];\n");
+        sb.append("    int i = 0, j = 0, k = left;\n"); // 9
+        sb.append("    while (i < n1 && j < n2) {\n"); // 10
+        if (sortOrder == Configuration.ASC) {
+            sb.append("        if (L[i] <= R[j]) {\n");
         } else {
-            sb.append("             if (array[j] > array[j-1]) {\n");
+            sb.append("        if (L[i] >= R[j]) {\n");
         }
-        sb.append("                 Swap(array[j], array[j-1]);\n");
-        sb.append("             }\n");
-        sb.append("         }\n");
-        sb.append("     }\n");
+        sb.append("            array[k] = L[i];\n");
+        sb.append("            i++;\n");
+        sb.append("        } else {\n");
+        sb.append("            array[k] = R[j];\n");
+        sb.append("            j++;\n");
+        sb.append("        }\n");
+        sb.append("        k++;\n");
+        sb.append("    }\n");
+        sb.append("    while (i < n1) {\n"); // 20
+        sb.append("        array[k] = L[i];\n");
+        sb.append("        i++;\n");
+        sb.append("        k++;\n");
+        sb.append("    }\n");
+        sb.append("    while (j < n2) {\n"); // 25
+        sb.append("        array[k] = R[j];\n");
+        sb.append("        j++;\n");
+        sb.append("        k++;\n");
+        sb.append("    }\n");
+        sb.append("}\n");
+        sb.append("void MergeSort(int[] array, int left, int right) {\n"); // 31
+        sb.append("    if (left < right) {\n");
+        sb.append("        int mid = (left + right) / 2;\n");
+        sb.append("        MergeSort(array, left, mid);\n");
+        sb.append("        MergeSort(array, mid + 1, right);\n");
+        sb.append("        Merge(array, left, mid, right);\n");
+        sb.append("    }\n");
         sb.append("}");
+
         return sb.toString();
     }
 

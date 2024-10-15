@@ -5,6 +5,7 @@
 package model;
 
 import config.Configuration;
+import java.awt.Color;
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 
@@ -15,7 +16,7 @@ import java.util.function.BiPredicate;
 public class QuickSort extends Sort {
 
     private BiPredicate<Integer, Integer> fstPred, scdPred;
-    
+
     public QuickSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
         super(visualPanel, codeVisual, infomationPanel);
     }
@@ -25,73 +26,162 @@ public class QuickSort extends Sort {
     }
 
     @Override
-    public String getCode(int sortType) {
+    public String getCode(int sortOrder) {
         StringBuilder sb = new StringBuilder();
-        sb.append("void BubbleSort(int array[]) {\n");
-        sb.append("        for(int i = 0; i < array.length - 1; i++){\n");
-        sb.append("           for(int j = array.length - 1; j>=1; j--) {\n");
-        if (sortType == Configuration.ASC) {
-            sb.append("             if (array[j] < array[j-1]) {\n");
-        } else {
-            sb.append("             if (array[j] > array[j-1]) {\n");
-        }
-        sb.append("                 Swap(array[j], array[j-1]);\n");
-        sb.append("             }\n");
-        sb.append("         }\n");
+
+        sb.append("int FindPivot(int array[], int i,int j) {\n");                        //0
+        sb.append("     int firstkey, k = i + 1;\n");
+        sb.append("     firstkey = array[i];\n");
+        sb.append("     while (k <= j && array[k] == firstkey) {\n");
+        sb.append("         k++;\n");
         sb.append("     }\n");
-        sb.append("}");
+        sb.append("     if (k > j)\n");
+        sb.append("         return -1;\n");
+        sb.append("     else if (array[k] > firstkey)\n");
+        sb.append("         return k;\n");
+        sb.append("     else return i;\n");
+        sb.append("}\n");
+        sb.append("int Partition(int array[], int i, int j, int pivot) {\n");             //12
+        sb.append("     int Left = i, Right = j;\n");
+        sb.append("     while (Left <= Right) {\n");
+        if (sortOrder == Configuration.ASC) {
+            sb.append("         while (array[Left] < pivot)\n");
+            sb.append("             Left++;\n");
+            sb.append("         while (array[Right] >= pivot)\n");
+        } else {
+            sb.append("         while (array[Left] >= pivot)\n");
+            sb.append("             Left++;\n");
+            sb.append("         while (array[Right] < pivot)\n");
+        }
+        sb.append("             Right--;\n");
+        sb.append("         if (Left < Right)\n");
+        sb.append("             Swap(array[Left], array[Right]);\n");
+        sb.append("     }\n");
+        sb.append("     return Left;\n");
+        sb.append("}\n");
+        sb.append("void QuickSort(int array[], int i, int j) {\n");                     //24
+        sb.append("     int k, pivotindex, pivot;\n");
+        sb.append("     pivotindex = FindPivot(array, i, j);\n");
+        sb.append("     if (pivotindex != -1) {\n");
+        sb.append("         pivot = array[pivotindex];\n");
+        sb.append("         k = Partition(array, i, j, pivot);\n");
+        sb.append("         QuickSort(array, i, k-1);\n");
+        sb.append("         QuickSort(array, k, j);\n");
+        sb.append("     }\n");
+        sb.append("}\n");
+
         return sb.toString();
+    }
+
+    private int findPivot(int[] array, int i, int j) {
+        int firstkey, k = i + 1;
+        setSelectedLine(1);
+        firstkey = array[i];
+        setSelectedLine(2);
+        setSelectedLine(3);
+        while (k <= j && array[k] == firstkey && !isStop) {
+            k++;
+            setSelectedLine(4);
+        }
+        if (k > j && !isStop) {
+            return -1;
+        } else if (array[k] > firstkey && !isStop) {
+            infomationPanel.setText("Chốt bằng: " + k);
+            return k;
+        } else {
+            setSelectedLine(12);
+            return i;
+        }
+    }
+
+    private int partition(int[] array, int i, int j, int pivot) {
+        int Left = i, Right = j;
+        setSelectedLine(13);
+        setSelectedLine(14);
+
+        while (Left <= Right && !isStop) {
+            while (fstPred.test(array[Left], pivot) && !isStop) {
+                setSelectedLine(15);
+                setSelectedLine(16);
+                Left++;
+                visualPanel.setNodeColor(Left, Configuration.YELLOW);
+            }
+
+            while (scdPred.test(array[Right], pivot) && !isStop) {
+                setSelectedLine(17);
+                setSelectedLine(18);
+                Right--;
+                visualPanel.setNodeColor(Right, Configuration.YELLOW);
+            }
+
+            setSelectedLine(19);
+            if (Left < Right && !isStop) {
+                setSelectedLine(20);
+                swap(array, Left, Right);
+                visualPanel.setNodeColor(Left, Configuration.HIGHLIGHT_NODE);
+                visualPanel.setNodeColor(Right, Configuration.HIGHLIGHT_NODE);
+            }
+        }
+
+        setSelectedLine(22);
+        return Left;
+    }
+
+    private void quickSort(int[] array, int i, int j) {
+        setSelectedLine(24);
+        int k, pivotindex, pivot;
+        setSelectedLine(25);
+
+        for (int l = i; l <= j && !isStop; l++) {
+            visualPanel.setNodeColor(l, Configuration.COLOR_SUBHEADER);
+        }
+
+        //Tìm chốt
+        setSelectedLine(26);
+        pivotindex = findPivot(array, i, j);
+        setSelectedLine(0);
+
+        if (pivotindex != -1 && !isStop) {
+            setSelectedLine(27);
+            setSelectedLine(28);
+            pivot = array[pivotindex];
+            visualPanel.setNodeColor(pivotindex, Color.PINK);
+            
+            //Phân hoạch tại k
+            setSelectedLine(29);
+            k = partition(array, i, j, pivot);
+            setSelectedLine(12);
+            visualPanel.setNodeColor(k, Color.ORANGE);
+            
+            for(int l = i; l <= j && !isStop; l++){
+                if(l == k && !isStop){
+                    continue;
+                }
+                visualPanel.setNodeColor(l, Configuration.COLOR_HEADER);
+            }
+            setSelectedLine(30);
+            quickSort(array, i, k-1);
+            for(int l = i; l <= k-1; l++){
+                visualPanel.setNodeColor(l, Configuration.HIGHLIGHT_NODE);
+            }
+            setSelectedLine(31);
+            quickSort(array, k, j);
+            for(int l = k; l <= j && !isStop; l++){
+                visualPanel.setNodeColor(l, Configuration.COLOR_SUBHEADER);
+            }
+        }
     }
 
     @Override
     public void sort(int[] array, int sortType) {
-        Comparator<Integer> cmptor;
         if (sortType == Configuration.ASC) {
-            cmptor = (current, previous) -> current - previous;
+            fstPred = (left, pivot) -> left < pivot;
+            scdPred = (right, pivot) -> right >= pivot;
         } else {
-            cmptor = (current, previous) -> previous - current;
+            fstPred = (left, pivot) -> left >= pivot;
+            scdPred = (right, pivot) -> right < pivot;
         }
-
-        infomationPanel.setText("Bắt đầu thuật toán sắp xếp nổi bọt");
-
-        for (int i = 0; i < array.length - 1 && !isStop; i++) {
-            setSelectedLine(1);
-            visualPanel.setNodeLabel(i, "i = " + i);
-            for (int j = array.length - 1; j > i && !isStop; j--) { // điều chỉnh lại hướng chạy của j
-                setSelectedLine(2);
-                int x = j - 1;
-                infomationPanel.setText("array[" + x + "]=" + array[j - 1] + " , array[" + j + "]= " + array[j]);
-                visualPanel.setNodeLabel(j, "j = " + j);
-                int y = j - 1;
-                visualPanel.setNodeLabel(j - 1, "j = " + y);
-                visualPanel.setNodeColor(j, config.Configuration.YELLOW);
-                visualPanel.setNodeColor(j - 1, config.Configuration.YELLOW);
-                setSelectedLine(3);
-
-                if (cmptor.compare(array[j], array[j - 1]) < 0) {  // Sử dụng j+1 để so sánh
-                    visualPanel.setNodeColor(j, config.Configuration.YELLOW);
-                    setSelectedLine(4);
-                    infomationPanel.setText("Hoán đổi i và j");
-                    swap(array, j - 1, j);  // Swap array[j] và array[j+1]
-                    delay();
-                    visualPanel.setNodeLabel(j, " ");
-                    visualPanel.setNodeLabel(j - 1, " ");
-                } else {
-                    visualPanel.setNodeColor(j, config.Configuration.COLOR_HEADER);
-                    visualPanel.setNodeColor(j - 1, config.Configuration.COLOR_HEADER);
-                    visualPanel.setNodeLabel(j, " ");
-                    visualPanel.setNodeLabel(j - 1, " ");
-                }
-                visualPanel.setNodeColor(i, config.Configuration.COLOR_HEADER);
-            }
-            if (!isStop) {
-                visualPanel.setNodeColor(i, config.Configuration.HIGHLIGHT_NODE);
-                visualPanel.setNodeLabel(i, " ");
-            }
-        }
-        if (!isStop) {
-            visualPanel.setNodeColor(array.length - 1, config.Configuration.HIGHLIGHT_NODE);
-        }
+        quickSort(array, 0, array.length-1);
     }
 
     // Dung de so sanh toi uu, khong animation
@@ -164,5 +254,5 @@ public class QuickSort extends Sort {
         quickSortNoAnimation(array, 0, array.length - 1);
         return swapCounts;
     }
-    
+
 }

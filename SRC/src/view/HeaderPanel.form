@@ -142,6 +142,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Merge Sort"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mergeSortBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="quickSortBtn">
       <Properties>
@@ -156,6 +159,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Quick Sort"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="quickSortBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton6">
       <Properties>
@@ -184,6 +190,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="?"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="heapSortBtn">
       <Properties>

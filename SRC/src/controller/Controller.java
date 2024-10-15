@@ -112,7 +112,9 @@ public class Controller {
         ControlPanel controlPanel = frm.getControlPanel();
         CodeVisual codeVisual = frm.getCodeVisual();
 
+
         controlPanel.addAscBtnListener((e) -> {
+            frm.getHeaderPanel().disableBtn();
             int[] arrayToSort = getSortData();
             for (int i = 0; i < arrayToSort.length; i++) {
                 System.out.print(arrayToSort[i] + ", ");
@@ -279,7 +281,8 @@ public class Controller {
             }
 
             // Sử dụng một mảng String để lưu trữ kết quả
-            final String[] res = { "Mảng gốc: " + Arrays.toString(originArray) };
+            final List<String> res = new ArrayList<>();
+            res.add("Mảng gốc: " + Arrays.toString(originArray));
 
             // Sử dụng ExecutorService để chạy các công việc không đồng bộ
             ExecutorService executor = Executors.newFixedThreadPool(algorithms.size());
@@ -299,8 +302,8 @@ public class Controller {
                 controlPanel.setOptimalASCResultPanel(selectionAscSwapCount, insertionAscSwapCount, bubbleAscSwapCount, quickAscSwapCount, heapAscSwapCount, mergeAscSwapCount);
                 controlPanel.setOptimalASCResultLabel(selectionAscSwapCount, insertionAscSwapCount, bubbleAscSwapCount, quickAscSwapCount, heapAscSwapCount, mergeAscSwapCount);
                 // Cập nhật chuỗi res
-                res[0] += "\nSố lần hoán đổi - Sắp xếp tăng dần"+"\n   +Selection sort: " + selectionAscSwapCount + "\n   +Insertion Sort" + insertionAscSwapCount 
-                +"\n   +BubbleSort" + bubbleAscSwapCount;
+                res.add("\nSố lần hoán đổi - Sắp xếp tăng dần"+"\n   +Selection Sort: " + selectionAscSwapCount + "\n   +Insertion Sort" + insertionAscSwapCount 
+                +"\n   +Bubble Sort: " + bubbleAscSwapCount + "\n   +Quick Sort: " + quickAscSwapCount + "\n   +Heap Sort: " + heapAscSwapCount + "\n    +Merge Sort: " + mergeAscSwapCount);
 
                 // Thực hiện các công việc DESC và thu thập kết quả
                 List<Future<Integer>> descResults = executor.invokeAll(descTasks);
@@ -312,13 +315,16 @@ public class Controller {
                 int quickDescSwapCount = descResults.get(3).get();
                 int heapDescSwapCount = descResults.get(4).get();
                 int mergeDescSwapCount = descResults.get(5).get();
+                
+                res.add("\nSố lần hoán đổi - Sắp xếp tăng dần"+"\n   +Selection Sort: " + selectionDescSwapCount + "\n   +Insertion Sort" + insertionDescSwapCount 
+                +"\n   +Bubble Sort: " + bubbleDescSwapCount + "\n   +Quick Sort: " + quickDescSwapCount + "\n   +Heap Sort: " + heapDescSwapCount + "\n    +Merge Sort: " + mergeDescSwapCount);
 
                 // Gọi hàm setOptimalDESCResultValue để đặt giá trị lên giao diện cho DESC
                 controlPanel.setOptimalDESCResultPanel(selectionDescSwapCount, insertionDescSwapCount, bubbleDescSwapCount, quickDescSwapCount, heapDescSwapCount, mergeDescSwapCount);
                 controlPanel.setOptimalDESCResultLabel(selectionDescSwapCount, insertionDescSwapCount, bubbleDescSwapCount, quickDescSwapCount, heapDescSwapCount, mergeDescSwapCount);
 
                 controlPanel.addExportCompareResultListner((event) -> {
-                    saveSortingResultToFile(res[0]);
+                    saveSortingResultToFile(res.toString());
                 });
 
             } catch (InterruptedException | ExecutionException ex) {
@@ -427,6 +433,7 @@ public class Controller {
 
         frm.getControlPanel().addStopBtnListener((e) -> {
             if (algorithm != null && !algorithm.isStop()) {
+                frm.getHeaderPanel().enableBtn();
                 algorithm.setStop(true);
                 frm.getControlPanel().enableBtn();
                 frm.getCodeVisual().setVisible(false);
