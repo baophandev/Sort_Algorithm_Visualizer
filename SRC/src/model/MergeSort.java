@@ -5,6 +5,7 @@
 package model;
 
 import config.Configuration;
+import java.awt.Color;
 import java.util.Comparator;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Comparator;
  * @author GIA BAO
  */
 public class MergeSort extends Sort {
-    
+
     private Comparator<Integer> cmptor;
 
     public MergeSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
@@ -73,64 +74,103 @@ public class MergeSort extends Sort {
         return sb.toString();
     }
 
+    //Mảng con a1 có k phần tử
+    //Mảng con a2 có l phần tử
+    //Trộn 2 mảng a1 và a2 thành mảng a
+    private void merge(int[] array, int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        // Copy dữ liệu vào các mảng con tạm thời L[] và R[]
+        for (int i = 0; i < n1; i++) {
+            L[i] = array[left + i];
+            visualPanel.setNodeColor(left + i, Configuration.YELLOW);  // Animation cho mảng L
+        }
+
+        for (int j = 0; j < n2; j++) {
+            R[j] = array[mid + 1 + j];
+            visualPanel.setNodeColor(mid + 1 + j, Configuration.HIGHLIGHT_NODE);  // Animation cho mảng R
+        }
+
+        // Hợp nhất các mảng con L[] và R[] trở lại mảng gốc array[]
+        int i = 0, j = 0, k = left;
+        while (i < n1 && j < n2 && !isStop) {
+            if (cmptor.compare(L[i], R[j]) <= 0 && !isStop) {
+                array[k] = L[i];
+                visualPanel.swapNodes(left + i, k);
+                visualPanel.setNodeColor(k, Configuration.YELLOW);  // Animation cho node đang hợp nhất
+                i++;
+            } else {
+                array[k] = R[j];
+                visualPanel.swapNodes(mid + 1 + j, k);
+                visualPanel.setNodeColor(k, Configuration.HIGHLIGHT_NODE);  // Animation cho node đang hợp nhất
+                j++;
+            }
+            k++;
+        }
+
+        // Sao chép các phần tử còn lại của L[], nếu có
+        while (i < n1 && !isStop) {
+            array[k] = L[i];
+            visualPanel.swapNodes(left+1, k);
+            visualPanel.setNodeColor(k, Configuration.YELLOW);  // Animation cho node đang hợp nhất
+            i++;
+            k++;
+        }
+
+        // Sao chép các phần tử còn lại của R[], nếu có
+        while (j < n2 && !isStop) {
+            array[k] = R[j];
+            visualPanel.swapNodes(mid+1+j, k);
+            visualPanel.setNodeColor(k, Configuration.YELLOW);  // Animation cho node đang hợp nhất
+            j++;
+            k++;
+        }
+    }
+
+    private void mergeSort(int[] array, int left, int right) {
+        setSelectedLine(31);
+
+        if (left < right && !isStop) {
+            setSelectedLine(32);
+
+            setSelectedLine(33);
+            int mid = left + (right - left) / 2;
+
+            setSelectedLine(34);
+            mergeSort(array, left, mid);
+
+            setSelectedLine(35);
+            mergeSort(array, mid + 1, right);
+
+            setSelectedLine(36);
+            merge(array, left, mid, right);
+
+        }
+
+        setSelectedLine(38);
+    }
+
     @Override
     public void sort(int[] array, int sortType) {
-        Comparator<Integer> cmptor;
         if (sortType == Configuration.ASC) {
-            cmptor = (current, previous) -> current - previous;
+            cmptor = (L, R) -> L - R;
         } else {
-            cmptor = (current, previous) -> previous - current;
+            cmptor = (L, R) -> R - L;
         }
 
-        infomationPanel.setText("Bắt đầu thuật toán sắp xếp nổi bọt");
-
-        for (int i = 0; i < array.length - 1 && !isStop; i++) {
-            setSelectedLine(1);
-            visualPanel.setNodeLabel(i, "i = " + i);
-            for (int j = array.length - 1; j > i && !isStop; j--) { // điều chỉnh lại hướng chạy của j
-                setSelectedLine(2);
-                int x = j - 1;
-                infomationPanel.setText("array[" + x + "]=" + array[j - 1] + " , array[" + j + "]= " + array[j]);
-                visualPanel.setNodeLabel(j, "j = " + j);
-                int y = j - 1;
-                visualPanel.setNodeLabel(j - 1, "j = " + y);
-                visualPanel.setNodeColor(j, config.Configuration.YELLOW);
-                visualPanel.setNodeColor(j - 1, config.Configuration.YELLOW);
-                setSelectedLine(3);
-
-                if (cmptor.compare(array[j], array[j - 1]) < 0) {  // Sử dụng j+1 để so sánh
-                    visualPanel.setNodeColor(j, config.Configuration.YELLOW);
-                    setSelectedLine(4);
-                    infomationPanel.setText("Hoán đổi i và j");
-                    swap(array, j - 1, j);  // Swap array[j] và array[j+1]
-                    delay();
-                    visualPanel.setNodeLabel(j, " ");
-                    visualPanel.setNodeLabel(j - 1, " ");
-                } else {
-                    visualPanel.setNodeColor(j, config.Configuration.COLOR_HEADER);
-                    visualPanel.setNodeColor(j - 1, config.Configuration.COLOR_HEADER);
-                    visualPanel.setNodeLabel(j, " ");
-                    visualPanel.setNodeLabel(j - 1, " ");
-                }
-                visualPanel.setNodeColor(i, config.Configuration.COLOR_HEADER);
-            }
-            if (!isStop) {
-                visualPanel.setNodeColor(i, config.Configuration.HIGHLIGHT_NODE);
-                visualPanel.setNodeLabel(i, " ");
-            }
-        }
-        if (!isStop) {
-            visualPanel.setNodeColor(array.length - 1, config.Configuration.HIGHLIGHT_NODE);
-        }
+        mergeSort(array, 0, array.length - 1);
     }
 
     // Dung de so sanh toi uu, khong animation
     private void mergeNoAnimation(int[] array, int left, int mid, int right) {
         int n1 = mid - left + 1,
-            n2 = right - mid;
+                n2 = right - mid;
         int[] L = new int[n1];
         int[] R = new int[n2];
-        for (int i = 0; i < n1; i ++) {
+        for (int i = 0; i < n1; i++) {
             L[i] = array[left + i];
         }
         for (int j = 0; j < n2; j++) {
@@ -140,24 +180,20 @@ public class MergeSort extends Sort {
         while (i < n1 && j < n2) {
             if (cmptor.compare(L[i], R[j]) <= 0) { // 11
                 array[k] = L[i];
-                swapCounts++;
                 i++;
             } else { // 14
                 array[k] = R[j];
-                swapCounts++;
                 j++;
             }
             k++;
         }
         while (i < n1) { // 20
             array[k] = L[i];
-            swapCounts++;
             i++;
             k++;
         }
         while (j < n2) { // 25
             array[k] = R[j];
-            swapCounts++;
             j++;
             k++;
         }
@@ -187,5 +223,5 @@ public class MergeSort extends Sort {
 
         return swapCounts;
     }
-    
+
 }

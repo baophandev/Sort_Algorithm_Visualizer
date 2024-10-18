@@ -140,6 +140,7 @@ public class Controller {
                 protected void done() {
                     if (!algorithm.isStop()) {
                         controlPanel.enableBtn();
+                        frm.getHeaderPanel().enableBtn();
                         frm.getCodeVisual().setVisible(false);
                         System.out.println("Sorting completed.");
                         frm.getInfomationPanel().setText("Hoàn thành sắp xếp");
@@ -202,6 +203,7 @@ public class Controller {
                 @Override
                 protected void done() {
                     if (!algorithm.isStop()) {
+                        frm.getHeaderPanel().enableBtn();
                         controlPanel.enableBtn();
                         frm.getCodeVisual().setVisible(false);
                         System.out.println("Sorting completed.");

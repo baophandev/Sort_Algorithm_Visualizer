@@ -21,6 +21,7 @@ public class UserGuide extends javax.swing.JFrame {
         Icon imgIcon = new ImageIcon("D:\\Myproject\\NLCS\\SortAlgorithmVisualizer\\SRC\\src\\images\\tab1_UserGuide.gif");
 //        jLabel1.setBounds(668, 43, 46, 14);
         jLabel1.setIcon(imgIcon);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     @SuppressWarnings("unchecked")
@@ -40,10 +41,10 @@ public class UserGuide extends javax.swing.JFrame {
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jLabel1);
 
-        jTabbedPane2.addTab("tab1", jScrollPane1);
+        jTabbedPane2.addTab("Hướng dẩn sử dụng", jScrollPane1);
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
-        jTabbedPane2.addTab("tab2", jScrollPane2);
+        jTabbedPane2.addTab("", jScrollPane2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

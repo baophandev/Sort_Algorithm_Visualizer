@@ -1040,18 +1040,18 @@ public class ControlPanel extends javax.swing.JPanel {
         jPanel8.setPreferredSize(new Dimension(32, selection));
         jPanel10.setPreferredSize(new Dimension(32, insertion));
         jPanel11.setPreferredSize(new Dimension(32, bubble));
-        jPanel12.setPreferredSize(new Dimension(32, quick));
-        jPanel13.setPreferredSize(new Dimension(32, heap));
-        jPanel14.setPreferredSize(new Dimension(32, merge));
+        jPanel12.setPreferredSize(new Dimension(32, merge));
+        jPanel13.setPreferredSize(new Dimension(32, quick));
+        jPanel14.setPreferredSize(new Dimension(32, heap));
     }
     
     public void setOptimalDESCResultPanel(int selection, int insertion, int bubble, int quick, int heap, int merge){
         jPanel16.setPreferredSize(new Dimension(32, selection));
         jPanel17.setPreferredSize(new Dimension(32, insertion));
         jPanel18.setPreferredSize(new Dimension(32, bubble));
-        jPanel19.setPreferredSize(new Dimension(32, quick));
-        jPanel20.setPreferredSize(new Dimension(32, heap));
-        jPanel21.setPreferredSize(new Dimension(32, merge));
+        jPanel19.setPreferredSize(new Dimension(32, merge));
+        jPanel20.setPreferredSize(new Dimension(32, quick));
+        jPanel21.setPreferredSize(new Dimension(32, heap));
     }
     
     
@@ -1059,18 +1059,18 @@ public class ControlPanel extends javax.swing.JPanel {
         jLabel20.setText(String.valueOf(selection));
         jLabel19.setText(String.valueOf(insertion));
         jLabel21.setText(String.valueOf(bubble));
-        jLabel23.setText(String.valueOf(quick));
-        jLabel22.setText(String.valueOf(heap));
-        jLabel24.setText(String.valueOf(merge));
+        jLabel23.setText(String.valueOf(merge));
+        jLabel22.setText(String.valueOf(quick));
+        jLabel24.setText(String.valueOf(heap));
     }
     
     public void setOptimalDESCResultLabel(int selection, int insertion, int bubble, int quick, int heap, int merge){
         jLabel25.setText(String.valueOf(selection));
         jLabel26.setText(String.valueOf(insertion));
         jLabel27.setText(String.valueOf(bubble));
-        jLabel28.setText(String.valueOf(quick));
-        jLabel29.setText(String.valueOf(heap));
-        jLabel30.setText(String.valueOf(merge));
+        jLabel28.setText(String.valueOf(merge));
+        jLabel29.setText(String.valueOf(quick));
+        jLabel30.setText(String.valueOf(heap));
     }
     
     public void addFileBtnListener(ActionListener listener){
