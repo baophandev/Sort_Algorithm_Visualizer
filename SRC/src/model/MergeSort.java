@@ -84,14 +84,14 @@ public class MergeSort extends Sort {
         int[] R = new int[n2];
 
         // Copy dữ liệu vào các mảng con tạm thời L[] và R[]
-        for (int i = 0; i < n1; i++) {
+        for (int i = 0; i < n1 && !isStop; i++) {
             L[i] = array[left + i];
-            visualPanel.setNodeColor(left + i, Configuration.YELLOW);  // Animation cho mảng L
+            visualPanel.setNodeColor(left + i, Color.GREEN);  // Animation cho mảng L
         }
 
-        for (int j = 0; j < n2; j++) {
+        for (int j = 0; j < n2 && !isStop; j++) {
             R[j] = array[mid + 1 + j];
-            visualPanel.setNodeColor(mid + 1 + j, Configuration.HIGHLIGHT_NODE);  // Animation cho mảng R
+            visualPanel.setNodeColor(mid + 1 + j, Color.orange);  // Animation cho mảng R
         }
 
         // Hợp nhất các mảng con L[] và R[] trở lại mảng gốc array[]
@@ -99,13 +99,11 @@ public class MergeSort extends Sort {
         while (i < n1 && j < n2 && !isStop) {
             if (cmptor.compare(L[i], R[j]) <= 0 && !isStop) {
                 array[k] = L[i];
-                visualPanel.swapNodes(left + i, k);
-                visualPanel.setNodeColor(k, Configuration.YELLOW);  // Animation cho node đang hợp nhất
+                visualPanel.swapNodes(k, i);
                 i++;
             } else {
                 array[k] = R[j];
-                visualPanel.swapNodes(mid + 1 + j, k);
-                visualPanel.setNodeColor(k, Configuration.HIGHLIGHT_NODE);  // Animation cho node đang hợp nhất
+                visualPanel.swapNodes(k, j);
                 j++;
             }
             k++;
@@ -114,8 +112,7 @@ public class MergeSort extends Sort {
         // Sao chép các phần tử còn lại của L[], nếu có
         while (i < n1 && !isStop) {
             array[k] = L[i];
-            visualPanel.swapNodes(left+1, k);
-            visualPanel.setNodeColor(k, Configuration.YELLOW);  // Animation cho node đang hợp nhất
+            visualPanel.swapNodes(k, i);
             i++;
             k++;
         }
@@ -123,8 +120,7 @@ public class MergeSort extends Sort {
         // Sao chép các phần tử còn lại của R[], nếu có
         while (j < n2 && !isStop) {
             array[k] = R[j];
-            visualPanel.swapNodes(mid+1+j, k);
-            visualPanel.setNodeColor(k, Configuration.YELLOW);  // Animation cho node đang hợp nhất
+            visualPanel.swapNodes(k, j);
             j++;
             k++;
         }
@@ -133,19 +129,37 @@ public class MergeSort extends Sort {
     private void mergeSort(int[] array, int left, int right) {
         setSelectedLine(31);
 
+        for(int i = left; i<= right; i++){
+            visualPanel.setNodeColor(i, Configuration.HIGHLIGHT_NODE);
+        }
+        
         if (left < right && !isStop) {
             setSelectedLine(32);
-
             setSelectedLine(33);
             int mid = left + (right - left) / 2;
-
+            
+            for(int i=left; i<=mid && !isStop; i++){
+                visualPanel.setNodeColor(i, Configuration.YELLOW);
+            }
+            
             setSelectedLine(34);
             mergeSort(array, left, mid);
-
+            
+            for(int i = mid; i <= right && !isStop; i++){
+                visualPanel.setNodeColor(i, Color.GREEN);
+            }
+            
             setSelectedLine(35);
-            mergeSort(array, mid + 1, right);
-
+            mergeSort(array, mid+1, right);
             setSelectedLine(36);
+            for(int i = left; i <= mid && !isStop; i++){
+                visualPanel.setNodeColor(i, Configuration.YELLOW);
+            }
+            
+            for(int i = mid + 1; i<=right && !isStop; i++){
+                visualPanel.setNodeColor(i, Color.GREEN);
+            }
+            
             merge(array, left, mid, right);
 
         }
@@ -160,7 +174,7 @@ public class MergeSort extends Sort {
         } else {
             cmptor = (L, R) -> R - L;
         }
-
+        infomationPanel.setText("Bắt đầu thuật toán sắp xếp trộn - Merge Sort");
         mergeSort(array, 0, array.length - 1);
     }
 

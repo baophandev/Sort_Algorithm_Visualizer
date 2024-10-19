@@ -148,6 +148,38 @@ public class VisualPanel extends javax.swing.JPanel {
             repaint();
         }
     }
+    
+    public void setAllNodeColor(int[] array, Color color){
+        for(int i = 0; i<array.length; i++){
+            Component cmp = getComponent(i);
+        if (cmp instanceof CardNumberComponent) {
+            CardNumberComponent node = (CardNumberComponent) cmp;
+
+            // Đặt màu mới cho volume của node
+            node.setVolumeColor(color);
+
+            // Cập nhật lại giao diện
+            revalidate();
+            repaint();
+        }
+        }
+    }
+    
+    public void setNodeDefaultLabel(int[] array){
+        for(int i = 0; i<array.length; i++){
+            Component cmp = getComponent(i);
+        if (cmp instanceof CardNumberComponent) {
+            CardNumberComponent node = (CardNumberComponent) cmp;
+
+            // Đặt màu mới cho volume của node
+            node.setlabel(" ");
+
+            // Cập nhật lại giao diện
+            revalidate();
+            repaint();
+        }
+        }
+    }
 
     public void setSpeed(int speed) {
         if (speed < 1) {

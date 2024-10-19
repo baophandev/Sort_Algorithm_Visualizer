@@ -5,7 +5,7 @@
 package model;
 
 import config.Configuration;
-import java.util.Comparator;
+import java.awt.Color;
 import java.util.function.BiPredicate;
 
 /**
@@ -13,6 +13,7 @@ import java.util.function.BiPredicate;
  * @author GIA BAO
  */
 public class HeapSort extends Sort {
+
     private BiPredicate<Integer, Integer> fPred, sPred1, sPred2, tPred1, tPred2;
 
     public HeapSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
@@ -24,73 +25,193 @@ public class HeapSort extends Sort {
     }
 
     @Override
-    public String getCode(int sortType) {
+    public String getCode(int sortOrder) {
+
         StringBuilder sb = new StringBuilder();
-        sb.append("void BubbleSort(int array[]) {\n");
-        sb.append("        for(int i = 0; i < array.length - 1; i++){\n");
-        sb.append("           for(int j = array.length - 1; j>=1; j--) {\n");
-        if (sortType == Configuration.ASC) {
-            sb.append("             if (array[j] < array[j-1]) {\n");
+
+        sb.append("void PushDown(int[] array,int first, int last) {\n"); // 0
+        sb.append("     int r = first;\n");
+        sb.append("     while(r <= (last - 1)/2) {\n");
+
+        if (sortOrder == Configuration.ASC) {
+            sb.append("         if (last == 2 * r + 1){\n");
+            sb.append("             if (array[r] <= array[last]) {\n");
+            sb.append("                 Swap(array[r], array[last]);\n");
+            sb.append("             }\n");
+            sb.append("                 r = 2 * r + 1;\n");
+            sb.append("         }\n");
+            sb.append("         else if ((array[r] <= array[2*r+1]) && (array[2*r+1] > array[2*r++2])) {\n");
+            sb.append("                 Swap(array[r], array[2*r+1]);\n");
+            sb.append("                 r = 2 * r + 1;\n");
+            sb.append("         }\n");
+            sb.append("         else if ((array[r] <= array[2*r+2]) && (array[2*r+2] >= array[2*r++1])) {\n");
+            sb.append("                 Swap(array[r], array[2*r+2]);\n");
+            sb.append("                 r = 2 * r + 2;\n");
+            sb.append("         }\n");
+            sb.append("         else\n");
+            sb.append("             r = last;\n"); // 18
         } else {
-            sb.append("             if (array[j] > array[j-1]) {\n");
+            sb.append("            if(array[r] > array[last]){\n");
+            sb.append("                swap(array[r], array[last]);\n");
+            sb.append("            }\n");
+            sb.append("            r = 2 * r + 1;\n");
+            sb.append("         }\n");
+            sb.append("        else if((array[r] > array[2 * r + 1]) && (array[2 * r + 1] <= array[2 * r + 2])){\n");
+            sb.append("            swap(array[r], array[2 * r + 1]);\n");
+            sb.append("            r = 2 * r + 1;\n");
+            sb.append("        }\n");
+            sb.append("        else if((array[r] > array[2 * r + 2]) && (array[2 * r + 2] < array[2 * r + 1])){\n");
+            sb.append("            swap(array[r], array[2 * r + 1]);\n");
+            sb.append("            r = 2 * r + 2;\n");
+            sb.append("        }\n");
         }
-        sb.append("                 Swap(array[j], array[j-1]);\n");
-        sb.append("             }\n");
+
         sb.append("         }\n");
+        sb.append("}\n"); // 20
+        sb.append("\n");
+        sb.append("void HeapSort(int[] array) {\n"); // 22
+        sb.append("     int n = array.length;\n");
+        sb.append("     for (int i = (n-2)/2; i >= 0; i--)\n");
+        sb.append("         PushDown(array, i, n-1);\n"); // 25
+        sb.append("     for(int i = n-1; i >= 2; i--) {\n");
+        sb.append("         Swap(array[0], array[i]);\n");
+        sb.append("         PushDown(array, 0, i-1);\n");
         sb.append("     }\n");
-        sb.append("}");
+        sb.append("     Swap(array[0], array[1]);\n"); // 30
+        sb.append("}\n");
+
         return sb.toString();
+    }
+
+    private void pushDown(int[] array, int first, int last) {
+        int r = first;
+        setSelectedLine(0);
+        setSelectedLine(1);
+        setSelectedLine(2);
+        while (r <= (last - 1) / 2 && !isStop) {
+            if (last == 2 * r + 1 && !isStop) {
+                setSelectedLine(3);
+                if (fPred.test(array[r], array[last]) && !isStop) {
+                    setSelectedLine(4);
+                    setSelectedLine(5);
+                    visualPanel.setNodeLabel(r, "Nút");
+                    visualPanel.setNodeColor(r, Configuration.HIGHLIGHT_NODE);
+                    delay();
+                    visualPanel.setNodeLabel(last, "Con trái");
+                    visualPanel.setNodeColor(last, Color.ORANGE);
+                    delay();
+                    infomationPanel.setText("Nút lớn hơn con trái");
+                    delay();
+                    infomationPanel.setText("Hoán đổi nút với con trái");
+                    delay();
+                    swap(array, r, last);
+                }
+                r = last;
+                setSelectedLine(7);
+            } else if (sPred1.test(array[r], array[2 * r + 1])
+                    && sPred2.test(array[2 * r + 1], array[2 * r + 2]) && !isStop) {
+                setSelectedLine(9);
+                setSelectedLine(10);
+                visualPanel.setNodeLabel(r, "Nút");
+                visualPanel.setNodeColor(r, Configuration.HIGHLIGHT_NODE);
+                delay();
+                visualPanel.setNodeLabel(2 * r + 1, "Con trái");
+                visualPanel.setNodeColor(2 * r + 1, Color.ORANGE);
+//                delay();
+                visualPanel.setNodeLabel(2 * r + 2, "Con phải");
+                visualPanel.setNodeColor(2 * r + 2, Color.ORANGE);
+                delay();
+                infomationPanel.setText("Nút lớn hơn con trái");
+                delay();
+                infomationPanel.setText("Con trái lớn hơn con phải");
+                delay();
+                infomationPanel.setText("Hoán đổi nút với con trái");
+                delay();
+                swap(array, r, 2 * r + 1);
+                r = 2 * r + 1;
+                setSelectedLine(11);
+
+            } else if (tPred1.test(array[r], array[2 * r + 2])
+                    && tPred2.test(array[2 * r + 2], array[2 * r + 1]) && !isStop) {
+                setSelectedLine(13);
+                setSelectedLine(14);
+
+                visualPanel.setNodeLabel(r, "Nút");
+                visualPanel.setNodeColor(r, Configuration.HIGHLIGHT_NODE);
+                delay();
+                visualPanel.setNodeLabel(2 * r + 1, "Con trái");
+                visualPanel.setNodeColor(2 * r + 1, Color.ORANGE);
+//                delay();
+                visualPanel.setNodeLabel(2 * r + 2, "Con phải");
+                visualPanel.setNodeColor(2 * r + 2, Color.ORANGE);
+                delay();
+                infomationPanel.setText("Nút lớn hơn con phải");
+                delay();
+                infomationPanel.setText("Con phải lớn hơn con trái");
+                delay();
+                infomationPanel.setText("Hoán đổi nút với con phải");
+                delay();
+                swap(array, r, 2 * r + 2);
+                r = 2 * r + 2;
+
+                setSelectedLine(15);
+            } else {
+                r = last;
+                setSelectedLine(18);
+            }
+            visualPanel.setAllNodeColor(array, Configuration.COLOR_HEADER);
+            visualPanel.setNodeDefaultLabel(array);
+        }
+    }
+
+    private void heapSort(int[] array, int n) {
+        int i;
+        //Tạo Heap
+        for (i = (n - 2) / 2; i >= 0 && !isStop; i--) {
+            pushDown(array, i, n - 1);
+        }
+
+        //Sắp xếp
+        for (i = n - 1; i >= 2 && !isStop; i--) {
+            visualPanel.setNodeColor(0, Color.yellow);
+            visualPanel.setNodeColor(i, Color.yellow);
+            infomationPanel.setText("Hoán đổi array[0] và array[" + i + "]");
+            delay();
+            swap(array, 0, i);
+            infomationPanel.setText(" ");
+            pushDown(array, 0, i - 1);
+        }
+        visualPanel.setNodeColor(0, Color.yellow);
+        visualPanel.setNodeColor(1, Color.yellow);
+        infomationPanel.setText("Hoán đổi array[0] và array[1]");
+        delay();
+        swap(array, 0, 1);
     }
 
     @Override
     public void sort(int[] array, int sortType) {
-        Comparator<Integer> cmptor;
+        infomationPanel.setText("Bắt đầu thuật toán Sắp xếp Vun đống - Heap Sort");
         if (sortType == Configuration.ASC) {
-            cmptor = (current, previous) -> current - previous;
+            fPred = (aF, L) -> aF <= L; // TH1
+
+            // TH2
+            sPred1 = (aF, L) -> aF <= L;
+            sPred2 = (L, R) -> L > R;
+
+            // TH3
+            tPred1 = (aF, R) -> aF <= R;
+            tPred2 = (R, L) -> R >= L;
         } else {
-            cmptor = (current, previous) -> previous - current;
+            fPred = (aF, L) -> aF > L;
+
+            sPred1 = (aF, L) -> aF > L;
+            sPred2 = (L, R) -> L <= R;
+
+            tPred1 = (aF, R) -> aF > R;
+            tPred2 = (R, L) -> R < L;
         }
 
-        infomationPanel.setText("Bắt đầu thuật toán sắp xếp nổi bọt");
-
-        for (int i = 0; i < array.length - 1 && !isStop; i++) {
-            setSelectedLine(1);
-            visualPanel.setNodeLabel(i, "i = " + i);
-            for (int j = array.length - 1; j > i && !isStop; j--) { // điều chỉnh lại hướng chạy của j
-                setSelectedLine(2);
-                int x = j - 1;
-                infomationPanel.setText("array[" + x + "]=" + array[j - 1] + " , array[" + j + "]= " + array[j]);
-                visualPanel.setNodeLabel(j, "j = " + j);
-                int y = j - 1;
-                visualPanel.setNodeLabel(j - 1, "j = " + y);
-                visualPanel.setNodeColor(j, config.Configuration.YELLOW);
-                visualPanel.setNodeColor(j - 1, config.Configuration.YELLOW);
-                setSelectedLine(3);
-
-                if (cmptor.compare(array[j], array[j - 1]) < 0) {  // Sử dụng j+1 để so sánh
-                    visualPanel.setNodeColor(j, config.Configuration.YELLOW);
-                    setSelectedLine(4);
-                    infomationPanel.setText("Hoán đổi i và j");
-                    swap(array, j - 1, j);  // Swap array[j] và array[j+1]
-                    delay();
-                    visualPanel.setNodeLabel(j, " ");
-                    visualPanel.setNodeLabel(j - 1, " ");
-                } else {
-                    visualPanel.setNodeColor(j, config.Configuration.COLOR_HEADER);
-                    visualPanel.setNodeColor(j - 1, config.Configuration.COLOR_HEADER);
-                    visualPanel.setNodeLabel(j, " ");
-                    visualPanel.setNodeLabel(j - 1, " ");
-                }
-                visualPanel.setNodeColor(i, config.Configuration.COLOR_HEADER);
-            }
-            if (!isStop) {
-                visualPanel.setNodeColor(i, config.Configuration.HIGHLIGHT_NODE);
-                visualPanel.setNodeLabel(i, " ");
-            }
-        }
-        if (!isStop) {
-            visualPanel.setNodeColor(array.length - 1, config.Configuration.HIGHLIGHT_NODE);
-        }
+        heapSort(array, array.length);
     }
 
     // Dung de so sanh toi uu, khong animation
@@ -168,5 +289,5 @@ public class HeapSort extends Sort {
         heapSortNoAnimation(array);
         return swapCounts;
     }
-    
+
 }

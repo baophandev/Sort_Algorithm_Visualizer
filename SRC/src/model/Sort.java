@@ -54,13 +54,13 @@ public abstract class Sort {
             int delayTime;
             switch (speed) {
                 case 1: // nhanh
-                    delayTime = 50;
+                    delayTime = 600;
                     break;
                 case 2: // trung bình
                     delayTime = 300;
                     break;
                 case 3: // chậm
-                    delayTime = 600;
+                    delayTime = 100;
                     break;
                 default:
                     delayTime = 300; // mặc định trung bình
