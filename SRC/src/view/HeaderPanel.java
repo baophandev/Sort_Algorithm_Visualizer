@@ -33,11 +33,11 @@ public class HeaderPanel extends javax.swing.JPanel {
         selectionSortBtn = new javax.swing.JButton();
         insectionSortBtn = new javax.swing.JButton();
         bubbleSortBtn = new javax.swing.JButton();
-        mergeSortBtn = new javax.swing.JButton();
         quickSortBtn = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         heapSortBtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        swapValue = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
@@ -78,16 +78,6 @@ public class HeaderPanel extends javax.swing.JPanel {
             }
         });
 
-        mergeSortBtn.setBackground(new java.awt.Color(31, 92, 169));
-        mergeSortBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
-        mergeSortBtn.setForeground(new java.awt.Color(255, 255, 255));
-        mergeSortBtn.setText("Merge Sort");
-        mergeSortBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mergeSortBtnActionPerformed(evt);
-            }
-        });
-
         quickSortBtn.setBackground(new java.awt.Color(31, 92, 169));
         quickSortBtn.setFont(new java.awt.Font("K2D", 1, 12)); // NOI18N
         quickSortBtn.setForeground(new java.awt.Color(255, 255, 255));
@@ -118,15 +108,24 @@ public class HeaderPanel extends javax.swing.JPanel {
             }
         });
 
+        swapValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        swapValue.setText("0");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(swapValue, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 31, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(swapValue)
+                .addContainerGap())
         );
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -137,17 +136,15 @@ public class HeaderPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(33, 33, 33)
                 .addComponent(selectionSortBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(insectionSortBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bubbleSortBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mergeSortBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(5, 5, 5)
                 .addComponent(quickSortBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(heapSortBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,27 +152,23 @@ public class HeaderPanel extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(quickSortBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(mergeSortBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(bubbleSortBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(insectionSortBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(selectionSortBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(heapSortBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(quickSortBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bubbleSortBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(insectionSortBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(selectionSortBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -184,7 +177,6 @@ public class HeaderPanel extends javax.swing.JPanel {
         insectionSortBtn.addActionListener(listener);
         bubbleSortBtn.addActionListener(listener);
         quickSortBtn.addActionListener(listener);
-        mergeSortBtn.addActionListener(listener);
         heapSortBtn.addActionListener(listener);
     }
     
@@ -201,9 +193,6 @@ public class HeaderPanel extends javax.swing.JPanel {
         
         quickSortBtn.setForeground(Color.white);
         quickSortBtn.setBackground(Configuration.COLOR_HEADER);
-        
-        mergeSortBtn.setForeground(Color.white);
-        mergeSortBtn.setBackground(Configuration.COLOR_HEADER);
         
         heapSortBtn.setForeground(Color.white);
         heapSortBtn.setBackground(Configuration.COLOR_HEADER);
@@ -224,9 +213,6 @@ public class HeaderPanel extends javax.swing.JPanel {
         quickSortBtn.setForeground(Color.white);
         quickSortBtn.setBackground(Configuration.COLOR_HEADER);
         
-        mergeSortBtn.setForeground(Color.white);
-        mergeSortBtn.setBackground(Configuration.COLOR_HEADER);
-        
         heapSortBtn.setForeground(Color.white);
         heapSortBtn.setBackground(Configuration.COLOR_HEADER);
         
@@ -245,9 +231,6 @@ public class HeaderPanel extends javax.swing.JPanel {
         
         quickSortBtn.setForeground(Color.white);
         quickSortBtn.setBackground(Configuration.COLOR_HEADER);
-        
-        mergeSortBtn.setForeground(Color.white);
-        mergeSortBtn.setBackground(Configuration.COLOR_HEADER);
         
         heapSortBtn.setForeground(Color.white);
         heapSortBtn.setBackground(Configuration.COLOR_HEADER);
@@ -269,9 +252,6 @@ public class HeaderPanel extends javax.swing.JPanel {
         bubbleSortBtn.setForeground(Color.white);
         bubbleSortBtn.setBackground(Configuration.COLOR_HEADER);
         
-        mergeSortBtn.setForeground(Color.white);
-        mergeSortBtn.setBackground(Configuration.COLOR_HEADER);
-        
         heapSortBtn.setForeground(Color.white);
         heapSortBtn.setBackground(Configuration.COLOR_HEADER);
         
@@ -284,28 +264,6 @@ public class HeaderPanel extends javax.swing.JPanel {
         userGuide.setVisible(true);
         userGuide.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void mergeSortBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mergeSortBtnActionPerformed
-        mergeSortBtn.setBackground(Color.white);
-        mergeSortBtn.setForeground(Configuration.COLOR_HEADER);
-        
-        selectionSortBtn.setForeground(Color.white);
-        selectionSortBtn.setBackground(Configuration.COLOR_HEADER);
-        
-        insectionSortBtn.setForeground(Color.white);
-        insectionSortBtn.setBackground(Configuration.COLOR_HEADER);
-        
-        bubbleSortBtn.setForeground(Color.white);
-        bubbleSortBtn.setBackground(Configuration.COLOR_HEADER);
-        
-        quickSortBtn.setForeground(Color.white);
-        quickSortBtn.setBackground(Configuration.COLOR_HEADER);
-        
-        heapSortBtn.setForeground(Color.white);
-        heapSortBtn.setBackground(Configuration.COLOR_HEADER);
-        
-        algorithm = Configuration.MERGE_SORT;
-    }//GEN-LAST:event_mergeSortBtnActionPerformed
 
     private void heapSortBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heapSortBtnActionPerformed
 
@@ -324,9 +282,6 @@ public class HeaderPanel extends javax.swing.JPanel {
         quickSortBtn.setForeground(Color.white);
         quickSortBtn.setBackground(Configuration.COLOR_HEADER);
         
-        mergeSortBtn.setForeground(Color.white);
-        mergeSortBtn.setBackground(Configuration.COLOR_HEADER);
-        
         algorithm = Configuration.HEAP_SORT;
     }//GEN-LAST:event_heapSortBtnActionPerformed
 
@@ -335,7 +290,6 @@ public class HeaderPanel extends javax.swing.JPanel {
         insectionSortBtn.setEnabled(false);
         selectionSortBtn.setEnabled(false);
         quickSortBtn.setEnabled(false);
-        mergeSortBtn.setEnabled(false);
         heapSortBtn.setEnabled(false);
     }
     
@@ -344,10 +298,12 @@ public class HeaderPanel extends javax.swing.JPanel {
         insectionSortBtn.setEnabled(true);
         selectionSortBtn.setEnabled(true);
         quickSortBtn.setEnabled(true);
-        mergeSortBtn.setEnabled(true);
         heapSortBtn.setEnabled(true);
     }
     
+    public void setLabelSwapCount(int a){
+        swapValue.setText(String.valueOf(a));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bubbleSortBtn;
@@ -358,8 +314,8 @@ public class HeaderPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton mergeSortBtn;
     private javax.swing.JButton quickSortBtn;
     private javax.swing.JButton selectionSortBtn;
+    private javax.swing.JLabel swapValue;
     // End of variables declaration//GEN-END:variables
 }

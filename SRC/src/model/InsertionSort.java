@@ -13,8 +13,8 @@ import java.util.Comparator;
  */
 public class InsertionSort extends Sort {
 
-    public InsertionSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
-        super(visualPanel, codeVisual, infomationPanel);
+    public InsertionSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel, view.HeaderPanel headerPanel) {
+        super(visualPanel, codeVisual, infomationPanel, headerPanel);
     }
 
     public InsertionSort() {
@@ -50,6 +50,10 @@ public class InsertionSort extends Sort {
         } else {
             cmptor = (current, previous) -> previous - current;
         }
+        
+        infomationPanel.setText("Bắt đầu thuật toán Sắp xếp xen - Insertion Sort");
+        delay();
+        infomationPanel.setText(" ");
 
         for (int i = 0; i < array.length && !isStop; i++) {
             setSelectedLine(1);
@@ -67,6 +71,8 @@ public class InsertionSort extends Sort {
 
                 setSelectedLine(4);
                 swap(array, j - 1, j);
+                visualPanel.setNodeColor(j - 1, Configuration.COLOR_HEADER);
+                visualPanel.setNodeColor(j, Configuration.COLOR_HEADER);
 
                 visualPanel.setNodeColor(j - 1, Configuration.COLOR_HEADER);
                 visualPanel.setNodeColor(j, Configuration.COLOR_HEADER);
@@ -74,6 +80,10 @@ public class InsertionSort extends Sort {
                 j--;
             }
             visualPanel.setNodeLabel1(i, "i=" + i);
+        }
+        if (isStop) {
+            visualPanel.setAllNodeColor(array, Configuration.COLOR_HEADER);
+            visualPanel.setNodeDefaultLabel1(array);
         }
     }
 

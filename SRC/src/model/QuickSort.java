@@ -17,8 +17,8 @@ public class QuickSort extends Sort {
 
     private BiPredicate<Integer, Integer> fstPred, scdPred;
 
-    public QuickSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
-        super(visualPanel, codeVisual, infomationPanel);
+    public QuickSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel, view.HeaderPanel headerPanel) {
+        super(visualPanel, codeVisual, infomationPanel, headerPanel);
     }
 
     public QuickSort() {
@@ -86,7 +86,7 @@ public class QuickSort extends Sort {
         if (k > j && !isStop) {
             return -1;
         } else if (array[k] > firstkey && !isStop) {
-            infomationPanel.setText("Chốt bằng: " + k);
+            infomationPanel.setText("Chốt bằng: " + array[k]);
             return k;
         } else {
             setSelectedLine(12);
@@ -174,6 +174,7 @@ public class QuickSort extends Sort {
 
     @Override
     public void sort(int[] array, int sortType) {
+        infomationPanel.setText("Bắt đầu thuật toán Sắp xếp Nhanh - Quick Sort");
         if (sortType == Configuration.ASC) {
             fstPred = (left, pivot) -> left < pivot;
             scdPred = (right, pivot) -> right >= pivot;

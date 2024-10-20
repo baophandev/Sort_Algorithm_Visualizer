@@ -5,18 +5,12 @@
 package model;
 
 import config.Configuration;
-import java.awt.Color;
 import java.util.Comparator;
-import javax.swing.SwingWorker;
 
-/**
- *
- * @author GIA BAO
- */
 public class SelectionSort extends Sort {
 
-    public SelectionSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
-        super(visualPanel, codeVisual, infomationPanel);
+    public SelectionSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel, view.HeaderPanel headerPanel) {
+        super(visualPanel, codeVisual, infomationPanel, headerPanel);
     }
 
     public SelectionSort() {
@@ -63,7 +57,7 @@ public class SelectionSort extends Sort {
             cmptor = (current, previous) -> previous - current;
         }
 
-        infomationPanel.setText("Bắt đầu thuật toán sắp xếp chọn");
+        infomationPanel.setText("Bắt đầu thuật toán Sắp xếp chọn - Selection Sort");
 
         for (int i = 0; i < array.length - 1 && !isStop; i++) {
             int minIdx = i;
@@ -128,6 +122,10 @@ public class SelectionSort extends Sort {
         if (!isStop) {
             visualPanel.setNodeColor(array.length - 1, config.Configuration.HIGHLIGHT_NODE);
             visualPanel.setNodeLabel1(array.length - 1, "i=" + (array.length - 1));
+        }else{
+            visualPanel.setAllNodeColor(array, Configuration.COLOR_HEADER);
+            visualPanel.setNodeDefaultLabel1(array);
+            visualPanel.setNodeDefaultLabel(array);
         }
     }
 

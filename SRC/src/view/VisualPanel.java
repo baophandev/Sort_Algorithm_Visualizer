@@ -181,6 +181,22 @@ public class VisualPanel extends javax.swing.JPanel {
         }
     }
 
+    public void setNodeDefaultLabel1(int[] array){
+        for(int i = 0; i<array.length; i++){
+            Component cmp = getComponent(i);
+        if (cmp instanceof CardNumberComponent) {
+            CardNumberComponent node = (CardNumberComponent) cmp;
+
+            // Đặt màu mới cho volume của node
+            node.setlabel1(" ");
+
+            // Cập nhật lại giao diện
+            revalidate();
+            repaint();
+        }
+        }
+    }
+    
     public void setSpeed(int speed) {
         if (speed < 1) {
             return;
@@ -209,8 +225,6 @@ public class VisualPanel extends javax.swing.JPanel {
         comp2.setVolumeNumber(tempText);
         comp2.setHeight(tempVolume);
 
-        comp1.setVolumeColor(config.Configuration.COLOR_HEADER);
-        comp2.setVolumeColor(config.Configuration.COLOR_HEADER);
         revalidate();
         repaint();
 

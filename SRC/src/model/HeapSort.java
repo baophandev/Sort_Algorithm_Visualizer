@@ -16,8 +16,8 @@ public class HeapSort extends Sort {
 
     private BiPredicate<Integer, Integer> fPred, sPred1, sPred2, tPred1, tPred2;
 
-    public HeapSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
-        super(visualPanel, codeVisual, infomationPanel);
+    public HeapSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel, view.HeaderPanel headerPanel) {
+        super(visualPanel, codeVisual, infomationPanel, headerPanel);
     }
 
     public HeapSort() {
