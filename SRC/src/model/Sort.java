@@ -6,12 +6,14 @@ import view.CodeVisual;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import view.InfomationPanel;
+import view.HeaderPanel;
 
 public abstract class Sort {
 
     protected final VisualPanel visualPanel;
     protected final CodeVisual codeVisual;
     protected final InfomationPanel infomationPanel;
+    protected final HeaderPanel headerPanel;
 
     protected int swapCounts = 0;
     protected volatile boolean isStop = false; // Đảm bảo thread-safe khi dừng
@@ -23,13 +25,15 @@ public abstract class Sort {
         this.visualPanel = null;
         this.codeVisual = null;
         this.infomationPanel = null;
+        this.headerPanel = null;
     }
 
     // Constructor có tham số
-    public Sort(VisualPanel visualPanel, CodeVisual codeVisual, InfomationPanel infomationPanel) {
+    public Sort(VisualPanel visualPanel, CodeVisual codeVisual, InfomationPanel infomationPanel, HeaderPanel headerPanel) {
         this.visualPanel = visualPanel;
         this.codeVisual = codeVisual;
         this.infomationPanel = infomationPanel;
+        this.headerPanel = headerPanel;
     }
 
     // Lấy mã thuật toán (tuỳ loại sort)
@@ -46,6 +50,7 @@ public abstract class Sort {
         array[i] = array[j];
         array[j] = tmp;
         swapCounts++; // Tăng số lần swap
+        headerPanel.setLabelSwapCount(swapCounts);
     }
 
     // Phương thức để kiểm soát tốc độ

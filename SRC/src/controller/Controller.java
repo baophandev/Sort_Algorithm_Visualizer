@@ -21,9 +21,8 @@ import java.util.logging.Logger;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 import config.Configuration;
-import java.io.BufferedWriter;
+import java.awt.Color;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -31,12 +30,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
-import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 import model.BubbleSort;
 import model.SelectionSort;
 import model.InsertionSort;
-import model.MergeSort;
 import model.HeapSort;
 import model.QuickSort;
 import view.CodeVisual;
@@ -91,25 +88,21 @@ public class Controller {
             int alg = headerPanel.getAlgorithm();
             algorithm = switch (alg) {
                 case Configuration.BUBBLE_SORT ->
-                    new BubbleSort(visualPanel, codeVisual, infomationPanel);
+                    new BubbleSort(visualPanel, codeVisual, infomationPanel, headerPanel);
                 case Configuration.INSERTION_SORT ->
-                    new InsertionSort(visualPanel, codeVisual, infomationPanel);
-                case Configuration.MERGE_SORT ->
-                    new MergeSort(visualPanel, codeVisual, infomationPanel);
+                    new InsertionSort(visualPanel, codeVisual, infomationPanel, headerPanel);
                 case Configuration.HEAP_SORT ->
-                    new HeapSort(visualPanel, codeVisual, infomationPanel);
+                    new HeapSort(visualPanel, codeVisual, infomationPanel, headerPanel);
                 case Configuration.QUICK_SORT ->
-                    new QuickSort(visualPanel, codeVisual, infomationPanel);
+                    new QuickSort(visualPanel, codeVisual, infomationPanel, headerPanel);
                 default ->
-                    new SelectionSort(visualPanel, codeVisual, infomationPanel);
+                    new SelectionSort(visualPanel, codeVisual, infomationPanel, headerPanel);
             };
             switch (alg) {
                 case Configuration.BUBBLE_SORT ->
                     frm.getInfomationPanel().setText("Đã chọn thuật toán Bubble Sort");
                 case Configuration.INSERTION_SORT ->
                     frm.getInfomationPanel().setText("Đã chọn thuật toán Insertion Sort");
-                case Configuration.MERGE_SORT ->
-                    frm.getInfomationPanel().setText("Đã chọn thuật toán Merge Sort");
                 case Configuration.HEAP_SORT ->
                     frm.getInfomationPanel().setText("Đã chọn thuật toán Heap Sort");
                 case Configuration.QUICK_SORT ->
@@ -129,6 +122,7 @@ public class Controller {
 
         controlPanel.addAscBtnListener((e) -> {
             frm.getHeaderPanel().disableBtn();
+            frm.getHeaderPanel().setLabelSwapCount(0);
             int[] arrayToSort = getSortData();
             for (int i = 0; i < arrayToSort.length; i++) {
                 System.out.print(arrayToSort[i] + ", ");
@@ -193,6 +187,8 @@ public class Controller {
         CodeVisual codeVisual = frm.getCodeVisual();
 
         controlPanel.addDESCBtnListener((e) -> {
+            frm.getHeaderPanel().disableBtn();
+            frm.getHeaderPanel().setLabelSwapCount(0);
             int[] arrayToSort = getSortData();
             for (int i = 0; i < arrayToSort.length; i++) {
                 System.out.print(arrayToSort[i] + ", ");
@@ -268,8 +264,7 @@ public class Controller {
                     new InsertionSort(),
                     new BubbleSort(),
                     new QuickSort(),
-                    new HeapSort(),
-                    new MergeSort()
+                    new HeapSort()
             ));
 
             int[] arrayforSortAsc = getSortData();
@@ -312,14 +307,14 @@ public class Controller {
                 int bubbleAscSwapCount = ascResults.get(2).get();
                 int quickAscSwapCount = ascResults.get(3).get();
                 int heapAscSwapCount = ascResults.get(4).get();
-                int mergeAscSwapCount = ascResults.get(5).get();
+                
 
                 // Gọi hàm setOptimalASCResultValue để đặt giá trị lên giao diện cho ASC
-                controlPanel.setOptimalASCResultPanel(selectionAscSwapCount, insertionAscSwapCount, bubbleAscSwapCount, quickAscSwapCount, heapAscSwapCount, mergeAscSwapCount);
-                controlPanel.setOptimalASCResultLabel(selectionAscSwapCount, insertionAscSwapCount, bubbleAscSwapCount, quickAscSwapCount, heapAscSwapCount, mergeAscSwapCount);
+                controlPanel.setOptimalASCResultPanel(selectionAscSwapCount, insertionAscSwapCount, bubbleAscSwapCount, quickAscSwapCount, heapAscSwapCount);
+                controlPanel.setOptimalASCResultLabel(selectionAscSwapCount, insertionAscSwapCount, bubbleAscSwapCount, quickAscSwapCount, heapAscSwapCount);
                 // Cập nhật chuỗi res
                 res.add("\nSố lần hoán đổi - Sắp xếp tăng dần" + "\n   +Selection Sort: " + selectionAscSwapCount + "\n   +Insertion Sort" + insertionAscSwapCount
-                        + "\n   +Bubble Sort: " + bubbleAscSwapCount + "\n   +Quick Sort: " + quickAscSwapCount + "\n   +Heap Sort: " + heapAscSwapCount + "\n    +Merge Sort: " + mergeAscSwapCount);
+                        + "\n   +Bubble Sort: " + bubbleAscSwapCount + "\n   +Quick Sort: " + quickAscSwapCount + "\n   +Heap Sort: " + heapAscSwapCount );
 
                 // Thực hiện các công việc DESC và thu thập kết quả
                 List<Future<Integer>> descResults = executor.invokeAll(descTasks);
@@ -330,14 +325,13 @@ public class Controller {
                 int bubbleDescSwapCount = descResults.get(2).get();
                 int quickDescSwapCount = descResults.get(3).get();
                 int heapDescSwapCount = descResults.get(4).get();
-                int mergeDescSwapCount = descResults.get(5).get();
 
                 res.add("\nSố lần hoán đổi - Sắp xếp tăng dần" + "\n   +Selection Sort: " + selectionDescSwapCount + "\n   +Insertion Sort" + insertionDescSwapCount
-                        + "\n   +Bubble Sort: " + bubbleDescSwapCount + "\n   +Quick Sort: " + quickDescSwapCount + "\n   +Heap Sort: " + heapDescSwapCount + "\n    +Merge Sort: " + mergeDescSwapCount);
+                        + "\n   +Bubble Sort: " + bubbleDescSwapCount + "\n   +Quick Sort: " + quickDescSwapCount + "\n   +Heap Sort: " + heapDescSwapCount );
 
                 // Gọi hàm setOptimalDESCResultValue để đặt giá trị lên giao diện cho DESC
-                controlPanel.setOptimalDESCResultPanel(selectionDescSwapCount, insertionDescSwapCount, bubbleDescSwapCount, quickDescSwapCount, heapDescSwapCount, mergeDescSwapCount);
-                controlPanel.setOptimalDESCResultLabel(selectionDescSwapCount, insertionDescSwapCount, bubbleDescSwapCount, quickDescSwapCount, heapDescSwapCount, mergeDescSwapCount);
+                controlPanel.setOptimalDESCResultPanel(selectionDescSwapCount, insertionDescSwapCount, bubbleDescSwapCount, quickDescSwapCount, heapDescSwapCount);
+                controlPanel.setOptimalDESCResultLabel(selectionDescSwapCount, insertionDescSwapCount, bubbleDescSwapCount, quickDescSwapCount, heapDescSwapCount);
 
                 controlPanel.addExportCompareResultListner((event) -> {
                     saveSortingResultToFile(res.toString());

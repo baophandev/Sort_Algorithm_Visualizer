@@ -5,6 +5,7 @@
 package model;
 
 import config.Configuration;
+import java.awt.Color;
 import java.util.Comparator;
 
 /**
@@ -13,8 +14,8 @@ import java.util.Comparator;
  */
 public class BubbleSort extends Sort {
 
-    public BubbleSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel) {
-        super(visualPanel, codeVisual, infomationPanel);
+    public BubbleSort(view.VisualPanel visualPanel, view.CodeVisual codeVisual, view.InfomationPanel infomationPanel, view.HeaderPanel headerPanel) {
+        super(visualPanel, codeVisual, infomationPanel, headerPanel);
     }
 
     public BubbleSort() {
@@ -58,9 +59,7 @@ public class BubbleSort extends Sort {
                 setSelectedLine(2);
                 int x = j - 1;
                 infomationPanel.setText("array[" + x + "]=" + array[j - 1] + " , array[" + j + "]= " + array[j]);
-                visualPanel.setNodeLabel(j, "j = " + j);
                 int y = j - 1;
-                visualPanel.setNodeLabel(j - 1, "j = " + y);
                 visualPanel.setNodeColor(j, config.Configuration.YELLOW);
                 visualPanel.setNodeColor(j - 1, config.Configuration.YELLOW);
                 setSelectedLine(3);
@@ -70,25 +69,28 @@ public class BubbleSort extends Sort {
                     setSelectedLine(4);
                     infomationPanel.setText("Hoán đổi i và j");
                     swap(array, j - 1, j);  // Swap array[j] và array[j+1]
+                    visualPanel.setNodeColor(j-1, Configuration.COLOR_HEADER);
+                    visualPanel.setNodeColor(j, Configuration.COLOR_HEADER);
                     delay();
                     visualPanel.setNodeLabel(j, " ");
                     visualPanel.setNodeLabel(j - 1, " ");
                 } else {
                     visualPanel.setNodeColor(j, config.Configuration.COLOR_HEADER);
                     visualPanel.setNodeColor(j - 1, config.Configuration.COLOR_HEADER);
-                    visualPanel.setNodeLabel(j, " ");
-                    visualPanel.setNodeLabel(j - 1, " ");
                 }
                 visualPanel.setNodeColor(i, config.Configuration.COLOR_HEADER);
             }
             if (!isStop) {
                 visualPanel.setNodeColor(i, config.Configuration.HIGHLIGHT_NODE);
-                visualPanel.setNodeLabel(i, " ");
             }
         }
         if (!isStop) {
             visualPanel.setNodeColor(array.length - 1, config.Configuration.HIGHLIGHT_NODE);
+        }else{
+            visualPanel.setAllNodeColor(array, Configuration.COLOR_HEADER);
+            visualPanel.setNodeDefaultLabel(array);
         }
+        
     }
 
     @Override
