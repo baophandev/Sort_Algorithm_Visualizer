@@ -86,12 +86,15 @@ public class QuickSort extends Sort {
         if (k > j && !isStop) {
             return -1;
         } else if (array[k] > firstkey && !isStop) {
-            infomationPanel.setText("Chốt bằng: " + array[k]);
+            infomationPanel.setText("Chốt bằng = " + array[k]);
             return k;
+            
         } else {
+            infomationPanel.setText("Chốt bằng = " + array[i]);
             setSelectedLine(12);
             return i;
         }
+        
     }
 
     private int partition(int[] array, int i, int j, int pivot) {
@@ -103,27 +106,35 @@ public class QuickSort extends Sort {
             while (fstPred.test(array[Left], pivot) && !isStop) {
                 setSelectedLine(15);
                 setSelectedLine(16);
+                visualPanel.setNodeColor(Left, Color.yellow);
                 Left++;
-                visualPanel.setNodeColor(Left, Configuration.YELLOW);
             }
 
             while (scdPred.test(array[Right], pivot) && !isStop) {
                 setSelectedLine(17);
                 setSelectedLine(18);
+                visualPanel.setNodeColor(Right, Color.green);
                 Right--;
-                visualPanel.setNodeColor(Right, Configuration.YELLOW);
             }
 
             setSelectedLine(19);
             if (Left < Right && !isStop) {
                 setSelectedLine(20);
+                visualPanel.setNodeColor(Left, Color.yellow);
+                visualPanel.setNodeColor(Right, Color.green);
                 swap(array, Left, Right);
-                visualPanel.setNodeColor(Left, Configuration.HIGHLIGHT_NODE);
-                visualPanel.setNodeColor(Right, Configuration.HIGHLIGHT_NODE);
             }
         }
 
         setSelectedLine(22);
+        if (isStop) {
+            visualPanel.setAllNodeColor(array, Configuration.COLOR_HEADER);
+            visualPanel.setNodeDefaultLabel1(array);
+            visualPanel.setNodeDefaultLabel(array);
+        }
+        visualPanel.setNodeDefaultLabel(array);
+        visualPanel.setNodeDefaultLabel1(array);
+        visualPanel.setAllNodeColor(array, Configuration.COLOR_HEADER);
         return Left;
     }
 
@@ -132,43 +143,45 @@ public class QuickSort extends Sort {
         int k, pivotindex, pivot;
         setSelectedLine(25);
 
-        for (int l = i; l <= j && !isStop; l++) {
-            visualPanel.setNodeColor(l, Configuration.COLOR_SUBHEADER);
-        }
+//        for (int l = i; l <= j && !isStop; l++) {
+//            visualPanel.setNodeColor(l, Configuration.COLOR_SUBHEADER);
+//        }
 
         //Tìm chốt
         setSelectedLine(26);
         pivotindex = findPivot(array, i, j);
         setSelectedLine(0);
+        
+//        infomationPanel.setText("Chốt bằng = " + array[pivotindex]);
 
         if (pivotindex != -1 && !isStop) {
             setSelectedLine(27);
             setSelectedLine(28);
             pivot = array[pivotindex];
-            visualPanel.setNodeColor(pivotindex, Color.PINK);
             
             //Phân hoạch tại k
             setSelectedLine(29);
             k = partition(array, i, j, pivot);
             setSelectedLine(12);
-            visualPanel.setNodeColor(k, Color.ORANGE);
             
             for(int l = i; l <= j && !isStop; l++){
                 if(l == k && !isStop){
                     continue;
                 }
-                visualPanel.setNodeColor(l, Configuration.COLOR_HEADER);
             }
             setSelectedLine(30);
             quickSort(array, i, k-1);
-            for(int l = i; l <= k-1; l++){
-                visualPanel.setNodeColor(l, Configuration.HIGHLIGHT_NODE);
+            for(int l = i; l <= k-1 && !isStop; l++){
             }
             setSelectedLine(31);
             quickSort(array, k, j);
             for(int l = k; l <= j && !isStop; l++){
-                visualPanel.setNodeColor(l, Configuration.COLOR_SUBHEADER);
             }
+        }
+        if (isStop) {
+            visualPanel.setAllNodeColor(array, Configuration.COLOR_HEADER);
+            visualPanel.setNodeDefaultLabel1(array);
+            visualPanel.setNodeDefaultLabel(array);
         }
     }
 

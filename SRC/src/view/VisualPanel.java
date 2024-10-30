@@ -7,19 +7,10 @@ package view;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.util.Random;
-import java.awt.Point;
 import java.util.ArrayList;
-import javax.swing.SwingUtilities;
 import java.util.List;
-import config.Configuration;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
